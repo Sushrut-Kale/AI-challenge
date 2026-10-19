@@ -20,7 +20,16 @@ export default function TracksSection() {
       />
 
       {/* The 2 Official Rounds from Poster */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-16">
+      <div className="relative max-w-5xl mx-auto mb-16">
+        {/* Animated Redstone Connector Badge (Desktop) */}
+        <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 items-center gap-1.5 px-3 py-1 bg-[#160c06] border-2 border-[#ea580c] shadow-[0_0_14px_rgba(234,88,12,0.5)] pointer-events-none">
+          <span className="w-2 h-2 rounded-full bg-[#ef4444] animate-ping inline-block" />
+          <span className="font-pixel text-[8px] text-amber-300 uppercase tracking-wider">
+            ADVANCE ➔
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {rounds.map((round) => {
           const isFinal = round.roundNumber === 2;
 
@@ -84,6 +93,7 @@ export default function TracksSection() {
             </PixelCard>
           );
         })}
+        </div>
       </div>
 
       {/* Sustainable Development Goals Theme Section — Stacked One Below the Other */}

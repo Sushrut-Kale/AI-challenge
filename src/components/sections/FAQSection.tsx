@@ -48,13 +48,17 @@ export default function FAQSection() {
                   </span>
                   <span className="text-white font-medium">{faq.question}</span>
                 </span>
-                <span className="shrink-0 font-pixel text-xs text-neutral-400">
-                  {isOpen ? '▲' : '▼'}
+                <span
+                  className={`shrink-0 font-pixel text-xs text-emerald-400 transition-transform duration-200 ${
+                    isOpen ? 'rotate-180' : 'rotate-0'
+                  }`}
+                >
+                  ▼
                 </span>
               </button>
 
               {isOpen && (
-                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-2 text-sm sm:text-base font-sans text-neutral-100 leading-relaxed border-t border-white/10 animate-in fade-in duration-150">
+                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-2 text-sm sm:text-base font-sans text-neutral-100 leading-relaxed border-t border-white/10 animate-in fade-in zoom-in-95 duration-150">
                   {faq.answer}
                 </div>
               )}

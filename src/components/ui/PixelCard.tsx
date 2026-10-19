@@ -41,7 +41,7 @@ export default function PixelCard({
       className={`
         mc-card relative p-5 sm:p-6
         ${variantStyles[variant]}
-        ${interactive ? 'cursor-pointer hover:-translate-y-1.5 transition-all duration-200' : ''}
+        ${interactive ? 'cursor-pointer hover:-translate-y-1.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-all duration-200' : ''}
         ${className}
       `.trim()}
       data-interactive={interactive ? 'true' : undefined}

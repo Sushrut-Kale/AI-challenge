@@ -45,7 +45,7 @@ export default function HomePage() {
       </div>
 
       {/* Conventional Minecraft Event Landing Page */}
-      <main className="relative flex flex-col w-full min-h-screen bg-[#0d0b09]">
+      <main className="relative z-10 flex flex-col w-full min-h-screen bg-transparent">
         <AboutSection />
         <TracksSection />
         <TimelineSection />
