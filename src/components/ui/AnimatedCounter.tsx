@@ -23,13 +23,22 @@ export default function AnimatedCounter({
   ariaLabel,
 }: AnimatedCounterProps) {
   const containerRef = useRef<HTMLSpanElement>(null);
-  const [displayValue, setDisplayValue] = useState<number>(0);
-  const hasAnimatedRef = useRef<boolean>(false);
   const prefersReducedMotion = useReducedMotion();
+  const [displayValue, setDisplayValue] = useState<number>(() => prefersReducedMotion ? value : 0);
+  const hasAnimatedRef = useRef<boolean>(false);
+  const isFinishedRef = useRef<boolean>(false);
 
   useEffect(() => {
     // If reduced motion is preferred, immediately render target value
     if (prefersReducedMotion) {
+      setDisplayValue(value);
+      hasAnimatedRef.current = true;
+      isFinishedRef.current = true;
+      return;
+    }
+
+    // If already animated, guarantee target value is maintained
+    if (hasAnimatedRef.current && isFinishedRef.current) {
       setDisplayValue(value);
       return;
     }
@@ -45,6 +54,9 @@ export default function AnimatedCounter({
         const [entry] = entries;
         if (entry.isIntersecting && !hasAnimatedRef.current) {
           hasAnimatedRef.current = true;
+          // Disconnect observer immediately so it can never re-trigger
+          observer.unobserve(node);
+          observer.disconnect();
 
           const step = (timestamp: number) => {
             if (startTime === null) startTime = timestamp;
@@ -54,17 +66,17 @@ export default function AnimatedCounter({
             // Smooth easeOutQuart easing
             const ease = 1 - Math.pow(1 - progress, 4);
             const current = Math.floor(ease * value);
-            setDisplayValue(current);
 
             if (progress < 1) {
+              setDisplayValue(current);
               animId = requestAnimationFrame(step);
             } else {
+              isFinishedRef.current = true;
               setDisplayValue(value);
             }
           };
 
           animId = requestAnimationFrame(step);
-          observer.unobserve(node);
         }
       },
       { threshold: 0.15 }

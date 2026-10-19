@@ -22,7 +22,7 @@ export default function SponsorsSection() {
       <SectionHeading
         tag="ECOSYSTEM & PARTNERSHIPS"
         title="ORGANIZERS & SPONSORS"
-        subtitle="Presented by the AAAI Global Professional Chapter, AlgoVedas, and ASTRA at MIT Academy of Engineering, with distinguished industry partners."
+        subtitle="Organized by ASTRA Student Association in association with AAAI Global Professional Chapter and AlgoVedas at MIT Academy of Engineering, with distinguished industry partners."
       />
 
       {/* Official Institutional Organizers */}
@@ -34,37 +34,64 @@ export default function SponsorsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Lead Organizer: AAAI */}
+          {/* Primary Student Organizer: ASTRA (First & Most Prominent) */}
+          <PixelCard
+            variant="emerald"
+            title="Primary Organizer"
+            badge={<PixelBadge variant="gold">PRIMARY ORGANIZER</PixelBadge>}
+            className="ring-2 ring-amber-400/50 shadow-[0_0_20px_rgba(251,191,36,0.2)]"
+          >
+            <div className="flex flex-col items-center text-center p-2">
+              <div className="h-16 w-full flex items-center justify-center mb-4 bg-white/5 border border-amber-400/30 p-2">
+                <Image
+                  src="/assets/logos/astra_logo.jpg"
+                  alt="ASTRA Student Association"
+                  width={140}
+                  height={50}
+                  className="max-h-12 w-auto object-contain rounded filter drop-shadow"
+                />
+              </div>
+              <h4 className="font-pixel text-xs text-amber-300 mb-2">
+                ASTRA Student Association
+              </h4>
+              <p className="font-sans text-xs text-neutral-200 leading-relaxed">
+                Primary student organizing body at MIT Academy of Engineering (Department of CSE-AIML)
+                leading the AGENTCRAFT National Challenge and student innovation.
+              </p>
+            </div>
+          </PixelCard>
+
+          {/* Associated Professional Chapter: AAAI */}
           <PixelCard
             variant="stone"
-            title="Lead Chapter"
-            badge={<PixelBadge variant="gold">ORGANIZER</PixelBadge>}
+            title="Professional Chapter"
+            badge={<PixelBadge variant="emerald">ASSOCIATED CHAPTER</PixelBadge>}
           >
             <div className="flex flex-col items-center text-center p-2">
               <div className="h-16 w-full flex items-center justify-center mb-4 bg-white/5 border border-white/10 p-2">
                 <Image
                   src="/assets/aaai_logo.png"
-                  alt="AAAI Student Chapter"
+                  alt="AAAI Global Professional Chapter"
                   width={160}
                   height={50}
                   className="max-h-12 w-auto object-contain filter drop-shadow"
                 />
               </div>
               <h4 className="font-pixel text-xs text-white mb-2">
-                {organizers.lead}
+                AAAI Global Professional Chapter
               </h4>
               <p className="font-sans text-xs text-neutral-300 leading-relaxed">
-                Global artificial intelligence professional association advancing research
-                and responsible deployment of autonomous agentic systems.
+                Global artificial intelligence professional association advancing research,
+                technical rigor, and responsible deployment of autonomous agentic systems.
               </p>
             </div>
           </PixelCard>
 
-          {/* Department: AlgoVedas */}
+          {/* Department Technical Society: AlgoVedas */}
           <PixelCard
             variant="stone"
-            title="AlgoVedas"
-            badge={<PixelBadge variant="emerald">DEPARTMENT</PixelBadge>}
+            title="Department Community"
+            badge={<PixelBadge variant="diamond">CSE AIML</PixelBadge>}
           >
             <div className="flex flex-col items-center text-center p-2">
               <div className="h-16 w-full flex items-center justify-center mb-4 bg-white/5 border border-white/10 p-2">
@@ -81,33 +108,7 @@ export default function SponsorsSection() {
               </h4>
               <p className="font-sans text-xs text-neutral-300 leading-relaxed">
                 Department of Computer Science & Engineering (Artificial Intelligence & Machine Learning)
-                driving competitive student innovation.
-              </p>
-            </div>
-          </PixelCard>
-
-          {/* Student Association: ASTRA */}
-          <PixelCard
-            variant="stone"
-            title="ASTRA"
-            badge={<PixelBadge variant="diamond">STUDENT BODY</PixelBadge>}
-          >
-            <div className="flex flex-col items-center text-center p-2">
-              <div className="h-16 w-full flex items-center justify-center mb-4 bg-white/5 border border-white/10 p-2">
-                <Image
-                  src="/assets/logos/astra_logo.jpg"
-                  alt="ASTRA Student Association"
-                  width={140}
-                  height={50}
-                  className="max-h-12 w-auto object-contain rounded filter drop-shadow"
-                />
-              </div>
-              <h4 className="font-pixel text-xs text-white mb-2">
-                ASTRA
-              </h4>
-              <p className="font-sans text-xs text-neutral-300 leading-relaxed">
-                MITAOE Student Association fostering interdisciplinary hackathons, technical
-                workshops, and student developer growth.
+                technical community driving competitive student innovation.
               </p>
             </div>
           </PixelCard>

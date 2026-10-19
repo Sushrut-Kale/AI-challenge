@@ -191,8 +191,8 @@ const sponsorList: SponsorItem[] = [
 ];
 
 const sponsorsData = Object.assign(sponsorList, {
-  organizer: 'AAAI Global Professional Chapter & MIT Academy of Engineering',
-  academicPartner: 'AlgoVedas (CSE AIML) & ASTRA Student Association',
+  organizer: 'ASTRA Student Association & MIT Academy of Engineering',
+  academicPartner: 'In association with AAAI Global Professional Chapter & AlgoVedas (CSE AIML)',
   statusNote: 'Official industry sponsors and career pathways presented on the official poster.',
 });
 
@@ -202,19 +202,24 @@ export const EVENT_DATA: EventData = {
   tagline: 'Build Intelligent Agents. Solve Real-World Problems. Create Sustainable Impact.',
   subtitle: 'National Agentic AI Challenge for Sustainable Development Goals',
   organizers: {
-    lead: 'AAAI Global Professional Chapter',
+    lead: 'ASTRA Student Association',
     chapter: 'AAAI Global Professional Chapter',
-    studentChapter: 'AAAI Student Chapter',
+    studentChapter: 'ASTRA Student Association',
     associated: [
       {
-        name: 'AlgoVedas',
-        role: 'Department of Computer Science & Engineering (AI & ML)',
-        category: 'Technical Society',
+        name: 'ASTRA',
+        role: 'Primary Student Organizing Body (Department of CSE-AIML)',
+        category: 'Student Association',
       },
       {
-        name: 'ASTRA',
-        role: 'Student Association',
-        category: 'Student Body',
+        name: 'AAAI Global Professional Chapter',
+        role: 'Associated Professional Chapter',
+        category: 'Professional Society',
+      },
+      {
+        name: 'AlgoVedas',
+        role: 'Department Technical Society (CSE AIML)',
+        category: 'Department Community',
       },
     ],
     institution: {

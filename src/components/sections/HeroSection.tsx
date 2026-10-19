@@ -14,7 +14,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[95vh] flex items-center justify-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0d14] overflow-hidden"
+      className="relative min-h-[95vh] flex items-center justify-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0d14] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
     >
       {/* Background Minecraft grid & subtle illumination */}
       <div className="absolute inset-0 bg-minecraft-grid opacity-50" aria-hidden="true" />
@@ -44,13 +44,13 @@ export default function HeroSection() {
 
       {/* Main Hero Container */}
       <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-        {/* Presenter Banner */}
+        {/* Presenter Banner prioritizing ASTRA */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
-          <PixelBadge variant="grass" icon="🏛">
-            {organizers.lead}
+          <PixelBadge variant="gold" icon="🚀">
+            ASTRA Student Association • Primary Organizer
           </PixelBadge>
-          <PixelBadge variant="emerald" icon="🎓">
-            MIT AOE • AlgoVedas • ASTRA
+          <PixelBadge variant="emerald" icon="🏛">
+            In Association with AAAI Global Chapter • AlgoVedas • MIT AOE
           </PixelBadge>
         </div>
 

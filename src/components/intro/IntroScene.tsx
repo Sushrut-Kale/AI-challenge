@@ -22,16 +22,17 @@ function LibraryCamera({ scrollProgress }: CameraRigProps) {
     const idleBob = Math.cos(t * 0.6) * 0.08;
 
     // Target position blends base + scroll progress zoom forward
-    const targetZ = 16 - scrollProgress * 10 + idleDolly;
-    const targetY = 4.2 - scrollProgress * 1.5 + idleBob;
-    const targetX = Math.sin(t * 0.2) * 0.3 * (1 - scrollProgress);
+    const clampedProg = Math.max(0, Math.min(1, scrollProgress));
+    const targetZ = 16 - clampedProg * 10 + idleDolly;
+    const targetY = 4.2 - clampedProg * 1.5 + idleBob;
+    const targetX = Math.sin(t * 0.2) * 0.3 * (1 - clampedProg);
 
     const destPos = new THREE.Vector3(targetX, targetY, targetZ);
-    currentPos.current.lerp(destPos, delta * 3.5);
+    currentPos.current.lerp(destPos, Math.min(1, delta * 3.5));
     state.camera.position.copy(currentPos.current);
 
-    const destTarget = new THREE.Vector3(0, 2.4 - scrollProgress * 0.4, 0);
-    currentTarget.current.lerp(destTarget, delta * 4);
+    const destTarget = new THREE.Vector3(0, 2.4 - clampedProg * 0.4, 0);
+    currentTarget.current.lerp(destTarget, Math.min(1, delta * 4));
     state.camera.lookAt(currentTarget.current);
   });
 

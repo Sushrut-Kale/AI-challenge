@@ -27,7 +27,7 @@ export default function SectionContainer({
   return (
     <section
       id={id}
-      className={`relative w-full overflow-hidden ${bgStyles[variant]} ${className}`}
+      className={`relative w-full overflow-hidden scroll-mt-20 sm:scroll-mt-24 ${bgStyles[variant]} ${className}`}
     >
       {/* Minecraft Wooden Seam Divider */}
       {showTopSeam && (

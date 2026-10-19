@@ -43,8 +43,8 @@ export default function AboutSection() {
               <div>
                 <p className="font-sans text-sm text-neutral-200 leading-relaxed mb-3">
                   <strong>AGENTCRAFT</strong> is a premier National Agentic AI Challenge organized
-                  by <strong>{organizers.lead}</strong> in association with{' '}
-                  <strong>AlgoVedas</strong> and <strong>ASTRA</strong> at{' '}
+                  by <strong>ASTRA Student Association</strong> (Department of CSE-AIML) in association with the{' '}
+                  <strong>AAAI Global Professional Chapter</strong> and <strong>AlgoVedas</strong> at{' '}
                   <strong>{organizers.institution.name}</strong>, Alandi, Pune.
                 </p>
                 <p className="font-sans text-xs text-neutral-300 leading-relaxed">
@@ -101,7 +101,7 @@ export default function AboutSection() {
                     Organizing Bodies
                   </strong>
                   <span className="text-neutral-300">
-                    {organizers.lead} • AlgoVedas (CSE AIML) • ASTRA
+                    ASTRA (Primary Student Organizer) • AAAI Global Chapter • AlgoVedas (CSE AIML)
                   </span>
                 </div>
               </div>

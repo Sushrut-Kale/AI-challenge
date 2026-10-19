@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import IntroExperience from '@/components/intro/IntroExperience';
+import React, { useState, useEffect, useCallback } from 'react';
+import IntroExperience, { IntroLifecycle } from '@/components/intro/IntroExperience';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -16,43 +16,59 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
-  const [isIntroActive, setIsIntroActive] = useState(true);
+  const [introState, setIntroState] = useState<IntroLifecycle>('INTRO');
 
   useEffect(() => {
-    // If user has already visited in this session, skip intro
+    // If user has already visited in this session, skip intro directly to MAIN_SITE
     if (typeof window !== 'undefined') {
       const viewed = sessionStorage.getItem('agentcraft_intro_viewed');
       if (viewed) {
-        setIsIntroActive(false);
+        setIntroState('MAIN_SITE');
       }
     }
   }, []);
 
-  const handleIntroComplete = () => {
-    setIsIntroActive(false);
+  // Idempotent start transition callback
+  const handleStartTransition = useCallback(() => {
+    setIntroState((prev) => {
+      if (prev !== 'INTRO') return prev;
+      return 'TRANSITIONING';
+    });
+  }, []);
+
+  // Idempotent complete transition callback
+  const handleCompleteTransition = useCallback(() => {
+    setIntroState('MAIN_SITE');
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('agentcraft_intro_viewed', 'true');
     }
-  };
+  }, []);
+
+  const isIntro = introState === 'INTRO';
+  const isMainSite = introState === 'MAIN_SITE';
 
   return (
     <>
-      {/* Three.js Opening Cinematic Knowledge Hall Intro */}
-      <IntroExperience
-        onIntroComplete={handleIntroComplete}
-        isCompleted={!isIntroActive}
-      />
+      {/* Three.js Opening Cinematic Knowledge Hall Intro:
+          Mounted during INTRO and TRANSITIONING, permanently unmounted in MAIN_SITE */}
+      {!isMainSite && (
+        <IntroExperience
+          introState={introState}
+          onStartTransition={handleStartTransition}
+          onCompleteTransition={handleCompleteTransition}
+        />
+      )}
 
-      {/* Minecraft-styled Experience Progress Bar (active after entering) */}
-      {!isIntroActive && <ScrollProgress />}
+      {/* Minecraft-styled Experience Progress Bar (active after entering main site) */}
+      {isMainSite && <ScrollProgress />}
 
       {/* Minecraft Top Navigation: Compact during intro, full after entering */}
-      <Navbar isIntro={isIntroActive} />
+      <Navbar isIntro={isIntro} />
 
       {/* Conventional Minecraft Event Landing Page */}
       <main
         className={`relative flex flex-col w-full min-h-screen bg-[#0c0e14] transition-opacity duration-700 ${
-          isIntroActive ? 'opacity-0 pointer-events-none h-screen overflow-hidden' : 'opacity-100'
+          isIntro ? 'opacity-0 pointer-events-none h-screen overflow-hidden' : 'opacity-100'
         }`}
       >
         <HeroSection />

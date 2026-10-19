@@ -44,8 +44,8 @@ export default function Footer() {
             </div>
 
             <p className="text-sm text-neutral-300 max-w-md leading-relaxed">
-              Presented by <strong>{organizers.lead}</strong> in association with{' '}
-              <strong>AlgoVedas</strong> and <strong>ASTRA</strong> at{' '}
+              Organized by <strong>ASTRA Student Association</strong> (Department of CSE-AIML) in association with{' '}
+              <strong>AAAI Global Professional Chapter</strong> and <strong>AlgoVedas</strong> at{' '}
               <strong>{organizers.institution.name}</strong>, Alandi, Pune.
             </p>
 
