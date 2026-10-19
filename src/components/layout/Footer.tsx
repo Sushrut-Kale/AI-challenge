@@ -13,10 +13,10 @@ export default function Footer() {
   const { organizers, contact } = EVENT_DATA;
 
   return (
-    <footer className="relative bg-[#07090e] border-t-4 border-[#222838] text-neutral-400 font-sans pt-16 pb-12 overflow-hidden">
+    <footer className="relative bg-[#0d0b09] border-t-4 border-[#3d2c1c] text-neutral-300 font-sans pt-16 pb-12 overflow-hidden">
       {/* Decorative Minecraft Grass Strip */}
       <div
-        className="absolute top-0 inset-x-0 h-2 border-b border-[#141824]"
+        className="absolute top-0 inset-x-0 h-2 border-b border-[#281d14]"
         style={{
           backgroundImage:
             'repeating-linear-gradient(90deg, #5d8a2e 0px, #5d8a2e 12px, #3d5a1e 12px, #3d5a1e 24px, #7bb53b 24px, #7bb53b 36px)',
@@ -98,6 +98,17 @@ export default function Footer() {
               <li>
                 <a href="#registration" className="hover:text-amber-400 transition-colors" data-interactive="true">
                   ★ Register (₹400 / Team)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-300 text-emerald-400 transition-colors flex items-center gap-1 font-semibold"
+                  data-interactive="true"
+                >
+                  💬 WhatsApp Community ↗
                 </a>
               </li>
               <li>

@@ -50,7 +50,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${pixelFont.variable} ${sansFont.variable}`}>
-      <body className="min-h-screen bg-[#0c0e14] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans">
+      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans">
         <MinecraftCursor />
         {children}
       </body>

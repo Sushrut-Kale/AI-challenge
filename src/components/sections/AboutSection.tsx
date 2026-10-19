@@ -41,13 +41,13 @@ export default function AboutSection() {
               </div>
 
               <div>
-                <p className="font-sans text-sm text-neutral-200 leading-relaxed mb-3">
-                  <strong>AGENTCRAFT</strong> is a premier National Agentic AI Challenge organized
-                  by <strong>ASTRA Student Association</strong> (Department of CSE-AIML) in association with the{' '}
-                  <strong>AAAI Global Professional Chapter</strong> and <strong>AlgoVedas</strong> at{' '}
-                  <strong>{organizers.institution.name}</strong>, Alandi, Pune.
+                <p className="font-sans text-sm sm:text-base text-neutral-100 leading-relaxed mb-3">
+                  <strong className="text-emerald-400">AGENTCRAFT</strong> is a premier National Agentic AI Challenge organized
+                  by <strong className="text-amber-300">ASTRA Student Association</strong> (Department of CSE-AIML) in association with the{' '}
+                  <strong className="text-white">AAAI Global Professional Chapter</strong> and <strong className="text-white">AlgoVedas</strong> at{' '}
+                  <strong className="text-emerald-300">{organizers.institution.name}</strong>, Alandi, Pune.
                 </p>
-                <p className="font-sans text-xs text-neutral-300 leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
                   Moving beyond simple chatbots, student developers build autonomous multi-agent
                   architectures capable of planning, tool usage, memory recall, and cooperative
                   execution aligned with the United Nations Sustainable Development Goals.
@@ -57,27 +57,27 @@ export default function AboutSection() {
 
             {/* Core Architectural Pillars */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/10">
-              <div className="p-3 bg-black/40 border border-neutral-700/60">
-                <span className="font-pixel text-[10px] text-emerald-400 block mb-1">
+              <div className="p-3 bg-black/50 border border-emerald-900/60 rounded">
+                <span className="font-pixel text-[10px] sm:text-[11px] text-emerald-400 block mb-1 font-bold">
                   01. REASON
                 </span>
-                <span className="text-xs text-neutral-400 block font-sans">
+                <span className="text-xs sm:text-sm text-neutral-200 block font-sans">
                   Goal decomposition & reflective planning
                 </span>
               </div>
-              <div className="p-3 bg-black/40 border border-neutral-700/60">
-                <span className="font-pixel text-[10px] text-sky-400 block mb-1">
+              <div className="p-3 bg-black/50 border border-sky-900/60 rounded">
+                <span className="font-pixel text-[10px] sm:text-[11px] text-sky-400 block mb-1 font-bold">
                   02. ACT
                 </span>
-                <span className="text-xs text-neutral-400 block font-sans">
+                <span className="text-xs sm:text-sm text-neutral-200 block font-sans">
                   Multi-tool integration & API execution
                 </span>
               </div>
-              <div className="p-3 bg-black/40 border border-neutral-700/60">
-                <span className="font-pixel text-[10px] text-amber-400 block mb-1">
+              <div className="p-3 bg-black/50 border border-amber-900/60 rounded">
+                <span className="font-pixel text-[10px] sm:text-[11px] text-amber-400 block mb-1 font-bold">
                   03. IMPACT
                 </span>
-                <span className="text-xs text-neutral-400 block font-sans">
+                <span className="text-xs sm:text-sm text-neutral-200 block font-sans">
                   Sustainable Development Goals solutions
                 </span>
               </div>
@@ -93,77 +93,77 @@ export default function AboutSection() {
             headerIcon="📜"
             badge={<PixelBadge variant="gold">VERIFIED POSTER DESK</PixelBadge>}
           >
-            <div className="space-y-3.5 font-sans text-xs text-amber-100">
-              <div className="flex items-start gap-2.5">
-                <span className="text-amber-400 text-sm">🏛</span>
+            <div className="space-y-4 font-sans text-xs sm:text-sm text-amber-100">
+              <div className="flex items-start gap-3">
+                <span className="text-amber-400 text-base">🏛</span>
                 <div>
-                  <strong className="font-pixel text-[9px] text-white block">
+                  <strong className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-0.5">
                     Organizing Bodies
                   </strong>
-                  <span className="text-neutral-300">
+                  <span className="text-neutral-100 font-medium">
                     ASTRA (Primary Student Organizer) • AAAI Global Chapter • AlgoVedas (CSE AIML)
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <span className="text-amber-400 text-sm">📍</span>
+              <div className="flex items-start gap-3">
+                <span className="text-amber-400 text-base">📍</span>
                 <div>
-                  <strong className="font-pixel text-[9px] text-white block">
+                  <strong className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-0.5">
                     Host Institution
                   </strong>
-                  <span className="text-neutral-300">
+                  <span className="text-neutral-100 font-medium">
                     {organizers.institution.name}, {organizers.institution.campus}
                   </span>
-                  <span className="text-[10px] text-neutral-400 block mt-0.5">
+                  <span className="text-xs text-neutral-300 block mt-0.5">
                     ({organizers.institution.affiliation})
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <span className="text-amber-400 text-sm">📅</span>
+              <div className="flex items-start gap-3">
+                <span className="text-amber-400 text-base">📅</span>
                 <div>
-                  <strong className="font-pixel text-[9px] text-white block">
+                  <strong className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-0.5">
                     Key Dates
                   </strong>
-                  <span className="text-neutral-300">
+                  <span className="text-neutral-100 font-medium">
                     Finale: {details.eventDate} | Deadline: {details.registrationDeadline}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <span className="text-amber-400 text-sm">👥</span>
+              <div className="flex items-start gap-3">
+                <span className="text-amber-400 text-base">👥</span>
                 <div>
-                  <strong className="font-pixel text-[9px] text-white block">
+                  <strong className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-0.5">
                     Team Composition
                   </strong>
-                  <span className="text-neutral-300">
+                  <span className="text-neutral-100 font-medium">
                     {details.teamSize} + {details.mentorAllowed}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5">
-                <span className="text-amber-400 text-sm">⚖️</span>
+              <div className="flex items-start gap-3">
+                <span className="text-amber-400 text-base">⚖️</span>
                 <div>
-                  <strong className="font-pixel text-[9px] text-white block">
+                  <strong className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-0.5">
                     Evaluation Streams
                   </strong>
-                  <span className="text-neutral-300">
-                    FY (Separate Evaluation) & SY, TY, B.Tech Tier
+                  <span className="text-neutral-100 font-medium">
+                    FY (Separate Evaluation Track) & SY, TY, B.Tech Open Tier
                   </span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#181109] border border-amber-800/60 mt-4">
-                <span className="font-pixel text-[9px] text-amber-300 block mb-1">
+              <div className="p-3.5 bg-[#181109] border-2 border-amber-800/80 mt-4 rounded shadow-md">
+                <span className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-1 font-bold">
                   ★ PRIZE POOL & INTERNSHIPS
                 </span>
-                <p className="text-[11px] text-amber-200/90 leading-relaxed font-sans">
-                  Total Prize Pool: <strong>{prizes.totalPool}</strong>. In addition to cash awards,{' '}
-                  <strong>Winners get internship opportunities *</strong> with sponsor partners.
+                <p className="text-xs sm:text-sm text-amber-100 leading-relaxed font-sans">
+                  Total Prize Pool: <strong className="text-amber-300">{prizes.totalPool}</strong>. In addition to cash awards,{' '}
+                  <strong className="text-emerald-400">Winners get internship opportunities *</strong> with sponsor partners.
                 </p>
               </div>
             </div>
@@ -171,82 +171,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {/* Featured AI Agent Archetypes */}
-      <div className="pt-4">
-        <div className="text-center mb-8">
-          <span className="font-pixel text-[9px] sm:text-[10px] text-emerald-400 uppercase tracking-widest block mb-2">
-            AGENTIC ROLES
-          </span>
-          <h3 className="font-pixel text-base sm:text-xl text-white">
-            THE AGENT ARCHETYPES
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Agent Alpha — Builder */}
-          {agents.builder && (
-            <PixelCard
-              variant="grass"
-              title={agents.builder.name}
-              headerIcon="⛏"
-              badge={<PixelBadge variant="grass">BUILDER</PixelBadge>}
-              accentBarColor={agents.builder.color}
-            >
-              <span className="font-pixel text-[9px] text-emerald-400 block mb-2">
-                {agents.builder.role}
-              </span>
-              <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
-                {agents.builder.description}
-              </p>
-              <div className="p-2.5 bg-black/40 border border-emerald-900/60 font-pixel text-[8px] text-emerald-300">
-                SDG FOCUS: {agents.builder.sdgFocus}
-              </div>
-            </PixelCard>
-          )}
-
-          {/* Agent Beta — Analyst */}
-          {agents.analyst && (
-            <PixelCard
-              variant="stone"
-              title={agents.analyst.name}
-              headerIcon="📊"
-              badge={<PixelBadge variant="diamond">ANALYST</PixelBadge>}
-              accentBarColor={agents.analyst.color}
-            >
-              <span className="font-pixel text-[9px] text-sky-400 block mb-2">
-                {agents.analyst.role}
-              </span>
-              <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
-                {agents.analyst.description}
-              </p>
-              <div className="p-2.5 bg-black/40 border border-sky-900/60 font-pixel text-[8px] text-sky-300">
-                SDG FOCUS: {agents.analyst.sdgFocus}
-              </div>
-            </PixelCard>
-          )}
-
-          {/* Agent Gamma — Innovator */}
-          {agents.innovator && (
-            <PixelCard
-              variant="obsidian"
-              title={agents.innovator.name}
-              headerIcon="⚡"
-              badge={<PixelBadge variant="obsidian">INNOVATOR</PixelBadge>}
-              accentBarColor={agents.innovator.color}
-            >
-              <span className="font-pixel text-[9px] text-purple-400 block mb-2">
-                {agents.innovator.role}
-              </span>
-              <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
-                {agents.innovator.description}
-              </p>
-              <div className="p-2.5 bg-black/40 border border-purple-900/60 font-pixel text-[8px] text-purple-300">
-                SDG FOCUS: {agents.innovator.sdgFocus}
-              </div>
-            </PixelCard>
-          )}
-        </div>
-      </div>
+      {/* End of Mission & Verified Event Desk */}
     </SectionContainer>
   );
 }

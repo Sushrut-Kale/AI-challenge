@@ -31,8 +31,8 @@ export default function FAQSection() {
               key={idx}
               className={`border-2 transition-colors ${
                 isOpen
-                  ? 'border-emerald-500/80 bg-[#111e17]'
-                  : 'border-neutral-800 bg-[#12151e] hover:border-neutral-700'
+                  ? 'border-emerald-500/80 bg-[#142318]'
+                  : 'border-[#382b1d] bg-[#16120e] hover:border-[#543b22]'
               }`}
             >
               <button
@@ -43,10 +43,10 @@ export default function FAQSection() {
                 data-interactive="true"
               >
                 <span className="flex items-center gap-3">
-                  <span className="text-emerald-400 font-pixel text-xs shrink-0">
+                  <span className="text-emerald-400 font-pixel text-xs shrink-0 font-bold">
                     Q{idx + 1}.
                   </span>
-                  <span>{faq.question}</span>
+                  <span className="text-white font-medium">{faq.question}</span>
                 </span>
                 <span className="shrink-0 font-pixel text-xs text-neutral-400">
                   {isOpen ? '▲' : '▼'}
@@ -54,7 +54,7 @@ export default function FAQSection() {
               </button>
 
               {isOpen && (
-                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-1 text-sm font-sans text-neutral-300 leading-relaxed border-t border-white/5 animate-in fade-in duration-150">
+                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-2 text-sm sm:text-base font-sans text-neutral-100 leading-relaxed border-t border-white/10 animate-in fade-in duration-150">
                   {faq.answer}
                 </div>
               )}

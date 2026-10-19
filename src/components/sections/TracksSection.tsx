@@ -77,23 +77,120 @@ export default function TracksSection() {
         })}
       </div>
 
-      {/* Sustainable Development Goals Theme Notice */}
-      <div className="max-w-4xl mx-auto p-6 bg-[#121622] border-2 border-emerald-600/50 relative overflow-hidden">
-        <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
-          <div className="w-14 h-14 shrink-0 border-2 border-emerald-500 bg-[#0d261e] flex items-center justify-center text-3xl shadow-[0_0_16px_rgba(16,185,129,0.4)]">
-            🌍
+      {/* Sustainable Development Goals Theme Section — Stacked One Below the Other */}
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <span className="font-pixel text-[10px] sm:text-[11px] text-emerald-400 uppercase tracking-widest block mb-2 font-bold">
+            UNITED NATIONS INITIATIVE
+          </span>
+          <h3 className="font-pixel text-base sm:text-xl text-white mb-3">
+            SDG PROBLEM STATEMENT TRACKS
+          </h3>
+          <p className="font-sans text-xs sm:text-sm text-neutral-200 max-w-2xl mx-auto leading-relaxed">
+            Teams must align their autonomous multi-agent AI system with one of the following official United Nations Sustainable Development Goals. Evaluation rubrics reward real-world deployability and social impact.
+          </p>
+        </div>
+
+        {/* The 4 SDGs stacked ONE BELOW THE OTHER */}
+        <div className="flex flex-col gap-4">
+          {/* SDG 7 */}
+          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#d97706]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-amber-400 transition-colors">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 border-2 border-amber-500 bg-[#2b190a] flex items-center justify-center text-2xl shadow-[0_0_12px_rgba(245,158,11,0.35)]">
+                  ⚡
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <PixelBadge variant="gold">SDG 07</PixelBadge>
+                    <span className="font-pixel text-[9px] text-amber-300 uppercase">Clean Energy</span>
+                  </div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
+                    Affordable & Clean Energy
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Build autonomous agent architectures for smart micro-grid balancing, renewable energy forecasting, battery load optimization, and decentralized energy distribution.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <span className="font-pixel text-[9px] text-emerald-400 uppercase tracking-widest block mb-1">
-              SDG PROBLEM STATEMENTS FOCUS
-            </span>
-            <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
-              For Sustainable Development Goals
-            </h4>
-            <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed">
-              Teams are invited to build autonomous agentic solutions tackling the UN Sustainable Development Goals — including Affordable & Clean Energy (SDG 7), Industry, Innovation & Infrastructure (SDG 9), Sustainable Cities & Communities (SDG 11), and Climate Action (SDG 13). Detailed problem statement templates and evaluation rubrics will be shared with registered teams via the official community desk.
-            </p>
+
+          {/* SDG 9 */}
+          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#ea580c]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-orange-400 transition-colors">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 border-2 border-orange-500 bg-[#2d1206] flex items-center justify-center text-2xl shadow-[0_0_12px_rgba(234,88,12,0.35)]">
+                  🏗️
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <PixelBadge variant="dirt">SDG 09</PixelBadge>
+                    <span className="font-pixel text-[9px] text-orange-300 uppercase">Infrastructure</span>
+                  </div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
+                    Industry, Innovation & Infrastructure
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Develop multi-agent networks for predictive factory maintenance, sustainable supply-chain self-healing, automated bridge/structure inspection, and circular manufacturing.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
+
+          {/* SDG 11 */}
+          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#10b981]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-emerald-400 transition-colors">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 border-2 border-emerald-500 bg-[#0d2618] flex items-center justify-center text-2xl shadow-[0_0_12px_rgba(16,185,129,0.35)]">
+                  🏙️
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <PixelBadge variant="emerald">SDG 11</PixelBadge>
+                    <span className="font-pixel text-[9px] text-emerald-300 uppercase">Smart Communities</span>
+                  </div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
+                    Sustainable Cities & Communities
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Orchestrate cooperative agent fleets for decentralized municipal traffic regulation, emergency response coordination, dynamic waste routing, and urban air quality monitoring.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SDG 13 */}
+          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#06b6d4]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-cyan-400 transition-colors">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 border-2 border-cyan-500 bg-[#07242a] flex items-center justify-center text-2xl shadow-[0_0_12px_rgba(6,182,212,0.35)]">
+                  🌍
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <PixelBadge variant="diamond">SDG 13</PixelBadge>
+                    <span className="font-pixel text-[9px] text-cyan-300 uppercase">Climate Action</span>
+                  </div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
+                    Climate Action
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
+                    Deploy reflective reasoning agents for wildfire telemetry monitoring, automated carbon footprint verification, flood simulation, and ecosystem restoration planning.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed templates notice */}
+        <div className="mt-6 p-4 bg-[#1a1510] border border-amber-900/60 rounded text-center">
+          <p className="font-sans text-xs sm:text-sm text-amber-200/90 leading-relaxed">
+            Detailed problem statement templates, dataset packages, and evaluation rubrics are shared with registered teams via the official <strong className="text-white">WhatsApp Community</strong>.
+          </p>
         </div>
       </div>
     </SectionContainer>

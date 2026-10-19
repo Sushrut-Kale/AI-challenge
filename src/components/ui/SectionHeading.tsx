@@ -23,7 +23,7 @@ export default function SectionHeading({
     >
       {tag && (
         <div className={`mb-3 flex ${centered ? 'justify-center' : 'justify-start'}`}>
-          <span className="inline-flex items-center gap-1.5 border-2 border-[#5d8a2e] bg-[#1a2e14]/90 px-3 py-1 font-pixel text-[8px] sm:text-[9px] uppercase tracking-widest text-[#86efac] shadow-[0_2px_8px_rgba(93,138,46,0.3)]">
+          <span className="inline-flex items-center gap-2 border-2 border-[#5d8a2e] bg-[#1a2e14]/90 px-3.5 py-1.5 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#86efac] shadow-[0_2px_8px_rgba(93,138,46,0.3)]">
             <span className="inline-block w-1.5 h-1.5 bg-[#86efac]" />
             {tag}
           </span>
@@ -46,7 +46,7 @@ export default function SectionHeading({
       </div>
 
       {subtitle && (
-        <p className="max-w-2xl mx-auto text-sm sm:text-base text-neutral-400 font-sans leading-relaxed">
+        <p className="max-w-2xl mx-auto text-sm sm:text-base text-neutral-200 font-sans leading-relaxed font-medium">
           {subtitle}
         </p>
       )}

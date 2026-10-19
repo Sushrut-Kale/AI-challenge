@@ -32,7 +32,7 @@ export default function PixelBadge({
       className={`
         inline-flex items-center gap-1.5
         border-2 px-2.5 py-1
-        font-pixel text-[8px] sm:text-[9px] tracking-wider uppercase
+        font-pixel text-[9px] sm:text-[10px] font-bold tracking-wide uppercase
         select-none backdrop-blur-sm
         ${badgeVariants[variant]}
         ${className}

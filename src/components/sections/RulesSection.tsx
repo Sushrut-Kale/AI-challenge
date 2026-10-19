@@ -96,14 +96,14 @@ export default function RulesSection() {
               </div>
 
               {/* Upper Years Stream */}
-              <div className="p-4 bg-[#151c2a] border-2 border-sky-500/70">
+              <div className="p-4 bg-[#161310] border-2 border-sky-500/70">
                 <PixelBadge variant="diamond" className="mb-2">
                   TRACK B
                 </PixelBadge>
-                <h4 className="font-pixel text-xs text-white uppercase mb-2">
+                <h4 className="font-pixel text-xs sm:text-sm text-white uppercase mb-2">
                   SY, TY, B.Tech Stream
                 </h4>
-                <p className="font-sans text-xs text-sky-200/90 leading-relaxed">
+                <p className="font-sans text-xs sm:text-sm text-sky-200/90 leading-relaxed font-medium">
                   Senior innovators are evaluated on architectural rigor, multi-agent tool loops,
                   autonomous error recovery, and benchmark performance on SDG domains.
                 </p>
@@ -111,11 +111,11 @@ export default function RulesSection() {
             </div>
 
             {/* Technical Framework Advisory */}
-            <div className="p-4 bg-black/50 border border-neutral-700/80">
-              <span className="font-pixel text-[9px] text-amber-400 uppercase tracking-wider block mb-1">
+            <div className="p-4 bg-black/60 border border-neutral-700/80">
+              <span className="font-pixel text-[10px] text-amber-400 uppercase tracking-wider block mb-1 font-bold">
                 Technical Advisory (Guidance)
               </span>
-              <p className="font-sans text-xs text-neutral-300 leading-relaxed">
+              <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
                 Teams may implement solutions using Python, LangGraph, AutoGen, CrewAI, LlamaIndex,
                 or custom agent runtime loops. Official submission portal guidelines and rubric weighting
                 will be published to all registered teams ahead of Round 1.

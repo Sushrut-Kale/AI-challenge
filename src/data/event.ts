@@ -116,6 +116,7 @@ export interface EventData {
     platform: string;
     note: string;
     status: string;
+    url?: string;
   };
   agents: Record<
     string,
@@ -358,6 +359,7 @@ export const EVENT_DATA: EventData = {
     platform: 'WhatsApp Community',
     note: 'Join the official AGENTCRAFT WhatsApp Community for round announcements, mentor office hours, and team coordination.',
     status: 'Official community hub managed by AAAI Student Chapter & AlgoVedas.',
+    url: 'https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A',
   },
   agents: {
     builder: {

@@ -38,20 +38,23 @@ export default function ContactSection() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3">
+              <a
+                href="https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mc-shine inline-flex items-center gap-2 px-6 py-3.5 bg-[#10b981] hover:bg-[#059669] border-2 border-[#047857] font-pixel text-xs sm:text-sm text-black font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+                data-interactive="true"
+              >
+                <span>💬</span>
+                <span>WHATSAPP REGISTRATION DESK ↗</span>
+              </a>
+
               <MinecraftButton
                 variant="gold"
                 size="lg"
                 href={`tel:${contact.phone.replace(/\s+/g, '')}`}
               >
-                CONTACT DESK ({contact.name})
-              </MinecraftButton>
-
-              <MinecraftButton
-                variant="emerald"
-                size="lg"
-                href="#about"
-              >
-                VIEW BRIEFING
+                CALL DESK ({contact.name})
               </MinecraftButton>
             </div>
           </div>

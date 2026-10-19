@@ -108,13 +108,13 @@ export default function TimelineSection() {
                       </PixelBadge>
                     }
                   >
-                    <div className="flex items-center gap-2 mb-2 font-pixel text-[9px] text-amber-300">
+                    <div className="flex items-center gap-2 mb-2 font-pixel text-[10px] text-amber-300 font-bold">
                       <span>📅 {milestone.date}</span>
                       <span className="opacity-40">•</span>
                       <span>STAGE #{milestone.step}</span>
                     </div>
 
-                    <p className="font-sans text-sm text-neutral-300 leading-relaxed">
+                    <p className="font-sans text-sm sm:text-base text-neutral-100 leading-relaxed font-medium">
                       {milestone.description}
                     </p>
                   </PixelCard>
