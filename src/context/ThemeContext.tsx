@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { ThemeId, ThemeConfig, THEMES } from '@/types/theme';
+import { ThemeId, ThemeConfig, THEMES, SECTION_THEME_MAP } from '@/types/theme';
 
 interface ThemeContextType {
   themeId: ThemeId;
@@ -66,6 +66,37 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       // localStorage may fail in private mode
     }
   }, []);
+
+  // Section-to-Background Auto-Sync: Automatically changes the 3D world theme as visitor scrolls each section
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const sections = Object.keys(SECTION_THEME_MAP);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id;
+            const mappedTheme = SECTION_THEME_MAP[sectionId];
+            if (mappedTheme && mappedTheme !== themeId) {
+              setThemeIdState(mappedTheme);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '-25% 0px -45% 0px',
+        threshold: 0.1,
+      }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [themeId]);
 
   const playThemeSound = useCallback(
     (freq?: number) => {

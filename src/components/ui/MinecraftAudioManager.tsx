@@ -324,40 +324,106 @@ export default function MinecraftAudioManager() {
     }
   };
 
-  return (
-    <div
-      className="fixed top-20 right-3 sm:right-6 z-40 flex items-center gap-1.5 pointer-events-auto select-none"
-      aria-label="Minecraft Audio Controls"
-    >
-      {/* SFX Click Sound Toggle */}
-      <button
-        onClick={toggleSfx}
-        type="button"
-        title={sfxEnabled ? 'Minecraft Click Sounds: ON' : 'Minecraft Click Sounds: OFF'}
-        aria-label={sfxEnabled ? 'Disable Minecraft Click Sounds' : 'Enable Minecraft Click Sounds'}
-        className={`px-2.5 py-1.5 flex items-center gap-1.5 border-2 font-pixel text-[9px] uppercase transition-all shadow-[2px_2px_0_rgba(0,0,0,0.85)] ${
-          sfxEnabled
-            ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
-            : 'bg-[#1a1714]/90 border-[#3d2e20] text-neutral-400 hover:text-neutral-200'
-        }`}
-      >
-        <span>{sfxEnabled ? '🔊 SFX' : '🔇 SFX'}</span>
-      </button>
+  const [isExpanded, setIsExpanded] = useState(false);
 
-      {/* Classic Minecraft Ambient Music (C418) Toggle */}
-      <button
-        onClick={toggleBgm}
-        type="button"
-        title={bgmEnabled ? 'Minecraft Ambient Music: PLAYING' : 'Minecraft Ambient Music: OFF'}
-        aria-label={bgmEnabled ? 'Pause Minecraft Ambient Music' : 'Play Minecraft Ambient Music'}
-        className={`px-2.5 py-1.5 flex items-center gap-1.5 border-2 font-pixel text-[9px] uppercase transition-all shadow-[2px_2px_0_rgba(0,0,0,0.85)] ${
-          bgmEnabled
-            ? 'bg-[#2b1f48] border-[#a855f7] text-[#c084fc] animate-pulse'
-            : 'bg-[#1a1714]/90 border-[#3d2e20] text-neutral-400 hover:text-neutral-200'
-        }`}
-      >
-        <span>{bgmEnabled ? '🎵 MUSIC: ON' : '🎵 MUSIC: OFF'}</span>
-      </button>
-    </div>
+  const toggleAll = () => {
+    setHasInteracted(true);
+    getAudioContext();
+    if (bgmEnabled || sfxEnabled) {
+      // Turn both off
+      setBgmEnabled(false);
+      setSfxEnabled(false);
+      ambientMusic.stop();
+      try {
+        localStorage.setItem('agentcraft_bgm', 'false');
+        localStorage.setItem('agentcraft_sfx', 'false');
+      } catch {}
+    } else {
+      // Turn both on
+      setBgmEnabled(true);
+      setSfxEnabled(true);
+      ambientMusic.start();
+      playMinecraftPop(1.2);
+      try {
+        localStorage.setItem('agentcraft_bgm', 'true');
+        localStorage.setItem('agentcraft_sfx', 'true');
+      } catch {}
+    }
+  };
+
+  return (
+    <aside
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-auto select-none"
+      aria-label="Minecraft Audio Control"
+    >
+      {/* Expanded Control Mini Drawer */}
+      {isExpanded && (
+        <div className="mb-2 p-2 bg-[#14100c]/95 border-2 border-[#3d2e20] shadow-[0_8px_24px_rgba(0,0,0,0.9)] flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-150 backdrop-blur-sm">
+          <div className="px-1 text-[8px] font-pixel text-neutral-400 tracking-wider uppercase border-b border-[#2d2218] pb-1 flex justify-between items-center gap-4">
+            <span>AUDIO SETTINGS</span>
+            <span className="text-amber-400 font-mono text-[7px]">C418 / SFX</span>
+          </div>
+
+          <div className="flex gap-1.5">
+            {/* SFX Toggle */}
+            <button
+              onClick={toggleSfx}
+              type="button"
+              className={`px-2 py-1.5 flex items-center gap-1 border-2 font-pixel text-[8px] uppercase transition-all ${
+                sfxEnabled
+                  ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
+                  : 'bg-[#1a1714] border-[#373737] text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              <span>{sfxEnabled ? '🔊 SFX ON' : '🔇 SFX OFF'}</span>
+            </button>
+
+            {/* BGM Toggle */}
+            <button
+              onClick={toggleBgm}
+              type="button"
+              className={`px-2 py-1.5 flex items-center gap-1 border-2 font-pixel text-[8px] uppercase transition-all ${
+                bgmEnabled
+                  ? 'bg-[#2b1f48] border-[#a855f7] text-[#c084fc] animate-pulse'
+                  : 'bg-[#1a1714] border-[#373737] text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              <span>{bgmEnabled ? '🎵 MUSIC ON' : '🎵 MUSIC OFF'}</span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Main Consolidated Single Audio Button in Bottom Right Corner */}
+      <div className="flex items-center gap-1">
+        <button
+          onClick={toggleAll}
+          type="button"
+          title={bgmEnabled || sfxEnabled ? 'Click to Mute Audio' : 'Click to Enable Minecraft Music & SFX'}
+          aria-label="Toggle Minecraft Audio"
+          className={`h-9 px-3 flex items-center gap-2 border-2 font-pixel text-[9px] uppercase transition-all shadow-[inset_1px_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.85)] ${
+            bgmEnabled || sfxEnabled
+              ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
+              : 'bg-[#1a1714]/95 border-[#3d2e20] text-neutral-400 hover:text-neutral-200'
+          }`}
+          data-interactive="true"
+        >
+          <span className="text-xs">{bgmEnabled ? '🎵' : sfxEnabled ? '🔊' : '🔇'}</span>
+          <span>{bgmEnabled ? 'MUSIC ON' : sfxEnabled ? 'SFX ON' : 'MUTED'}</span>
+        </button>
+
+        {/* Small Expand Settings Arrow */}
+        <button
+          onClick={() => setIsExpanded((prev) => !prev)}
+          type="button"
+          aria-expanded={isExpanded}
+          aria-label="Open detailed sound settings"
+          className="h-9 w-7 flex items-center justify-center bg-[#1a1714]/95 border-2 border-[#3d2e20] text-neutral-400 hover:text-amber-400 transition-colors shadow-[0_4px_12px_rgba(0,0,0,0.85)] text-[10px]"
+          data-interactive="true"
+        >
+          {isExpanded ? '▼' : '▲'}
+        </button>
+      </div>
+    </aside>
   );
 }

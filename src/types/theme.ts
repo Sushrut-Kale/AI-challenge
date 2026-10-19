@@ -292,3 +292,15 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
 };
 
 export const THEME_LIST = Object.values(THEMES);
+
+export const SECTION_THEME_MAP: Record<string, ThemeId> = {
+  about: 'overworld',
+  rounds: 'redstone-lab',
+  timeline: 'deep-cave',
+  rules: 'end',
+  prizes: 'nether',
+  sponsors: 'deep-cave',
+  faqs: 'redstone-lab',
+  contact: 'nether',
+  registration: 'nether',
+};

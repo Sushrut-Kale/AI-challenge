@@ -176,20 +176,20 @@ export default function MinecraftCursor() {
         }}
       >
         <div
-          className="relative transition-transform duration-100 ease-out select-none"
+          className="relative transition-transform duration-75 ease-out select-none"
           style={{
-            transformOrigin: '2px 2px',
+            transformOrigin: '4px 4px',
             transform: isClicking
-              ? 'rotate(-32deg) scale(1.15) translate(2px, -2px)'
+              ? 'rotate(-38deg) scale(1.18) translate(-2px, 6px)'
               : isHovering
-              ? 'scale(1.14) rotate(4deg)'
+              ? 'scale(1.12) rotate(6deg)'
               : 'scale(1) rotate(0deg)',
             filter: isHovering
-              ? 'drop-shadow(0 0 8px rgba(34,211,238,0.9)) drop-shadow(0 0 14px rgba(168,85,247,0.7))'
-              : 'drop-shadow(0 3px 6px rgba(0,0,0,0.85))',
+              ? 'drop-shadow(0 0 10px rgba(251,191,36,0.9)) drop-shadow(0 0 16px rgba(16,185,129,0.7))'
+              : 'drop-shadow(0 4px 8px rgba(0,0,0,0.85))',
           }}
         >
-          {/* Authentic 38x38 Minecraft Diamond Sword Pixel Art SVG with Tip at (2, 2) */}
+          {/* Authentic Minecraft Smithing Hammer Pixel Art SVG (Striking Hotspot at 4, 4) */}
           <svg
             width="38"
             height="38"
@@ -197,50 +197,49 @@ export default function MinecraftCursor() {
             fill="none"
             style={{ imageRendering: 'pixelated' }}
           >
-            {/* Sword Blade Tip & Outer Dark Border (083344) */}
-            <path
-              d="M0 2h4v2h2v2h2v2h2v2h2v2h2v2h2v2h2v2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2h2v-2h2V0h-4v2h-2v2h-2v2h-2v2h-2v2h-2v2h-2v2h-2v2h-2v-2h-2v-2h-2v-2H8V6H6V4H4V2H2V0H0v2z"
-              fill="#083344"
-              transform="translate(2, 2)"
-            />
+            {/* Hammer Head - Heavy Double-Beveled Steel Anvil Head */}
+            {/* Dark Outline */}
+            <rect x="0" y="2" width="16" height="12" fill="#0f172a" rx="1" />
+            <rect x="2" y="0" width="12" height="16" fill="#0f172a" rx="1" />
 
-            {/* Diamond Blade Body - Cyan (#22d3ee / #06b6d4) */}
-            <rect x="4" y="4" width="4" height="4" fill="#67e8f9" />
-            <rect x="6" y="6" width="4" height="4" fill="#a5f3fc" />
-            <rect x="8" y="8" width="4" height="4" fill="#22d3ee" />
-            <rect x="10" y="10" width="4" height="4" fill="#a5f3fc" />
-            <rect x="12" y="12" width="4" height="4" fill="#22d3ee" />
-            <rect x="14" y="14" width="4" height="4" fill="#06b6d4" />
-            <rect x="16" y="16" width="4" height="4" fill="#22d3ee" />
-            <rect x="18" y="18" width="4" height="4" fill="#0891b2" />
-            <rect x="20" y="20" width="4" height="4" fill="#22d3ee" />
+            {/* Iron / Steel Face Plates */}
+            <rect x="2" y="3" width="12" height="10" fill="#475569" />
+            <rect x="3" y="2" width="10" height="12" fill="#64748b" />
+            <rect x="3" y="3" width="6" height="5" fill="#cbd5e1" />
+            <rect x="2" y="2" width="4" height="4" fill="#f8fafc" />
 
-            {/* Sword Crossguard - Dark Oak & Netherite */}
-            <rect x="16" y="24" width="4" height="4" fill="#1e1814" />
-            <rect x="20" y="22" width="4" height="4" fill="#382516" />
-            <rect x="22" y="20" width="4" height="4" fill="#1e1814" />
-            <rect x="24" y="16" width="4" height="4" fill="#382516" />
-            <rect x="26" y="14" width="4" height="4" fill="#1e1814" />
+            {/* Steel Striking Edge Highlight */}
+            <rect x="1" y="4" width="2" height="8" fill="#e2e8f0" />
+            <rect x="13" y="4" width="2" height="8" fill="#334155" />
 
-            <rect x="18" y="22" width="3" height="3" fill="#06b6d4" />
-            <rect x="22" y="18" width="3" height="3" fill="#06b6d4" />
+            {/* Gold / Brass Reinforcement Collar Socket */}
+            <rect x="7" y="12" width="6" height="4" fill="#78350f" />
+            <rect x="8" y="13" width="4" height="3" fill="#fbbf24" />
+            <rect x="9" y="14" width="2" height="1" fill="#fef08a" />
 
-            {/* Wood Handle */}
-            <rect x="22" y="24" width="4" height="4" fill="#5c3c1e" />
-            <rect x="24" y="26" width="4" height="4" fill="#82552b" />
-            <rect x="26" y="28" width="4" height="4" fill="#5c3c1e" />
+            {/* Angled Oak Wood Shaft */}
+            <rect x="11" y="16" width="4" height="4" fill="#382516" />
+            <rect x="12" y="17" width="3" height="3" fill="#78471f" />
+            <rect x="14" y="19" width="4" height="4" fill="#382516" />
+            <rect x="15" y="20" width="3" height="3" fill="#a06028" />
+            <rect x="17" y="22" width="4" height="4" fill="#382516" />
+            <rect x="18" y="23" width="3" height="3" fill="#78471f" />
+            <rect x="20" y="25" width="4" height="4" fill="#382516" />
+            <rect x="21" y="26" width="3" height="3" fill="#a06028" />
+            <rect x="23" y="28" width="4" height="4" fill="#382516" />
+            <rect x="24" y="29" width="3" height="3" fill="#78471f" />
 
-            {/* Pommel (Bottom Cap) */}
-            <rect x="28" y="30" width="4" height="4" fill="#1e1814" />
-            <rect x="30" y="32" width="4" height="4" fill="#0891b2" />
-            <rect x="32" y="34" width="3" height="3" fill="#22d3ee" />
+            {/* Hammer Pommel / End Cap */}
+            <rect x="26" y="31" width="5" height="5" fill="#0f172a" />
+            <rect x="27" y="32" width="3" height="3" fill="#94a3b8" />
+            <rect x="28" y="33" width="1" height="1" fill="#f8fafc" />
 
-            {/* Enchantment glint overlay when hovering */}
+            {/* Glowing Golden Sparkle when hovering */}
             {isHovering && (
-              <g className="animate-pulse opacity-80">
-                <circle cx="8" cy="8" r="3" fill="#f0abfc" />
-                <circle cx="16" cy="16" r="3" fill="#c084fc" />
-                <circle cx="24" cy="24" r="2" fill="#e879f9" />
+              <g className="animate-pulse">
+                <rect x="0" y="0" width="2" height="2" fill="#fbbf24" />
+                <rect x="14" y="2" width="2" height="2" fill="#fef08a" />
+                <rect x="4" y="14" width="2" height="2" fill="#38bdf8" />
               </g>
             )}
           </svg>

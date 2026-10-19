@@ -79,11 +79,11 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
   },
   {
     id: 9,
-    name: 'Diamond Sword',
+    name: 'Smithing Hammer',
     sectionId: '#hero',
-    icon: '/assets/items/diamond.png',
-    tooltip: 'Mega Slash Attack!',
-    rarity: 'rare',
+    icon: '/assets/items/iron_pickaxe.png',
+    tooltip: 'Hammer Strike Impact!',
+    rarity: 'epic',
   },
 ];
 
@@ -185,31 +185,41 @@ export default function MinecraftHotbar() {
       )}
 
       {/* Minecraft Experience Bar (XP Bar) */}
-      <div className="w-[320px] sm:w-[440px] mb-1.5 flex flex-col items-center">
-        {/* Level Number */}
+      <div className="w-[310px] sm:w-[420px] mb-1.5 flex flex-col items-center">
+        {/* Level Number with classic lime green font and 3D pixel shadow */}
         <div
           onClick={triggerLevelUpCelebration}
-          className={`font-pixel text-xs sm:text-sm text-[#80ff20] font-bold cursor-pointer transition-transform hover:scale-110 active:scale-95 ${
+          className={`font-pixel text-xs sm:text-sm text-[#80ff20] font-bold cursor-pointer transition-transform hover:scale-110 active:scale-95 select-none ${
             isLevelUp ? 'animate-bounce text-amber-300 scale-125' : ''
           }`}
-          style={{ textShadow: '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000' }}
-          title="Click for XP Level Up!"
+          style={{
+            textShadow: '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
+          }}
+          title="Click to trigger Hammer Strike celebration!"
         >
           26
         </div>
 
-        {/* Green Pixelated XP Bar Track */}
-        <div className="w-full h-2 bg-[#0c0e12] border border-[#2b2b2b] shadow-[inset_1px_1px_0_#000] relative overflow-hidden">
+        {/* Green Pixelated XP Bar with authentic segment ticks */}
+        <div className="w-full h-2.5 bg-[#0a0d0a] border-2 border-[#1c241c] shadow-[inset_1px_1px_0_#000,0_2px_8px_rgba(0,0,0,0.8)] relative overflow-hidden flex items-center">
+          {/* Progress fill */}
           <div
-            className="h-full bg-gradient-to-r from-[#55aa00] via-[#80ff20] to-[#b3ff66] transition-all duration-150 shadow-[0_0_8px_rgba(128,255,32,0.6)]"
+            className="h-full bg-gradient-to-r from-[#44aa00] via-[#80ff20] to-[#b3ff66] transition-all duration-150 shadow-[0_0_10px_rgba(128,255,32,0.8)]"
             style={{ width: `${Math.round(scrollProgress * 100)}%` }}
           />
+
+          {/* 18 Notch Overlay for authentic Minecraft segment lines */}
+          <div className="absolute inset-0 flex justify-between pointer-events-none opacity-40">
+            {Array.from({ length: 18 }).map((_, i) => (
+              <div key={i} className="w-[1px] h-full bg-black/70" />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* 9-Slot Hotbar HUD Container */}
+      {/* 9-Slot Hotbar HUD Container with dark bedrock/deepslate styling */}
       <div
-        className="flex items-center p-1 bg-[#8f8f8f] border-2 border-[#373737] shadow-[inset_2px_2px_0_#dbdbdb,inset_-2px_-2px_0_#555555,0_8px_24px_rgba(0,0,0,0.85)] rounded-none"
+        className="flex items-center p-1.5 bg-[#161311]/95 border-2 border-[#3d2e20] shadow-[inset_1px_1px_0_#543b22,inset_-1px_-1px_0_#0a0806,0_12px_32px_rgba(0,0,0,0.95)] backdrop-blur-md rounded-none gap-1 sm:gap-1.5"
         style={{ imageRendering: 'pixelated' }}
       >
         {HOTBAR_SLOTS.map((slot) => {
@@ -224,28 +234,43 @@ export default function MinecraftHotbar() {
               onMouseLeave={() => setHoveredSlot(null)}
               className={`
                 relative w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center
-                border-2 transition-transform duration-75 outline-none
+                border-2 transition-all duration-100 outline-none
                 ${
                   isSelected
-                    ? 'border-white bg-[#8b8b8b] scale-110 z-20 shadow-[inset_2px_2px_0_#fff,inset_-2px_-2px_0_#fff,0_0_12px_rgba(255,255,255,0.7)]'
-                    : 'border-[#373737] bg-[#8b8b8b] hover:bg-[#9e9e9e] active:scale-95 shadow-[inset_2px_2px_0_#373737,inset_-2px_-2px_0_#dbdbdb]'
+                    ? 'border-amber-300 bg-[#35291d] scale-110 z-30 shadow-[0_0_16px_rgba(251,191,36,0.6),inset_1px_1px_0_#ffffff]'
+                    : 'border-[#261d15] bg-[#221a14] hover:border-amber-500/70 hover:bg-[#2c221a] active:scale-95 shadow-[inset_2px_2px_0_#120d09,inset_-1px_-1px_0_#382b20]'
                 }
               `}
               aria-label={slot.name}
+              data-slot={slot.id}
               data-interactive="true"
             >
+              {/* Corner Brackets for active slot */}
+              {isSelected && (
+                <>
+                  <span className="pointer-events-none absolute -top-1 -left-1 w-1.5 h-1.5 bg-amber-200" />
+                  <span className="pointer-events-none absolute -top-1 -right-1 w-1.5 h-1.5 bg-amber-200" />
+                  <span className="pointer-events-none absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-amber-200" />
+                  <span className="pointer-events-none absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-amber-200" />
+                </>
+              )}
+
               <Image
                 src={slot.icon}
                 alt={slot.name}
                 width={28}
                 height={28}
-                className="w-5 h-5 sm:w-7 sm:h-7 object-contain pointer-events-none drop-shadow-[0_2px_2px_rgba(0,0,0,0.6)]"
+                className={`w-5 h-5 sm:w-7 sm:h-7 object-contain pointer-events-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] transition-transform ${
+                  isSelected ? 'scale-105' : 'hover:-translate-y-0.5'
+                }`}
                 priority
               />
 
               {/* Slot Index Number Badge */}
               <span
-                className="absolute bottom-0 right-0.5 font-pixel text-[6px] sm:text-[7px] text-neutral-300 font-bold pointer-events-none"
+                className={`absolute bottom-0 right-0.5 font-pixel text-[6px] sm:text-[7px] font-bold pointer-events-none ${
+                  isSelected ? 'text-amber-300' : 'text-neutral-400'
+                }`}
                 style={{ textShadow: '1px 1px 0 #000' }}
               >
                 {slot.id}
