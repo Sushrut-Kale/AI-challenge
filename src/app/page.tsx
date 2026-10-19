@@ -31,8 +31,21 @@ export default function HomePage() {
       {/* 4-5 Frame Minecraft Scrollytelling Sequence (Advances on Scroll Down, Reverses on Scroll Up) */}
       <IntroExperience onProgressChange={setHeroProgress} />
 
+      {/* Wooden Seam Section Divider */}
+      <div className="relative z-20 h-0">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none w-full aspect-[1266/110] -translate-y-1/2 bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/assets/wooden_seam.png)',
+            backgroundSize: '100% 100%',
+            imageRendering: 'pixelated',
+          }}
+        />
+      </div>
+
       {/* Conventional Minecraft Event Landing Page */}
-      <main className="relative z-10 flex flex-col w-full min-h-screen bg-[#0d0b09]">
+      <main className="relative z-10 flex flex-col w-full min-h-screen bg-transparent">
         <AboutSection />
         <TracksSection />
         <TimelineSection />

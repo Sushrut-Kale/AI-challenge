@@ -102,7 +102,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
     <section
       id="home"
       ref={containerRef}
-      className="relative w-full bg-[#0d0b09]"
+      className="relative w-full"
       style={{ height: '380vh' }}
       aria-label="AGENTCRAFT 3D Minecraft Scrollytelling Sequence"
     >
