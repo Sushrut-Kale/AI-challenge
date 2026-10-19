@@ -7,6 +7,7 @@ import SectionHeading from '@/components/ui/SectionHeading';
 import PixelCard from '@/components/ui/PixelCard';
 import PixelBadge from '@/components/ui/PixelBadge';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import MiningPrizeVault from '@/components/sections/MiningPrizeVault';
 import { EVENT_DATA } from '@/data/event';
 
 export default function PrizesSection() {
@@ -44,22 +45,8 @@ export default function PrizesSection() {
               </div>
             </div>
 
-            <PixelBadge variant="gold" className="mb-3">
-              OFFICIAL CHAMPIONSHIP POOL
-            </PixelBadge>
-
-            <h3 className="font-pixel text-xs sm:text-sm text-neutral-200 uppercase tracking-widest mb-2 font-bold">
-              TOTAL PRIZE POOL
-            </h3>
-
-            {/* Animated Counter for ₹30,000 */}
-            <div className="font-pixel text-3xl sm:text-5xl md:text-6xl text-amber-300 tracking-wider mb-4 drop-shadow-[0_4px_16px_rgba(251,191,36,0.4)]">
-              <AnimatedCounter
-                value={prizes.totalPoolAmount}
-                prefix="₹"
-                suffix="/-"
-              />
-            </div>
+            {/* Interactive Mining Block Vault covering Prize Pool */}
+            <MiningPrizeVault totalPoolAmount={prizes.totalPoolAmount} />
 
             {/* Verified Poster Highlight: Winners Get Internship Opportunities */}
             <div className="mt-2 mb-6 px-5 py-3.5 bg-[#11261a] border-2 border-emerald-500/80 shadow-[0_0_16px_rgba(16,185,129,0.25)] flex items-center gap-3.5 rounded">

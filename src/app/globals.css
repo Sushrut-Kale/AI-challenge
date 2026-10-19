@@ -48,6 +48,42 @@ body {
   letter-spacing: -0.02em;
 }
 
+/* Authentic Minecraft Mining Swing Animation */
+@keyframes mc-mining-swing {
+  0% {
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+  35% {
+    /* Phase 1: Hammer moves FIRST UPWARD till head of character (wind-up) */
+    transform: rotate(-65deg) translate(-3px, -14px);
+  }
+  75% {
+    /* Phase 2: Hammer slams DOWNWARD & FORWARD right to cursor point (strike impact) */
+    transform: rotate(36deg) translate(-15px, 14px);
+  }
+  100% {
+    transform: rotate(0deg) translate(0px, 0px);
+  }
+}
+
+.animate-mining-swing {
+  animation: mc-mining-swing 0.26s ease-in-out infinite;
+  transform-origin: 24px 18px;
+}
+
+/* Minecraft Block Shake on Hit */
+@keyframes mc-block-shake {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  20% { transform: translate(-3px, 1px) rotate(-0.8deg); }
+  40% { transform: translate(3px, -2px) rotate(0.8deg); }
+  60% { transform: translate(-2px, 2px) rotate(-0.5deg); }
+  80% { transform: translate(2px, -1px) rotate(0.5deg); }
+}
+
+.animate-mc-shake {
+  animation: mc-block-shake 0.12s ease-in-out;
+}
+
 .pixel-heading {
   font-family: 'Press Start 2P', monospace;
   text-transform: uppercase;

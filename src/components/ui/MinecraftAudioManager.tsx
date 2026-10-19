@@ -141,6 +141,118 @@ export function playMinecraftSwordSweep() {
 }
 
 /**
+ * Authentic Minecraft Stone Hit / Dig Sound (`block.stone.hit`)
+ * Produces crisp mineral impact crunch + low deepslate body resonance
+ */
+export function playMinecraftStoneHit() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+
+  // Mineral crunch noise
+  const bufferSize = ctx.sampleRate * 0.05;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.012));
+  }
+
+  const noise = ctx.createBufferSource();
+  noise.buffer = noiseBuffer;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.setValueAtTime(1400 + Math.random() * 400, now);
+  filter.Q.setValueAtTime(1.8, now);
+
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.45, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+  noise.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  noise.start(now);
+  noise.stop(now + 0.06);
+
+  // Rock body impact thud
+  const osc = ctx.createOscillator();
+  const oscGain = ctx.createGain();
+  osc.type = 'triangle';
+  const rockPitch = 180 + Math.random() * 40;
+  osc.frequency.setValueAtTime(rockPitch, now);
+  osc.frequency.exponentialRampToValueAtTime(70, now + 0.06);
+
+  oscGain.gain.setValueAtTime(0.3, now);
+  oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
+
+  osc.connect(oscGain);
+  oscGain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.07);
+}
+
+/**
+ * Authentic Minecraft Block Break & Celebration Chime (`block.stone.break` + Level Up Chime)
+ */
+export function playMinecraftBlockBreak() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+
+  // 1. Heavy shatter explosion burst
+  const bufferSize = ctx.sampleRate * 0.22;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const data = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.05));
+  }
+
+  const noise = ctx.createBufferSource();
+  noise.buffer = noiseBuffer;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(1200, now);
+  filter.frequency.exponentialRampToValueAtTime(300, now + 0.2);
+
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(0.6, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+  noise.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  noise.start(now);
+  noise.stop(now + 0.23);
+
+  // 2. Triumphant Minecraft Level-Up Chime Arpeggio (C5 -> E5 -> G5 -> C6)
+  const notes = [523.25, 659.25, 783.99, 1046.5];
+  notes.forEach((freq, idx) => {
+    const startTime = now + 0.06 + idx * 0.07;
+    const osc = ctx.createOscillator();
+    const noteGain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, startTime);
+
+    noteGain.gain.setValueAtTime(0.22, startTime);
+    noteGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.28);
+
+    osc.connect(noteGain);
+    noteGain.connect(ctx.destination);
+
+    osc.start(startTime);
+    osc.stop(startTime + 0.3);
+  });
+}
+
+/**
  * Classic Minecraft C418-Inspired Ambient Generative Soundtrack (Piano Chords + Warm Soft Pads)
  */
 class MinecraftAmbientMusicEngine {
