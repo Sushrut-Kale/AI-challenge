@@ -171,19 +171,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
     }
   };
 
-  const handleResetVault = () => {
-    setHits(0);
-    setIsRevealed(false);
-    setIsShattering(false);
-    try {
-      sessionStorage.removeItem('agentcraft_prize_vault_mined');
-    } catch {
-      // ignore
-    }
-  };
-
   const crackStageIndex = Math.min(hits, CRACK_LEVELS.length - 1);
-  const remainingHits = Math.max(0, REQUIRED_CLICKS - hits);
 
   return (
     <div
@@ -247,7 +235,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
         }`}
       >
         <PixelBadge variant="gold" className="mb-2 animate-bounce">
-          🎉 VAULT MINED! CHAMPIONSHIP REVEALED
+          🎉 VAULT MINED! PRIZE REVEALED
         </PixelBadge>
 
         <h3 className="font-pixel text-xs sm:text-sm text-neutral-200 uppercase tracking-widest mb-1 font-bold">
@@ -258,15 +246,6 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
         <div className="font-pixel text-4xl sm:text-6xl md:text-7xl text-amber-300 tracking-wider mb-2 drop-shadow-[0_4px_24px_rgba(251,191,36,0.6)] animate-pulse">
           <AnimatedCounter value={totalPoolAmount} prefix="₹" suffix="/-" />
         </div>
-
-        <button
-          type="button"
-          onClick={handleResetVault}
-          className="mt-2 text-[9px] font-pixel text-neutral-400 hover:text-amber-300 underline uppercase tracking-wider transition-colors"
-          data-interactive="true"
-        >
-          [ ↺ RE-SEAL VAULT TO MINE AGAIN ]
-        </button>
       </div>
 
       {/* ------------------------------------------------------------- */}
@@ -282,7 +261,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
               handleMineClick(e as unknown as React.MouseEvent<HTMLDivElement>);
             }
           }}
-          className={`relative p-6 sm:p-8 border-4 border-[#1c1917] bg-[#1a1c23] shadow-[0_14px_32px_rgba(0,0,0,0.95)] rounded-sm cursor-pointer transition-all duration-150 ${
+          className={`relative p-8 sm:p-10 border-4 border-[#1c1917] bg-[#1a1c23] shadow-[0_14px_32px_rgba(0,0,0,0.95)] rounded-sm cursor-pointer transition-all duration-150 ${
             isShattering
               ? 'scale-110 opacity-0 filter blur-[2px]'
               : isShaking
@@ -310,37 +289,14 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
           {/* Minecraft Block Bevel Edge */}
           <div className="pointer-events-none absolute inset-1.5 border-2 border-[#334155]/70 shadow-[inset_2px_2px_0_rgba(255,255,255,0.1),inset_-2px_-2px_0_rgba(0,0,0,0.6)]" />
 
-          {/* Central Mining Call-to-Action */}
-          <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 border-2 border-amber-500/80 bg-black/80 px-4 py-1.5 mb-3 shadow-[0_4px_12px_rgba(0,0,0,0.9)]">
-              <span className="text-lg animate-bounce">⛏️</span>
+          {/* Clean Mining Call-to-Action */}
+          <div className="relative z-10 flex flex-col items-center text-center py-2">
+            <div className="inline-flex items-center gap-2 border-2 border-amber-500/80 bg-black/85 px-5 py-2.5 shadow-[0_4px_14px_rgba(0,0,0,0.95)]">
+              <span className="text-base animate-bounce">⛏️</span>
               <span className="font-pixel text-[11px] sm:text-xs text-amber-300 font-bold uppercase tracking-wider">
-                MINE TO REVEAL PRIZE POOL!
+                MINE TO REVEAL PRIZE
               </span>
-              <span className="text-lg animate-bounce">⛏️</span>
-            </div>
-
-            <p className="font-pixel text-[9px] sm:text-[10px] text-neutral-300 uppercase tracking-widest mb-3">
-              CLICK MULTIPLE TIMES WITH HAMMER
-            </p>
-
-            {/* Durability / Cracks Gauge Bar */}
-            <div className="w-full max-w-xs flex flex-col items-center gap-1.5">
-              <div className="w-full h-3.5 bg-black/80 border-2 border-[#475569] p-0.5 relative overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-red-600 via-amber-500 to-yellow-300 transition-all duration-150"
-                  style={{
-                    width: `${(hits / REQUIRED_CLICKS) * 100}%`,
-                    imageRendering: 'pixelated',
-                  }}
-                />
-              </div>
-
-              <span className="font-pixel text-[8px] sm:text-[9px] text-amber-200/90 tracking-wider">
-                {hits === 0
-                  ? 'BEDROCK VAULT IS SEALED • [ 5 HITS TO CRACK ]'
-                  : `VAULT CRACKING! • [ ${remainingHits} HIT${remainingHits === 1 ? '' : 'S'} REMAINING ]`}
-              </span>
+              <span className="text-base animate-bounce">⛏️</span>
             </div>
           </div>
 

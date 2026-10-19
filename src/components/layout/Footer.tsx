@@ -83,7 +83,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#prizes" className="hover:text-emerald-400 transition-colors" data-interactive="true">
-                  → ₹30K Prize Pool
+                  → Championship Perks
                 </a>
               </li>
             </ul>

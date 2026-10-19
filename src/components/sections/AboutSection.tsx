@@ -188,10 +188,10 @@ export default function AboutSection() {
 
               <div className="p-3.5 bg-[#181109] border-2 border-amber-800/80 mt-4 rounded shadow-md">
                 <span className="font-pixel text-[10px] sm:text-[11px] text-amber-300 block mb-1 font-bold">
-                  ★ PRIZE POOL & INTERNSHIPS
+                  ★ EXCLUSIVE AWARDS & INTERNSHIPS
                 </span>
                 <p className="text-xs sm:text-sm text-amber-100 leading-relaxed font-sans">
-                  Total Prize Pool: <strong className="text-amber-300">{prizes.totalPool}</strong>. In addition to cash awards,{' '}
+                  Mine the bedrock vault in the rewards section to uncover the cash pool! In addition,{' '}
                   <strong className="text-emerald-400">Winners get internship opportunities *</strong> with sponsor partners.
                 </p>
               </div>

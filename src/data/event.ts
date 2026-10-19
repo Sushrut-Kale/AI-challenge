@@ -164,7 +164,7 @@ const prizesData = Object.assign(prizeList, {
   totalPool: '₹30,000/-',
   totalPoolAmount: 30000,
   perks: [
-    'Cash Prize Pool of ₹30,000/-',
+    'Grand Cash Awards & Trophies',
     'Winners get Internship Opportunities *',
     'Certificates of Excellence from AAAI Global Chapter & MIT AOE',
     'Mentorship from Industry AI Architects',
@@ -416,9 +416,9 @@ export const EVENT_DATA: EventData = {
         'The challenge has two rounds: Round 1 (Online Screening on 31st October 2026) involves submitting an online PPT, solution architecture, and AI agent demo. Shortlisted finalists advance to Round 2 (Offline Grand Finale on 17th November 2026) for in-person presentations at MIT Academy of Engineering, Alandi, Pune.',
     },
     {
-      question: 'What is the registration fee and prize pool?',
+      question: 'What are the championship rewards and perks?',
       answer:
-        'Registration is ₹400 per team. The total prize pool is ₹30,000/-, and winners also receive exclusive internship opportunities with our sponsor partners.',
+        'Registration is ₹400 per team. Winners receive grand cash awards (revealed at the bedrock mining vault), exclusive internship opportunities with our sponsor partners, trophies, and certificates of excellence.',
     },
     {
       question: 'When is the registration deadline?',

@@ -38,7 +38,7 @@ export default function ContactSection() {
             </p>
 
             <p className="font-sans text-sm sm:text-base text-amber-100/90 max-w-xl mx-auto leading-relaxed mb-6">
-              Compete for the <strong>{prizes.totalPool}</strong> prize pool and exclusive{' '}
+              Compete for exclusive <strong>championship awards</strong> and career-defining{' '}
               <strong>internship opportunities</strong>. Open to FY innovators (separate track) and
               SY, TY, B.Tech student developers.
             </p>

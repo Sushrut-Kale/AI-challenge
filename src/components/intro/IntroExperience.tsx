@@ -215,7 +215,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             <div className="inline-flex items-center gap-2 border-2 border-amber-500/60 bg-black/60 px-4 py-2 font-pixel text-[8px] sm:text-[10px] uppercase tracking-widest text-amber-200 backdrop-blur-sm">
               <span>2 ROUNDS</span>
               <span className="opacity-40">•</span>
-              <span className="text-[#dba213]">₹30,000 PRIZE POOL</span>
+              <span className="text-[#dba213]">CHAMPIONSHIP AWARDS</span>
               <span className="opacity-40">•</span>
               <span>INTERNSHIP OPPORTUNITIES *</span>
             </div>
@@ -246,11 +246,11 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
               />
             </div>
 
-            {/* Date & Prize Pool Pill */}
+            {/* Date & Finale Pill */}
             <div className="inline-flex flex-wrap items-center justify-center gap-2 border-2 border-[#dba213]/80 bg-[#1a1209]/90 px-3.5 py-1.5 font-pixel text-[9px] sm:text-[11px] uppercase tracking-wider text-[#ffd875] backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
               <span>17 November 2026</span>
               <span className="opacity-50">•</span>
-              <span className="text-amber-400">₹30,000 Prize Pool</span>
+              <span className="text-amber-400">Grand Finale at MIT AOE</span>
             </div>
 
             {/* Live Countdown to Grand Finale */}

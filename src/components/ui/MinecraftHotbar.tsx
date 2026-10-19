@@ -50,7 +50,7 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
     name: 'Golden Apple',
     sectionId: '#prizes',
     icon: '/assets/items/golden_apple.png',
-    tooltip: '₹30K Prize Pool',
+    tooltip: 'Rewards & Perks',
     rarity: 'epic',
   },
   {

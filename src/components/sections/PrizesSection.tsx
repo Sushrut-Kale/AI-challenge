@@ -17,8 +17,8 @@ export default function PrizesSection() {
     <SectionContainer id="prizes" variant="alt" showTopSeam>
       <SectionHeading
         tag="REWARDS & CAREER ACCELERATION"
-        title="PRIZE POOL & PERKS"
-        subtitle="Compete for the championship prize pool and career-defining internship opportunities."
+        title="CHAMPIONSHIP REWARDS & PERKS"
+        subtitle="Mine the bedrock vault below to reveal the championship rewards, and unlock career-defining internship opportunities."
       />
 
       <div className="max-w-4xl mx-auto space-y-8">
@@ -91,7 +91,7 @@ export default function PrizesSection() {
             }
           >
             <p className="font-sans text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
-              Share of the official ₹30,000 prize pool awarded to top-performing teams across evaluation tracks.
+              Championship cash awards granted to top-performing teams across FY and senior evaluation tracks.
             </p>
           </PixelCard>
 

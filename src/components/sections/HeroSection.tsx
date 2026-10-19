@@ -86,18 +86,13 @@ export default function HeroSection() {
 
         {/* Event Statistics Cards with Animated Numeric Counters */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 w-full max-w-3xl mb-8 text-left">
-          {/* Prize Pool Counter */}
+          {/* Championship Vault */}
           <div className="p-3 sm:p-4 bg-[#1a1714]/90 border-2 border-[#543b22] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#0a0806]">
             <span className="font-pixel text-[8px] sm:text-[9px] text-amber-400 block uppercase">
-              PRIZE POOL
+              REWARDS
             </span>
-            <div className="font-pixel text-sm sm:text-xl text-white mt-1.5 flex items-center">
-              <AnimatedCounter
-                value={prizes.totalPoolAmount}
-                prefix="₹"
-                suffix="/-"
-                className="text-amber-300"
-              />
+            <div className="font-pixel text-xs sm:text-sm text-amber-300 mt-1.5 flex items-center font-bold">
+              MINE TO REVEAL
             </div>
             <span className="text-[10px] text-neutral-400 font-sans block mt-0.5">
               + Internships *
