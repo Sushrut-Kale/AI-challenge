@@ -9,68 +9,82 @@ interface MiningPrizeVaultProps {
   totalPoolAmount: number;
 }
 
-interface SpallParticle {
-  id: number;
+interface BrownBoxShard {
+  id: string;
   x: number;
   y: number;
   tx: number;
   ty: number;
-  rotX: number;
-  rotY: number;
-  rotZ: number;
+  rot: number;
   size: number;
   baseColor: string;
   topColor: string;
-  isDiamond?: boolean;
+  borderColor: string;
 }
 
-const REQUIRED_CLICKS = 5;
+// Exactly 8 hits to reveal as requested
+const REQUIRED_CLICKS = 8;
 
-// Authentic Minecraft Pixel-Art Destruction Stages (Progressive Block Break Grid)
+// 8 progressive crack levels across the Minecraft brown wooden blocks
 const CRACK_LEVELS = [
-  // 0: Clean block
+  // 0: Pristine block
   [],
-  // 1: Initial center impact fractures
+  // 1: First minor wood fracture
   [
-    { x: 48, y: 46, w: 6, h: 4 },
-    { x: 50, y: 50, w: 4, h: 6 },
-    { x: 44, y: 48, w: 5, h: 3 },
+    { x: 48, y: 46, w: 5, h: 4 },
+    { x: 50, y: 50, w: 4, h: 5 },
   ],
-  // 2: Radiating fractures
+  // 2: Spreading hairline cracks
   [
-    { x: 44, y: 42, w: 12, h: 5 },
-    { x: 48, y: 47, w: 8, h: 10 },
-    { x: 38, y: 52, w: 8, h: 4 },
-    { x: 54, y: 38, w: 4, h: 8 },
-    { x: 34, y: 44, w: 6, h: 4 },
-    { x: 58, y: 56, w: 7, h: 4 },
+    { x: 44, y: 44, w: 9, h: 4 },
+    { x: 48, y: 48, w: 6, h: 8 },
+    { x: 38, y: 52, w: 7, h: 3 },
   ],
-  // 3: Spiderweb fracture network across the face
+  // 3: Wood grain split emerging
   [
-    { x: 32, y: 36, w: 16, h: 5 },
-    { x: 48, y: 41, w: 14, h: 12 },
-    { x: 26, y: 48, w: 12, h: 6 },
-    { x: 58, y: 32, w: 6, h: 14 },
-    { x: 62, y: 54, w: 14, h: 6 },
-    { x: 40, y: 64, w: 16, h: 5 },
-    { x: 22, y: 60, w: 10, h: 4 },
-    { x: 68, y: 42, w: 10, h: 5 },
-    { x: 44, y: 24, w: 8, h: 12 },
+    { x: 42, y: 38, w: 12, h: 5 },
+    { x: 48, y: 44, w: 8, h: 10 },
+    { x: 36, y: 50, w: 10, h: 5 },
+    { x: 55, y: 36, w: 5, h: 9 },
   ],
-  // 4: Critical structural failure (almost completely fractured)
+  // 4: Radiating box split
   [
-    { x: 18, y: 28, w: 22, h: 6 },
-    { x: 40, y: 34, w: 18, h: 14 },
-    { x: 14, y: 52, w: 18, h: 7 },
-    { x: 62, y: 24, w: 10, h: 18 },
-    { x: 66, y: 52, w: 18, h: 7 },
-    { x: 34, y: 68, w: 24, h: 6 },
-    { x: 12, y: 68, w: 14, h: 6 },
-    { x: 74, y: 38, w: 14, h: 7 },
-    { x: 38, y: 16, w: 12, h: 18 },
-    { x: 56, y: 68, w: 18, h: 6 },
-    { x: 24, y: 40, w: 10, h: 8 },
-    { x: 70, y: 72, w: 12, h: 6 },
+    { x: 34, y: 34, w: 14, h: 5 },
+    { x: 48, y: 40, w: 12, h: 12 },
+    { x: 28, y: 46, w: 12, h: 6 },
+    { x: 58, y: 30, w: 6, h: 14 },
+    { x: 62, y: 52, w: 12, h: 6 },
+  ],
+  // 5: Deep structural cracks across planks
+  [
+    { x: 26, y: 30, w: 18, h: 6 },
+    { x: 46, y: 36, w: 14, h: 14 },
+    { x: 20, y: 48, w: 14, h: 7 },
+    { x: 60, y: 26, w: 8, h: 16 },
+    { x: 64, y: 50, w: 16, h: 6 },
+    { x: 38, y: 62, w: 16, h: 6 },
+  ],
+  // 6: Heavy splintering throughout
+  [
+    { x: 20, y: 26, w: 22, h: 6 },
+    { x: 42, y: 32, w: 18, h: 16 },
+    { x: 16, y: 50, w: 16, h: 7 },
+    { x: 62, y: 22, w: 10, h: 18 },
+    { x: 66, y: 48, w: 18, h: 7 },
+    { x: 34, y: 66, w: 22, h: 6 },
+    { x: 54, y: 64, w: 16, h: 6 },
+  ],
+  // 7: Critical fragmentation (one hit from shattering completely)
+  [
+    { x: 16, y: 22, w: 26, h: 7 },
+    { x: 38, y: 28, w: 22, h: 18 },
+    { x: 12, y: 46, w: 20, h: 8 },
+    { x: 60, y: 18, w: 12, h: 22 },
+    { x: 64, y: 44, w: 22, h: 8 },
+    { x: 30, y: 64, w: 26, h: 7 },
+    { x: 50, y: 62, w: 20, h: 7 },
+    { x: 70, y: 34, w: 14, h: 7 },
+    { x: 24, y: 38, w: 12, h: 9 },
   ],
 ];
 
@@ -79,10 +93,10 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
   const [isRevealed, setIsRevealed] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [isShattering, setIsShattering] = useState(false);
-  const [spallParticles, setSpallParticles] = useState<SpallParticle[]>([]);
+  const [boxShards, setBoxShards] = useState<BrownBoxShard[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Load persistence from sessionStorage
+  // Restore revealed state if previously mined in session
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem('agentcraft_prize_vault_mined');
@@ -101,58 +115,61 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
     const nextHits = hits + 1;
     setHits(nextHits);
 
-    // Visual block vibration on hit
+    // Block vibration on strike
     setIsShaking(true);
-    setTimeout(() => setIsShaking(false), 120);
+    setTimeout(() => setIsShaking(false), 130);
 
-    // Spall stone particles flying OUTWARD TOWARD THE SCREEN
+    // Radiating Brown Box Splitting Animation (same ray-burst type as 9th option)
     if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const originX = e.clientX - rect.left;
       const originY = e.clientY - rect.top;
 
       const isFinalHit = nextHits >= REQUIRED_CLICKS;
-      const count = isFinalHit ? 30 : 10;
+      // 12-16 radiating rays per hit, 32 on the final shattering blow
+      const rayCount = isFinalHit ? 32 : 14;
 
-      const stonePalette = [
-        { base: '#334155', top: '#64748b' },
-        { base: '#1e293b', top: '#475569' },
-        { base: '#0f172a', top: '#334155' },
-        { base: '#475569', top: '#94a3b8' },
-        { base: '#0284c7', top: '#38bdf8', isDiamond: true }, // Diamond ore chip
-        { base: '#d97706', top: '#fbbf24' }, // Gold ore chip
+      // Authentic Minecraft brown oak wood & crate palette
+      const woodPalette = [
+        { base: '#8f562b', top: '#b8773e', border: '#4f2d12' }, // Oak plank warm face
+        { base: '#704320', top: '#945b2b', border: '#3b200b' }, // Dark oak seam
+        { base: '#a46736', top: '#c88a4e', border: '#593414' }, // Light oak bevel
+        { base: '#5c3818', top: '#7d4e24', border: '#2d1808' }, // Wood crate shadow
+        { base: '#3b220c', top: '#543214', border: '#1c1005' }, // Deep bedrock knot
       ];
 
-      const newSpall: SpallParticle[] = Array.from({ length: count }, (_, i) => {
-        const angle = Math.random() * Math.PI * 2;
-        const distance = isFinalHit ? Math.random() * 180 + 40 : Math.random() * 80 + 20;
-        const color = stonePalette[Math.floor(Math.random() * stonePalette.length)];
+      const newShards: BrownBoxShard[] = [];
+      for (let r = 0; r < rayCount; r++) {
+        const baseAngle = (r / rayCount) * Math.PI * 2 + (Math.random() * 0.2 - 0.1);
+        const distance = isFinalHit
+          ? Math.random() * 260 + 80
+          : Math.random() * 140 + 40;
+        const color = woodPalette[r % woodPalette.length];
 
-        return {
-          id: Date.now() + i + Math.random(),
+        newShards.push({
+          id: `shard-${Date.now()}-${r}-${Math.random()}`,
           x: originX,
           y: originY,
-          tx: Math.cos(angle) * distance,
-          ty: Math.sin(angle) * distance - (Math.random() * 50 + 20), // Pop upwards before falling
-          rotX: Math.floor(Math.random() * 360) - 180,
-          rotY: Math.floor(Math.random() * 360) - 180,
-          rotZ: Math.floor(Math.random() * 360) - 180,
-          size: Math.floor(Math.random() * 8) + 8, // Substantial 3D voxel cubes
+          tx: Math.cos(baseAngle) * distance,
+          ty: Math.sin(baseAngle) * distance - (Math.random() * 40 + 15),
+          rot: Math.floor(Math.random() * 360) - 180,
+          size: Math.floor(Math.random() * 8) + 10, // Chunky Minecraft wooden box fragment
           baseColor: color.base,
           topColor: color.top,
-          isDiamond: color.isDiamond,
-        };
-      });
+          borderColor: color.border,
+        });
+      }
 
-      setSpallParticles((prev) => [...prev, ...newSpall]);
+      setBoxShards((prev) => [...prev, ...newShards]);
 
+      // Fail-safe cleanup after CSS animation finishes
       setTimeout(() => {
-        setSpallParticles((prev) => prev.filter((p) => !newSpall.includes(p)));
-      }, 700);
+        setBoxShards((prev) => prev.filter((s) => !newShards.includes(s)));
+      }, 750);
     }
 
     if (nextHits >= REQUIRED_CLICKS) {
-      // BLOCK SHATTERS! Stones spall toward screen and reveal the prize pool
+      // 8th HIT: Complete block break explosion revealing prize pool
       playMinecraftBlockBreak();
       setIsShattering(true);
 
@@ -166,7 +183,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
         }
       }, 350);
     } else {
-      // Crisp stone chip impact sound
+      // Hits 1 to 7: Wood block impact strike sound
       playMinecraftStoneHit();
     }
   };
@@ -177,46 +194,44 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
     <div
       ref={containerRef}
       className="relative w-full max-w-xl mx-auto my-3 select-none"
-      style={{ perspective: '800px', transformStyle: 'preserve-3d' }}
+      style={{ perspective: '900px', transformStyle: 'preserve-3d' }}
     >
       {/* ------------------------------------------------------------- */}
-      {/* 3D SPALLING STONE PARTICLES (FLYING TOWARDS SCREEN / VIEWER)  */}
+      {/* RADIATING BROWN BOX SPLITTING PARTICLES (FLYING OUTWARD)      */}
       {/* ------------------------------------------------------------- */}
       <div className="absolute inset-0 pointer-events-none z-50 overflow-visible">
-        {spallParticles.map((p) => (
+        {boxShards.map((s) => (
           <div
-            key={p.id}
-            className="absolute animate-mc-spall mc-voxel-cube pointer-events-none"
+            key={s.id}
+            className="absolute animate-mc-box-split pointer-events-none"
             style={
               {
-                left: p.x,
-                top: p.y,
-                width: p.size,
-                height: p.size,
-                '--spall-x': `${p.tx}px`,
-                '--spall-y': `${p.ty}px`,
-                '--rot-x': `${p.rotX}deg`,
-                '--rot-y': `${p.rotY}deg`,
-                '--rot-z': `${p.rotZ}deg`,
+                left: s.x,
+                top: s.y,
+                width: `${s.size}px`,
+                height: `${s.size}px`,
+                '--split-x': `${s.tx}px`,
+                '--split-y': `${s.ty}px`,
+                '--rot': `${s.rot}deg`,
+                imageRendering: 'pixelated',
               } as React.CSSProperties
             }
           >
-            {/* 3D Minecraft Textured Voxel Block */}
+            {/* Minecraft 3D Textured Brown Box Piece */}
             <div
-              className="w-full h-full border border-black/60 shadow-lg"
+              className="w-full h-full border-2 shadow-lg"
               style={{
-                backgroundColor: p.baseColor,
-                boxShadow: p.isDiamond
-                  ? 'inset 1px 1px 0 #e0f2fe, 0 0 8px rgba(56,189,248,0.8)'
-                  : 'inset 1px 1px 0 rgba(255,255,255,0.3)',
+                backgroundColor: s.baseColor,
+                borderColor: s.borderColor,
+                boxShadow: `inset 2px 2px 0 ${s.topColor}, 0 4px 10px rgba(0,0,0,0.85)`,
               }}
             >
-              {/* Top bevel highlight face */}
+              {/* Highlight plank grain stripe */}
               <div
                 className="w-full h-1/3"
                 style={{
-                  backgroundColor: p.topColor,
-                  opacity: 0.85,
+                  backgroundColor: s.topColor,
+                  opacity: 0.8,
                 }}
               />
             </div>
@@ -225,7 +240,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* UNDERNEATH: THE REVEALED PRIZE POOL COUNTER                   */}
+      {/* UNDERNEATH: REVEALED PRIZE POOL COUNTER                       */}
       {/* ------------------------------------------------------------- */}
       <div
         className={`transition-all duration-500 flex flex-col items-center ${
@@ -249,7 +264,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
       </div>
 
       {/* ------------------------------------------------------------- */}
-      {/* COVER OVERLAY: MINECRAFT STONE & BEDROCK MINING VAULT         */}
+      {/* COVER: CLASSICAL MINECRAFT BROWN BOXES / WOODEN CRATE VAULT   */}
       {/* ------------------------------------------------------------- */}
       {!isRevealed && (
         <div
@@ -261,7 +276,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
               handleMineClick(e as unknown as React.MouseEvent<HTMLDivElement>);
             }
           }}
-          className={`relative p-8 sm:p-10 border-4 border-[#1c1917] bg-[#1a1c23] shadow-[0_14px_32px_rgba(0,0,0,0.95)] rounded-sm cursor-pointer transition-all duration-150 ${
+          className={`relative p-8 sm:p-10 border-4 border-[#3a220e] shadow-[0_16px_36px_rgba(0,0,0,0.95)] rounded-none cursor-pointer transition-all duration-150 ${
             isShattering
               ? 'scale-110 opacity-0 filter blur-[2px]'
               : isShaking
@@ -269,50 +284,64 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
               : 'hover:scale-[1.01]'
           }`}
           style={{
-            backgroundImage:
-              'radial-gradient(circle at 50% 50%, #292d3b 0%, #161922 65%, #0d0f14 100%)',
+            // Classical Minecraft Oak Wood Planks & Brown Crate Texture
+            backgroundColor: '#6b421d',
+            backgroundImage: `
+              repeating-linear-gradient(
+                0deg,
+                #543214 0px,
+                #543214 2px,
+                transparent 2px,
+                transparent 24px
+              ),
+              radial-gradient(circle at 50% 50%, #855325 0%, #633c19 70%, #42250d 100%)
+            `,
             imageRendering: 'pixelated',
           }}
           data-interactive="true"
-          title="Click to mine with your hammer!"
+          title="Click 8 times to mine and reveal prize!"
         >
-          {/* Deepslate Voxel Texture Grid */}
+          {/* Classical Minecraft Wood Plank Seams & Nail Head Accents */}
           <div
-            className="absolute inset-0 pointer-events-none opacity-25"
+            className="absolute inset-0 pointer-events-none opacity-30"
             style={{
               backgroundImage:
-                'linear-gradient(to right, #475569 1px, transparent 1px), linear-gradient(to bottom, #475569 1px, transparent 1px)',
-              backgroundSize: '16px 16px',
+                'linear-gradient(to right, #3b220c 1px, transparent 1px), linear-gradient(to bottom, #3b220c 1px, transparent 1px)',
+              backgroundSize: '24px 24px',
             }}
           />
 
-          {/* Minecraft Block Bevel Edge */}
-          <div className="pointer-events-none absolute inset-1.5 border-2 border-[#334155]/70 shadow-[inset_2px_2px_0_rgba(255,255,255,0.1),inset_-2px_-2px_0_rgba(0,0,0,0.6)]" />
+          {/* Minecraft Oak Wood Bevel Border & Corner Brackets */}
+          <div className="pointer-events-none absolute inset-1.5 border-2 border-[#9b6330]/80 shadow-[inset_2px_2px_0_#c48344,inset_-2px_-2px_0_#2d1808]" />
 
-          {/* Clean Mining Call-to-Action */}
+          {/* Corner Reinforcement Brackets */}
+          <div className="pointer-events-none absolute top-1.5 left-1.5 w-3 h-3 bg-[#3d2511] border border-[#a66d38]" />
+          <div className="pointer-events-none absolute top-1.5 right-1.5 w-3 h-3 bg-[#3d2511] border border-[#a66d38]" />
+          <div className="pointer-events-none absolute bottom-1.5 left-1.5 w-3 h-3 bg-[#3d2511] border border-[#a66d38]" />
+          <div className="pointer-events-none absolute bottom-1.5 right-1.5 w-3 h-3 bg-[#3d2511] border border-[#a66d38]" />
+
+          {/* EXACTLY ONE LINE OF TEXT AS EXPLICITLY REQUESTED */}
           <div className="relative z-10 flex flex-col items-center text-center py-2">
-            <div className="inline-flex items-center gap-2 border-2 border-amber-500/80 bg-black/85 px-5 py-2.5 shadow-[0_4px_14px_rgba(0,0,0,0.95)]">
-              <span className="text-base animate-bounce">⛏️</span>
-              <span className="font-pixel text-[11px] sm:text-xs text-amber-300 font-bold uppercase tracking-wider">
-                MINE TO REVEAL PRIZE
+            <div className="inline-flex items-center gap-2 border-2 border-[#3d220b] bg-[#2a1708]/90 px-5 py-2.5 shadow-[inset_1px_1px_0_#8b5527,0_4px_12px_rgba(0,0,0,0.9)]">
+              <span className="font-pixel text-[11px] sm:text-xs text-amber-200 font-bold uppercase tracking-wider">
+                ⛏️ MINE TO REVEAL PRIZE ⛏️
               </span>
-              <span className="text-base animate-bounce">⛏️</span>
             </div>
           </div>
 
-          {/* AUTHENTIC MINECRAFT PROGRESSIVE CRACKS OVERLAY */}
+          {/* PROGRESSIVE FRACTURE CRACKS ON THE WOOD BOXES */}
           {crackStageIndex > 0 && (
             <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
               {CRACK_LEVELS[crackStageIndex].map((crack, idx) => (
                 <div
                   key={idx}
-                  className="absolute bg-black/90 shadow-[0_0_2px_#ffffff]"
+                  className="absolute bg-black/95"
                   style={{
                     left: `${crack.x}%`,
                     top: `${crack.y}%`,
                     width: `${crack.w}%`,
                     height: `${crack.h}%`,
-                    boxShadow: 'inset 1px 1px 0 rgba(255,255,255,0.7), 1px 1px 0 #000',
+                    boxShadow: 'inset 1px 1px 0 rgba(255,255,255,0.4), 1px 1px 0 #1b0e04',
                     imageRendering: 'pixelated',
                   }}
                 />

@@ -2,7 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 
-interface Particle {
+interface CelebrationParticle {
+  id: string;
+  tx: number;
+  ty: number;
+  color: string;
+  size: number;
+}
+
+interface CelebrationBurst {
+  id: number;
+  originX: number;
+  originY: number;
+  particles: CelebrationParticle[];
+}
+
+interface AmbientOrb {
   id: number;
   x: number;
   y: number;
@@ -15,71 +30,41 @@ interface Particle {
 }
 
 export default function MinecraftAmbientParticles() {
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const [ambientOrbs, setAmbientOrbs] = useState<AmbientOrb[]>([]);
+  const [bursts, setBursts] = useState<CelebrationBurst[]>([]);
 
+  // 1. Ambient gentle floating XP orbs
   useEffect(() => {
-    // Generate gentle ambient floating XP orbs
     const interval = setInterval(() => {
       if (typeof window === 'undefined') return;
 
-      setParticles((prev) => {
-        // limit maximum particles
-        if (prev.length > 25) return prev;
+      setAmbientOrbs((prev) => {
+        if (prev.length > 20) return prev;
 
-        const newP: Particle = {
+        const newOrb: AmbientOrb = {
           id: Math.random() + Date.now(),
           x: Math.random() * window.innerWidth,
           y: window.innerHeight + 10,
           vx: (Math.random() - 0.5) * 0.8,
           vy: -(0.8 + Math.random() * 1.2),
           color: Math.random() > 0.4 ? '#80ff20' : '#55ff55',
-          size: 4 + Math.floor(Math.random() * 5),
+          size: 4 + Math.floor(Math.random() * 4),
           life: 0,
-          maxLife: 180 + Math.random() * 120,
+          maxLife: 150 + Math.random() * 80,
         };
-        return [...prev, newP];
+        return [...prev, newOrb];
       });
-    }, 450);
+    }, 550);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Listen to slash burst celebration
-  useEffect(() => {
-    const handleBurst = () => {
-      if (typeof window === 'undefined') return;
-      const burstParticles: Particle[] = [];
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight * 0.7;
-
-      for (let i = 0; i < 30; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 2 + Math.random() * 6;
-        burstParticles.push({
-          id: Math.random() + Date.now(),
-          x: centerX,
-          y: centerY,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          color: ['#fbbf24', '#38bdf8', '#10b981', '#f43f5e', '#a855f7'][Math.floor(Math.random() * 5)],
-          size: 6 + Math.floor(Math.random() * 6),
-          life: 0,
-          maxLife: 60 + Math.random() * 30,
-        });
-      }
-      setParticles((prev) => [...prev, ...burstParticles]);
-    };
-
-    window.addEventListener('minecraft-slash-burst', handleBurst);
-    return () => window.removeEventListener('minecraft-slash-burst', handleBurst);
-  }, []);
-
-  // Animation frame loop
+  // Ambient orbs physics loop (self-cleaning)
   useEffect(() => {
     let animId: number;
 
     const tick = () => {
-      setParticles((prev) =>
+      setAmbientOrbs((prev) =>
         prev
           .map((p) => ({
             ...p,
@@ -87,7 +72,13 @@ export default function MinecraftAmbientParticles() {
             y: p.y + p.vy,
             life: p.life + 1,
           }))
-          .filter((p) => p.life < p.maxLife && p.y > -20 && p.x > -20 && (typeof window !== 'undefined' ? p.x < window.innerWidth + 20 : true))
+          .filter(
+            (p) =>
+              p.life < p.maxLife &&
+              p.y > -20 &&
+              p.x > -20 &&
+              (typeof window !== 'undefined' ? p.x < window.innerWidth + 20 : true)
+          )
       );
       animId = requestAnimationFrame(tick);
     };
@@ -96,12 +87,62 @@ export default function MinecraftAmbientParticles() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
+  // 2. 9th Option Celebratory Slash Burst (Guaranteed auto-disappearing via CSS + timeout)
+  useEffect(() => {
+    const handleBurst = () => {
+      if (typeof window === 'undefined') return;
+
+      const burstId = Date.now() + Math.random();
+      const originX = window.innerWidth / 2;
+      const originY = window.innerHeight * 0.65;
+
+      const colors = ['#fbbf24', '#38bdf8', '#10b981', '#f43f5e', '#a855f7', '#fef08a'];
+      const particles: CelebrationParticle[] = [];
+
+      // 16 radiating directions with 2-3 step particles per ray
+      const numRays = 16;
+      for (let r = 0; r < numRays; r++) {
+        const baseAngle = (r / numRays) * Math.PI * 2 + (Math.random() * 0.15 - 0.075);
+        const rayColor = colors[r % colors.length];
+
+        for (let step = 1; step <= 2; step++) {
+          const distance = step * 120 + Math.random() * 60;
+          particles.push({
+            id: `p-${burstId}-${r}-${step}`,
+            tx: Math.cos(baseAngle) * distance,
+            ty: Math.sin(baseAngle) * distance,
+            color: rayColor,
+            size: Math.floor(Math.random() * 4) + 6,
+          });
+        }
+      }
+
+      const newBurst: CelebrationBurst = {
+        id: burstId,
+        originX,
+        originY,
+        particles,
+      };
+
+      setBursts((prev) => [...prev, newBurst]);
+
+      // FAIL-SAFE CLEANUP: Remove burst DOM nodes completely after CSS animation finishes (750ms)
+      setTimeout(() => {
+        setBursts((prev) => prev.filter((b) => b.id !== burstId));
+      }, 800);
+    };
+
+    window.addEventListener('minecraft-slash-burst', handleBurst);
+    return () => window.removeEventListener('minecraft-slash-burst', handleBurst);
+  }, []);
+
   return (
     <div
       className="fixed inset-0 pointer-events-none z-30 overflow-hidden"
       aria-hidden="true"
     >
-      {particles.map((p) => {
+      {/* Gentle Floating XP Orbs */}
+      {ambientOrbs.map((p) => {
         const progress = p.life / p.maxLife;
         const opacity = progress < 0.2 ? progress / 0.2 : 1 - (progress - 0.2) / 0.8;
 
@@ -121,6 +162,35 @@ export default function MinecraftAmbientParticles() {
           />
         );
       })}
+
+      {/* 9th Option Radiating Bursts - 100% Guaranteed to vanish cleanly */}
+      {bursts.map((burst) => (
+        <div
+          key={burst.id}
+          className="absolute inset-0 pointer-events-none"
+          style={{ transform: `translate3d(${burst.originX}px, ${burst.originY}px, 0)` }}
+        >
+          {burst.particles.map((p) => (
+            <div
+              key={p.id}
+              className="absolute animate-mc-celebration-ray rounded-none"
+              style={
+                {
+                  left: 0,
+                  top: 0,
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  backgroundColor: p.color,
+                  boxShadow: `0 0 8px ${p.color}, inset 1px 1px 0 rgba(255,255,255,0.7)`,
+                  '--burst-x': `${p.tx}px`,
+                  '--burst-y': `${p.ty}px`,
+                  imageRendering: 'pixelated',
+                } as React.CSSProperties
+              }
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 }

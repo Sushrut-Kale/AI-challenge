@@ -107,6 +107,46 @@ body {
   animation: mc-spall-projectile 0.65s cubic-bezier(0.16, 0.88, 0.32, 1) forwards;
 }
 
+/* Celebratory Radiating Burst (Slot 9) - Smoothly shoots outward and completely vanishes */
+@keyframes mc-celebration-ray {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(var(--burst-x), var(--burst-y), 0) scale(0);
+    opacity: 0;
+  }
+}
+
+.animate-mc-celebration-ray {
+  animation: mc-celebration-ray 0.75s cubic-bezier(0.12, 0.82, 0.28, 1) forwards;
+}
+
+/* Brown Box Splitting Animation (Minecraft Wood/Crate Blocks splitting in radiating rays) */
+@keyframes mc-brown-box-split {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate3d(var(--split-x), var(--split-y), 160px) scale(1.6) rotate(var(--rot));
+    opacity: 1;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.9));
+  }
+  100% {
+    transform: translate3d(calc(var(--split-x) * 1.35), calc(var(--split-y) + 70px), 60px) scale(0.3) rotate(calc(var(--rot) * 2));
+    opacity: 0;
+  }
+}
+
+.animate-mc-box-split {
+  animation: mc-brown-box-split 0.7s cubic-bezier(0.16, 0.88, 0.32, 1) forwards;
+}
+
 /* 3D Minecraft Voxel Cube Particle */
 .mc-voxel-cube {
   position: relative;
