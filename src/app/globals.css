@@ -1,0 +1,306 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-grass: #5D8A2E;
+  --color-dirt: #8B6343;
+  --color-stone: #737373;
+  --color-bedrock: #12141a;
+  --color-emerald: #10B981;
+  --color-gold: #FBBF24;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #0c0e14;
+  color: #e5e7eb;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Minecraft pixel font utility */
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: -0.02em;
+}
+
+.pixel-heading {
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.pixel-subheading {
+  font-family: 'Press Start 2P', monospace;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* Custom Minecraft-inspired scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #14161f;
+  border-left: 2px solid #232736;
+}
+::-webkit-scrollbar-thumb {
+  background: #456e21;
+  border: 2px solid #284210;
+  box-shadow: inset 1px 1px 0 #7bb53b, inset -1px -1px 0 #1b2c0b;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5d8a2e;
+}
+
+/* Minecraft Button Bevel System */
+.mc-btn-bevel {
+  position: relative;
+  border-style: solid;
+  border-width: 3px;
+  image-rendering: pixelated;
+  transition: transform 0.08s ease, filter 0.08s ease;
+}
+
+.mc-btn-gold {
+  background: linear-gradient(180deg, #fcd34d 0%, #d97706 100%);
+  border-color: #fef08a #78350f #78350f #fef08a;
+  color: #1a1204;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 0 #451a03;
+}
+.mc-btn-gold:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #451a03;
+}
+.mc-btn-gold:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #451a03;
+}
+
+.mc-btn-emerald {
+  background: linear-gradient(180deg, #34d399 0%, #059669 100%);
+  border-color: #a7f3d0 #022c22 #022c22 #a7f3d0;
+  color: #022c22;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 0 #022c22;
+}
+.mc-btn-emerald:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #022c22;
+}
+.mc-btn-emerald:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #022c22;
+}
+
+.mc-btn-stone {
+  background: linear-gradient(180deg, #737373 0%, #404040 100%);
+  border-color: #a3a3a3 #171717 #171717 #a3a3a3;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000;
+  box-shadow: 0 4px 0 #171717;
+}
+.mc-btn-stone:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #171717;
+}
+.mc-btn-stone:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #171717;
+}
+
+.mc-btn-wood {
+  background: linear-gradient(180deg, #9a6a38 0%, #613e1b 100%);
+  border-color: #bc8e5c #38200b #38200b #bc8e5c;
+  color: #fff4e6;
+  text-shadow: 2px 2px 0 #281404;
+  box-shadow: 0 4px 0 #281404;
+}
+.mc-btn-wood:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #281404;
+}
+.mc-btn-wood:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #281404;
+}
+
+/* Pixel Card Bevel & Style Variants */
+.mc-card {
+  position: relative;
+  border-style: solid;
+  border-width: 3px;
+  image-rendering: pixelated;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.mc-card-stone {
+  background-color: #1e222d;
+  border-color: #4a5268 #0f1118 #0f1118 #4a5268;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.08), inset -2px -2px 0 rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.mc-card-grass {
+  background-color: #1b2615;
+  border-color: #5d8a2e #15200e #15200e #5d8a2e;
+  box-shadow: inset 2px 2px 0 rgba(123, 181, 59, 0.2), inset -2px -2px 0 rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.mc-card-emerald {
+  background-color: #0d261e;
+  border-color: #10b981 #042f24 #042f24 #10b981;
+  box-shadow: inset 2px 2px 0 rgba(52, 211, 153, 0.25), inset -2px -2px 0 rgba(0, 0, 0, 0.6), 0 8px 24px rgba(4, 120, 87, 0.2);
+}
+
+.mc-card-wood {
+  background-color: #241912;
+  border-color: #8b6343 #190f09 #190f09 #8b6343;
+  box-shadow: inset 2px 2px 0 rgba(214, 168, 129, 0.15), inset -2px -2px 0 rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.mc-card-obsidian {
+  background-color: #141121;
+  border-color: #581c87 #090611 #090611 #581c87;
+  box-shadow: inset 2px 2px 0 rgba(168, 85, 247, 0.2), inset -2px -2px 0 rgba(0, 0, 0, 0.7), 0 8px 24px rgba(88, 28, 135, 0.25);
+}
+
+/* Stepped Pixel Corners */
+.pixel-corners {
+  clip-path: polygon(
+    0 8px,
+    4px 8px,
+    4px 4px,
+    8px 4px,
+    8px 0,
+    calc(100% - 8px) 0,
+    calc(100% - 8px) 4px,
+    calc(100% - 4px) 4px,
+    calc(100% - 4px) 8px,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 8px),
+    calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    8px calc(100% - 4px),
+    4px calc(100% - 4px),
+    4px calc(100% - 8px),
+    0 calc(100% - 8px)
+  );
+}
+
+/* Subtle Minecraft Grid Backgrounds */
+.bg-minecraft-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.bg-grass-trim {
+  background-image: repeating-linear-gradient(
+    90deg,
+    #5d8a2e 0px,
+    #5d8a2e 16px,
+    #4d7326 16px,
+    #4d7326 32px,
+    #699e33 32px,
+    #699e33 48px
+  );
+}
+
+/* Minecraft shine effect on hover */
+.mc-shine {
+  position: relative;
+  overflow: hidden;
+}
+.mc-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: rotate(25deg);
+  transition: none;
+  pointer-events: none;
+}
+.mc-shine:hover::after {
+  left: 140%;
+  transition: left 0.7s ease-in-out;
+}
+
+/* Block floating animation */
+@keyframes blockFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: blockFloat 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: blockFloat 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Pulse glow animation for emeralds and portals */
+@keyframes emeraldPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3), inset 0 0 8px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.6), inset 0 0 16px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.pulse-emerald {
+  animation: emeraldPulse 2.5s ease-in-out infinite;
+}
+
+/* Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

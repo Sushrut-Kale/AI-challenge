@@ -89,10 +89,20 @@ export function generateTerrain(
         type = 'stone';
       }
 
+      const inPlaza = Math.sqrt(x * x + z * z) < 8.5;
       const treeSeed = rand();
       const flowerSeed = rand();
-      const hasTree = type === 'grass' && height > WORLD_CONFIG.WATER_LEVEL + 1 && treeSeed < WORLD_CONFIG.TREE_DENSITY;
-      const hasFlower = type === 'grass' && !hasTree && height > WORLD_CONFIG.WATER_LEVEL + 1 && flowerSeed < WORLD_CONFIG.FLOWER_DENSITY;
+      const hasTree =
+        !inPlaza &&
+        type === 'grass' &&
+        height > WORLD_CONFIG.WATER_LEVEL + 1 &&
+        treeSeed < WORLD_CONFIG.TREE_DENSITY;
+      const hasFlower =
+        !inPlaza &&
+        type === 'grass' &&
+        !hasTree &&
+        height > WORLD_CONFIG.WATER_LEVEL + 1 &&
+        flowerSeed < WORLD_CONFIG.FLOWER_DENSITY;
       const flowerType = Math.floor(rand() * 4) as 0 | 1 | 2 | 3;
 
       const isEdge = mask < 0.15;
@@ -118,7 +128,7 @@ export function generateFloatingIslands(seed: number = 99): FloatingIslandData[]
   const islands: FloatingIslandData[] = [
     { x: -35, y: 22, z: -30, radiusX: 8, radiusZ: 6, height: 4 },
     { x: 30, y: 28, z: -25, radiusX: 6, radiusZ: 5, height: 3 },
-    { x: 20, y: 18, z: 35, radiusX: 5, radiusZ: 7, height: 3 },
+    { x: 34, y: 24, z: 28, radiusX: 6, radiusZ: 6, height: 3 },
     { x: -28, y: 25, z: 20, radiusX: 7, radiusZ: 6, height: 4 },
     { x: 0, y: 32, z: -40, radiusX: 9, radiusZ: 8, height: 5 },
   ];

@@ -30,7 +30,7 @@ export default function WorldLoader({ progress = 0 }: WorldLoaderProps) {
       clearInterval(dotInterval);
       clearInterval(tipInterval);
     };
-  }, []);
+  }, [tips.length]);
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f3460]">

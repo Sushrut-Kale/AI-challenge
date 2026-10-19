@@ -1,0 +1,67 @@
+'use client';
+
+import React, { useState } from 'react';
+import SectionContainer from '@/components/layout/SectionContainer';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { EVENT_DATA } from '@/data/event';
+
+export default function FAQSection() {
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+
+  const toggle = (idx: number) => {
+    setOpenIdx(openIdx === idx ? null : idx);
+  };
+
+  const { faqs } = EVENT_DATA;
+
+  return (
+    <SectionContainer id="faqs" variant="alt" showTopSeam>
+      <SectionHeading
+        tag="CLARIFICATIONS & BRIEFING"
+        title="FREQUENTLY ASKED QUESTIONS"
+        subtitle="Verified details on registration, evaluation tracks, round formats, and team parameters."
+      />
+
+      <div className="max-w-3xl mx-auto space-y-3">
+        {faqs.map((faq, idx) => {
+          const isOpen = openIdx === idx;
+
+          return (
+            <div
+              key={idx}
+              className={`border-2 transition-colors ${
+                isOpen
+                  ? 'border-emerald-500/80 bg-[#111e17]'
+                  : 'border-neutral-800 bg-[#12151e] hover:border-neutral-700'
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => toggle(idx)}
+                aria-expanded={isOpen}
+                className="w-full p-4 sm:p-5 flex items-center justify-between gap-4 text-left font-pixel text-xs sm:text-sm text-white select-none outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                data-interactive="true"
+              >
+                <span className="flex items-center gap-3">
+                  <span className="text-emerald-400 font-pixel text-xs shrink-0">
+                    Q{idx + 1}.
+                  </span>
+                  <span>{faq.question}</span>
+                </span>
+                <span className="shrink-0 font-pixel text-xs text-neutral-400">
+                  {isOpen ? '▲' : '▼'}
+                </span>
+              </button>
+
+              {isOpen && (
+                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-1 text-sm font-sans text-neutral-300 leading-relaxed border-t border-white/5 animate-in fade-in duration-150">
+                  {faq.answer}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </SectionContainer>
+  );
+}

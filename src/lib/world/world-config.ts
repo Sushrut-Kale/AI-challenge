@@ -1,4 +1,4 @@
-// World configuration constants
+// World configuration constants — Sunset / Golden Hour Twilight Overworld
 
 export const WORLD_CONFIG = {
   // Island dimensions
@@ -20,70 +20,75 @@ export const WORLD_CONFIG = {
   MAX_TREE_HEIGHT: 7,
 
   // Performance
-  MAX_INSTANCES: 2000,
-  SHADOW_MAP_SIZE: 1024,
+  MAX_INSTANCES: 4000,
+  SHADOW_MAP_SIZE: 2048,
   PIXEL_RATIO_LIMIT: 2,
 
   // Camera
-  CAMERA_FOV: 60,
+  CAMERA_FOV: 55,
   CAMERA_NEAR: 0.1,
-  CAMERA_FAR: 500,
-  CAMERA_INITIAL_POSITION: [40, 35, 55] as [number, number, number],
-  CAMERA_TARGET: [0, 0, 0] as [number, number, number],
+  CAMERA_FAR: 600,
+  CAMERA_INITIAL_POSITION: [46, 30, 52] as [number, number, number],
+  CAMERA_TARGET: [0, 2, 0] as [number, number, number],
 
-  // Fog
-  FOG_COLOR: '#87CEEB',
-  FOG_NEAR: 60,
-  FOG_FAR: 200,
+  // Fog — Twilight sunset horizon dusk tone
+  FOG_COLOR: '#241228',
+  FOG_NEAR: 65,
+  FOG_FAR: 220,
 
-  // Lighting
-  SUN_POSITION: [50, 60, 30] as [number, number, number],
-  SUN_INTENSITY: 2.5,
-  AMBIENT_INTENSITY: 0.6,
-  SKY_COLOR: '#5BB2E8',
-  GROUND_COLOR: '#3D5A1E',
+  // Lighting — Low Golden Hour Sun
+  SUN_POSITION: [-70, 26, -80] as [number, number, number],
+  SUN_INTENSITY: 2.8,
+  AMBIENT_INTENSITY: 0.45,
+  SKY_COLOR: '#1a103c',
+  GROUND_COLOR: '#1f130b',
 } as const;
 
 export const COLORS = {
   // Block colors
-  GRASS_TOP: '#5D8A2E',
-  GRASS_SIDE: '#4E7A28',
-  DIRT: '#8B6343',
-  STONE: '#828282',
-  STONE_DARK: '#6B6B6B',
-  SAND: '#D4C078',
-  GRAVEL: '#9E9E9E',
-  SNOW: '#FFFFFF',
+  GRASS_TOP: '#55822b',
+  GRASS_SIDE: '#466e24',
+  DIRT: '#7c5332',
+  STONE: '#6e6e6e',
+  STONE_DARK: '#4e4e54',
+  SAND: '#c9b46e',
+  GRAVEL: '#888888',
+  SNOW: '#f0f4f8',
 
   // Vegetation
-  LEAVES_OAK: '#2D7D16',
-  LEAVES_OAK_DARK: '#1E6B0A',
-  LEAVES_BIRCH: '#80A755',
-  LOG_OAK: '#7B5928',
-  LOG_TOP: '#9E7B40',
+  LEAVES_OAK: '#2a7416',
+  LEAVES_OAK_DARK: '#1b560a',
+  LEAVES_BIRCH: '#72984a',
+  LOG_OAK: '#684520',
+  LOG_TOP: '#8b6732',
 
   // Water
-  WATER_SURFACE: '#3F76E4',
-  WATER_DEEP: '#1A4FA0',
-  WATER_FOAM: '#7FC4FD',
+  WATER_SURFACE: '#2962c4',
+  WATER_DEEP: '#123b7e',
+  WATER_FOAM: '#6eb8ff',
 
   // Structures
-  STONE_BRICK: '#7A7A7A',
-  COBBLESTONE: '#686868',
-  WOOD_PLANK: '#BC9862',
-  GLASS: '#B0D6F5',
-  CASTLE_STONE: '#6B6B6B',
+  STONE_BRICK: '#74747a',
+  COBBLESTONE: '#5a5a60',
+  WOOD_PLANK: '#a87948',
+  GLASS: '#a0c8ee',
+  CASTLE_STONE: '#62626b',
 
   // Flowers
-  FLOWER_RED: '#FF3030',
-  FLOWER_YELLOW: '#FFD700',
-  FLOWER_BLUE: '#4169E1',
-  FLOWER_ORANGE: '#FF8C00',
+  FLOWER_RED: '#e53935',
+  FLOWER_YELLOW: '#fbc02d',
+  FLOWER_BLUE: '#3949ab',
+  FLOWER_ORANGE: '#fb8c00',
 
-  // Sky
-  SKY_TOP: '#1E3A8A',
-  SKY_HORIZON: '#5BB2E8',
-  SUNSET_LOW: '#FF8C42',
-  SUNSET_ORANGE: '#FF6B35',
-  CLOUD_WHITE: '#FFFFFF',
+  // Sunset & Twilight Atmosphere
+  SKY_ZENITH: '#090d20',
+  SKY_UPPER: '#1e1642',
+  SKY_MID: '#6d1e4e',
+  SKY_HORIZON: '#ea580c',
+  SKY_GLOW: '#fbbf24',
+  SUN_CORE: '#fff7ed',
+  SUN_CORONA: '#f97316',
+  CLOUD_BODY: '#fff0e5',
+  CLOUD_SHADOW: '#c8a8c0',
+  TORCH_FIRE: '#ff9800',
 } as const;
