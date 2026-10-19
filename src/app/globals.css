@@ -84,6 +84,36 @@ body {
   animation: mc-block-shake 0.12s ease-in-out;
 }
 
+/* Authentic Minecraft Block Spalling Effect (Stones flying towards the screen / camera) */
+@keyframes mc-spall-projectile {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    opacity: 1;
+  }
+  45% {
+    /* Bursting forward toward screen with high scale */
+    transform: translate3d(var(--spall-x), var(--spall-y), 240px) scale(2.4) rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z));
+    opacity: 1;
+    filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.8));
+  }
+  100% {
+    /* Tumbling down with gravity past the viewer */
+    transform: translate3d(calc(var(--spall-x) * 1.3), calc(var(--spall-y) + 140px), 100px) scale(1.4) rotateX(calc(var(--rot-x) * 2)) rotateY(calc(var(--rot-y) * 2)) rotateZ(calc(var(--rot-z) * 2));
+    opacity: 0;
+  }
+}
+
+.animate-mc-spall {
+  animation: mc-spall-projectile 0.65s cubic-bezier(0.16, 0.88, 0.32, 1) forwards;
+}
+
+/* 3D Minecraft Voxel Cube Particle */
+.mc-voxel-cube {
+  position: relative;
+  transform-style: preserve-3d;
+  image-rendering: pixelated;
+}
+
 .pixel-heading {
   font-family: 'Press Start 2P', monospace;
   text-transform: uppercase;
