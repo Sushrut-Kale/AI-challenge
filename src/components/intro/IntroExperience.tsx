@@ -6,6 +6,7 @@ import Image from 'next/image';
 import useReducedMotion from '@/hooks/useReducedMotion';
 import EventCountdown from '@/components/ui/EventCountdown';
 import { EVENT_DATA } from '@/data/event';
+import LoginModal from '@/components/auth/LoginModal';
 
 // Dynamic import with SSR disabled
 const IntroScene = dynamic(() => import('./IntroScene'), {
@@ -31,6 +32,7 @@ interface IntroExperienceProps {
 export default function IntroExperience({ onProgressChange }: IntroExperienceProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
   // Track scroll position within the 380vh hero scrollytelling container
@@ -60,10 +62,14 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
   const handleSkipToContent = useCallback(() => {
     const aboutElem = document.getElementById('about');
     if (aboutElem) {
-      aboutElem.scrollIntoView({ behavior: 'smooth' });
+      const targetY = aboutElem.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth',
+      });
     } else if (containerRef.current) {
       window.scrollTo({
-        top: containerRef.current.offsetHeight,
+        top: containerRef.current.offsetTop + containerRef.current.offsetHeight,
         behavior: 'smooth',
       });
     }
@@ -115,11 +121,11 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
 
         {/* Top-Right Discreet Skip Control */}
         {scrollProgress < 0.75 && (
-          <div className="absolute top-4 right-4 z-30 pointer-events-auto animate-in fade-in duration-300">
+          <div className="fixed top-4 right-4 z-[70] pointer-events-auto animate-in fade-in duration-300">
             <button
               type="button"
               onClick={handleSkipToContent}
-              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-3 py-1.5 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
+              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-3.5 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
               aria-label="Skip to main website content"
               data-interactive="true"
             >
@@ -271,12 +277,22 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <a
-                href="#registration"
+                href="https://unstop.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-6 py-2.5 font-pixel text-[10px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
                 data-interactive="true"
               >
-                REGISTER NOW (₹400) →
+                REGISTER ↗
               </a>
+              <button
+                type="button"
+                onClick={() => setIsLoginOpen(true)}
+                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-5 py-2.5 font-pixel text-[10px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all"
+                data-interactive="true"
+              >
+                🔑 LOGIN
+              </button>
               <button
                 type="button"
                 onClick={handleSkipToContent}
@@ -288,6 +304,9 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             </div>
           </div>
         </div>
+
+        {/* Supabase Participant Login Modal */}
+        <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
 
         {/* Bottom Subtitle Tag */}
         <div className="absolute bottom-5 inset-x-0 z-10 flex justify-center pointer-events-none px-4">

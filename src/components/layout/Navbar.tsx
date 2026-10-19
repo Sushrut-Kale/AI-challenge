@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import MinecraftButton from '@/components/ui/MinecraftButton';
+import LoginModal from '@/components/auth/LoginModal';
 import { EVENT_DATA } from '@/data/event';
 
 const NAV_LINKS = [
@@ -23,6 +24,7 @@ interface NavbarProps {
 export default function Navbar({ isIntro = false }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +37,8 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
   // During intro, render ONLY the compact brand lockup (Official Logo + Event Name)
   if (isIntro) {
     return (
-      <header className="fixed inset-x-4 top-4 z-50 flex justify-center pointer-events-auto animate-in fade-in duration-300">
-        <div className="relative">
+      <header className="fixed inset-x-4 top-4 z-40 flex justify-center pointer-events-none animate-in fade-in duration-300">
+        <div className="relative pointer-events-auto">
           {/* Top Grass Trim */}
           <div
             className="absolute inset-x-0 -top-[9px] h-[10px] border-2 border-b-0 border-[#1f2e14]"
@@ -136,16 +138,30 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
             ))}
           </nav>
 
-          {/* Right Action: Register CTA & Mobile Hamburger */}
+          {/* Right Action: Register CTA & Supabase Login */}
           <div className="flex items-center gap-2">
+            {/* Official Registration on Unstop */}
             <a
-              href="#registration"
-              className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-3 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+              href="https://unstop.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-3 sm:px-3.5 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5"
               data-interactive="true"
+              title="Register on Unstop"
             >
-              <span className="sm:hidden">REGISTER</span>
-              <span className="hidden sm:inline">REGISTER NOW ({EVENT_DATA.details.registrationFee})</span>
+              <span>REGISTER ↗</span>
             </a>
+
+            {/* Supabase Participant Team Login */}
+            <button
+              type="button"
+              onClick={() => setIsLoginOpen(true)}
+              className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2.5 sm:px-3 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-purple-200 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1"
+              data-interactive="true"
+              title="Team Portal Login"
+            >
+              <span>🔑 LOGIN</span>
+            </button>
 
             <button
               type="button"
@@ -198,19 +214,35 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
                 </a>
               ))}
             </div>
-            <div className="mt-3 pt-3 border-t border-black/40">
+            <div className="mt-3 pt-3 border-t border-black/40 flex flex-col gap-2">
               <a
-                href="#registration"
+                href="https://unstop.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mc-shine block w-full text-center border-2 border-[#7a4f05] bg-[#fbbf24] py-2 font-pixel text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)]"
                 data-interactive="true"
               >
-                REGISTER NOW ({EVENT_DATA.details.registrationFee})
+                REGISTER ON UNSTOP ↗
               </a>
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setIsLoginOpen(true);
+                }}
+                className="block w-full text-center border-2 border-[#3b0764] bg-[#2e0854] py-2 font-pixel text-[9px] uppercase tracking-wider text-purple-200 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5)]"
+                data-interactive="true"
+              >
+                🔑 TEAM LOGIN
+              </button>
             </div>
           </div>
         )}
       </div>
+
+      {/* Supabase Team Login Modal */}
+      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </header>
   );
 }

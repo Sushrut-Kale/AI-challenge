@@ -299,8 +299,8 @@ export const SECTION_THEME_MAP: Record<string, ThemeId> = {
   timeline: 'deep-cave',
   rules: 'end',
   prizes: 'nether',
-  sponsors: 'deep-cave',
-  faqs: 'redstone-lab',
-  contact: 'nether',
+  sponsors: 'overworld',
+  faqs: 'deep-cave',
+  contact: 'redstone-lab',
   registration: 'nether',
 };

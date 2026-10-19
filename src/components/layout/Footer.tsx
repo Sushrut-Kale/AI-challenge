@@ -96,8 +96,14 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs font-pixel text-neutral-400">
               <li>
-                <a href="#registration" className="hover:text-amber-400 transition-colors" data-interactive="true">
-                  ★ Register (₹400 / Team)
+                <a
+                  href="https://unstop.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-400 transition-colors text-amber-300 font-semibold"
+                  data-interactive="true"
+                >
+                  ★ Register ↗
                 </a>
               </li>
               <li>

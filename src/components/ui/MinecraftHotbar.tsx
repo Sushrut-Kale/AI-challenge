@@ -74,7 +74,7 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
     name: 'Eye of Ender',
     sectionId: '#registration',
     icon: '/assets/items/ender_eye.png',
-    tooltip: 'Register Desk (₹400)',
+    tooltip: 'Register ↗',
     rarity: 'epic',
   },
   {

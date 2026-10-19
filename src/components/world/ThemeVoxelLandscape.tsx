@@ -92,6 +92,9 @@ export default function ThemeVoxelLandscape() {
   const islands = useMemo(() => generateIslands(), []);
   const islandGroupsRef = useRef<Array<THREE.Group | null>>([]);
   const cloudsRef = useRef<THREE.Group>(null);
+  const endCrystalRef = useRef<THREE.Group>(null);
+  const redstoneCoreRef = useRef<THREE.Group>(null);
+  const lavaPulseRef = useRef<THREE.MeshStandardMaterial>(null);
 
   // Colors for active theme
   const topColor = useMemo(() => new THREE.Color(theme.features.primaryBlockColor), [theme]);
@@ -111,9 +114,27 @@ export default function ThemeVoxelLandscape() {
       }
     });
 
-    // Slow cloud drift
+    // Slow cloud drift for Overworld
     if (cloudsRef.current && theme.features.hasClouds) {
-      cloudsRef.current.position.x = ((t * 0.5 + 40) % 80) - 40;
+      cloudsRef.current.position.x = ((t * 0.6 + 40) % 90) - 45;
+    }
+
+    // End Crystal spinning animation
+    if (endCrystalRef.current) {
+      endCrystalRef.current.rotation.y = t * 1.4;
+      endCrystalRef.current.rotation.x = Math.sin(t * 0.8) * 0.2;
+      endCrystalRef.current.position.y = 8 + Math.sin(t * 1.8) * 0.4;
+    }
+
+    // Redstone AI core rotation and pulsation
+    if (redstoneCoreRef.current) {
+      redstoneCoreRef.current.rotation.y = t * 1.8;
+      redstoneCoreRef.current.rotation.z = Math.cos(t * 1.2) * 0.15;
+    }
+
+    // Lava/Magma thermal pulse
+    if (lavaPulseRef.current) {
+      lavaPulseRef.current.emissiveIntensity = 1.4 + Math.sin(t * 3.5) * 0.6;
     }
   });
 
@@ -141,7 +162,7 @@ export default function ThemeVoxelLandscape() {
                   roughness={isEmissive ? 0.2 : 0.8}
                   metalness={0.1}
                   emissive={isEmissive ? emissiveColor : undefined}
-                  emissiveIntensity={isEmissive ? 1.5 : 0}
+                  emissiveIntensity={isEmissive ? 1.6 : 0}
                 />
               </mesh>
             );
@@ -149,39 +170,224 @@ export default function ThemeVoxelLandscape() {
         </group>
       ))}
 
-      {/* Minecraft Voxel Clouds (When enabled by theme) */}
-      {theme.features.hasClouds && (
-        <group ref={cloudsRef} position={[0, 14, -32]}>
-          <mesh position={[-15, 0, 0]}>
-            <boxGeometry args={[12, 1.2, 8]} />
-            <meshStandardMaterial color="#ffffff" transparent opacity={0.35} roughness={0.9} />
-          </mesh>
-          <mesh position={[12, -2, -6]}>
-            <boxGeometry args={[16, 1.4, 9]} />
-            <meshStandardMaterial color="#ffffff" transparent opacity={0.32} roughness={0.9} />
-          </mesh>
-          <mesh position={[0, 3, -12]}>
-            <boxGeometry args={[20, 1.5, 10]} />
-            <meshStandardMaterial color="#ffffff" transparent opacity={0.28} roughness={0.9} />
-          </mesh>
+      {/* OVERWORLD THEME: Voxel Oak Trees & Drifting Clouds */}
+      {theme.id === 'overworld' && (
+        <>
+          {/* Voxel Oak Tree on Center Island */}
+          <group position={[-14, -2, -22]}>
+            {/* Trunk */}
+            <mesh position={[0, 1.5, 0]}>
+              <boxGeometry args={[0.8, 3, 0.8]} />
+              <meshStandardMaterial color="#5c3d21" roughness={0.9} />
+            </mesh>
+            {/* Leaves Tier 1 */}
+            <mesh position={[0, 3.2, 0]}>
+              <boxGeometry args={[3, 1.4, 3]} />
+              <meshStandardMaterial color="#2e7d32" roughness={0.8} />
+            </mesh>
+            {/* Leaves Tier 2 */}
+            <mesh position={[0, 4.4, 0]}>
+              <boxGeometry args={[2, 1.2, 2]} />
+              <meshStandardMaterial color="#388e3c" roughness={0.8} />
+            </mesh>
+          </group>
+
+          {/* Voxel Oak Tree on Right Island */}
+          <group position={[16, 4, -26]}>
+            <mesh position={[0, 1.5, 0]}>
+              <boxGeometry args={[0.8, 3, 0.8]} />
+              <meshStandardMaterial color="#5c3d21" roughness={0.9} />
+            </mesh>
+            <mesh position={[0, 3.2, 0]}>
+              <boxGeometry args={[2.8, 1.3, 2.8]} />
+              <meshStandardMaterial color="#2e7d32" roughness={0.8} />
+            </mesh>
+            <mesh position={[0, 4.3, 0]}>
+              <boxGeometry args={[1.8, 1, 1.8]} />
+              <meshStandardMaterial color="#4caf50" roughness={0.8} />
+            </mesh>
+          </group>
+
+          {/* Minecraft Voxel Clouds */}
+          <group ref={cloudsRef} position={[0, 14, -32]}>
+            <mesh position={[-16, 0, 0]}>
+              <boxGeometry args={[14, 1.4, 9]} />
+              <meshStandardMaterial color="#ffffff" transparent opacity={0.38} roughness={0.9} />
+            </mesh>
+            <mesh position={[12, -2, -6]}>
+              <boxGeometry args={[18, 1.5, 10]} />
+              <meshStandardMaterial color="#ffffff" transparent opacity={0.35} roughness={0.9} />
+            </mesh>
+            <mesh position={[0, 3, -12]}>
+              <boxGeometry args={[22, 1.6, 12]} />
+              <meshStandardMaterial color="#ffffff" transparent opacity={0.3} roughness={0.9} />
+            </mesh>
+          </group>
+        </>
+      )}
+
+      {/* REDSTONE LAB THEME: Animated AI Neural Core & Circuit Grids */}
+      {theme.id === 'redstone-lab' && (
+        <group>
+          {/* Animated Central AI Core */}
+          <group ref={redstoneCoreRef} position={[0, 4, -28]}>
+            {/* Floating Outer Cyber Cube */}
+            <mesh>
+              <boxGeometry args={[2.5, 2.5, 2.5]} />
+              <meshStandardMaterial color="#1e293b" wireframe />
+            </mesh>
+            {/* Glowing Redstone Inner Core */}
+            <mesh>
+              <boxGeometry args={[1.6, 1.6, 1.6]} />
+              <meshStandardMaterial
+                color="#ef4444"
+                emissive="#ef4444"
+                emissiveIntensity={2.5}
+                roughness={0.2}
+              />
+            </mesh>
+            {/* Data Conduits */}
+            <mesh position={[0, 2, 0]}>
+              <boxGeometry args={[0.2, 2.5, 0.2]} />
+              <meshBasicMaterial color="#06b6d4" />
+            </mesh>
+            <mesh position={[0, -2, 0]}>
+              <boxGeometry args={[0.2, 2.5, 0.2]} />
+              <meshBasicMaterial color="#ef4444" />
+            </mesh>
+          </group>
+
+          {/* Active Redstone Lines & Repeaters */}
+          <group position={[0, -5, -16]}>
+            <mesh position={[-6, 0, 0]}>
+              <boxGeometry args={[12, 0.1, 0.3]} />
+              <meshBasicMaterial color="#ef4444" />
+            </mesh>
+            <mesh position={[6, 0, 0]}>
+              <boxGeometry args={[12, 0.1, 0.3]} />
+              <meshBasicMaterial color="#06b6d4" />
+            </mesh>
+            <mesh position={[0, 0, 4]}>
+              <boxGeometry args={[0.3, 0.1, 10]} />
+              <meshBasicMaterial color="#ef4444" />
+            </mesh>
+          </group>
         </group>
       )}
 
-      {/* Redstone Laboratory Circuit Lines (When in Redstone Lab theme) */}
-      {theme.features.hasCircuitLines && (
-        <group position={[0, -5, -16]}>
-          <mesh position={[-6, 0, 0]}>
-            <boxGeometry args={[10, 0.08, 0.25]} />
-            <meshBasicMaterial color="#ef4444" />
-          </mesh>
-          <mesh position={[6, 0, 0]}>
-            <boxGeometry args={[10, 0.08, 0.25]} />
-            <meshBasicMaterial color="#06b6d4" />
-          </mesh>
-          <mesh position={[0, 0, 4]}>
-            <boxGeometry args={[0.25, 0.08, 8]} />
-            <meshBasicMaterial color="#ef4444" />
-          </mesh>
+      {/* DEEP CAVE THEME: Stalactites, Stalagmites & Glowing Emerald Ore Formations */}
+      {theme.id === 'deep-cave' && (
+        <group>
+          {/* Hanging Stalactites from ceiling */}
+          <group position={[0, 16, -24]}>
+            <mesh position={[-8, -2, 0]} rotation={[0, 0, Math.PI]}>
+              <coneGeometry args={[1.2, 4.5, 4]} />
+              <meshStandardMaterial color="#1a1f24" roughness={0.9} />
+            </mesh>
+            <mesh position={[6, -2.5, -2]} rotation={[0, 0, Math.PI]}>
+              <coneGeometry args={[1.5, 5.5, 4]} />
+              <meshStandardMaterial color="#1e293b" roughness={0.9} />
+            </mesh>
+            <mesh position={[0, -3, 2]} rotation={[0, 0, Math.PI]}>
+              <coneGeometry args={[1.8, 6, 4]} />
+              <meshStandardMaterial color="#0f172a" roughness={0.9} />
+            </mesh>
+          </group>
+
+          {/* Glowing Emerald Crystals on Lower Shelf */}
+          <group position={[12, -7, -18]}>
+            <mesh position={[0, 1.2, 0]} rotation={[0.2, 0.3, 0.1]}>
+              <boxGeometry args={[0.8, 2.2, 0.8]} />
+              <meshStandardMaterial
+                color="#00e676"
+                emissive="#00e676"
+                emissiveIntensity={2.8}
+                roughness={0.1}
+              />
+            </mesh>
+            <mesh position={[-0.8, 0.8, 0.4]} rotation={[-0.3, 0.2, -0.2]}>
+              <boxGeometry args={[0.6, 1.6, 0.6]} />
+              <meshStandardMaterial
+                color="#10b981"
+                emissive="#10b981"
+                emissiveIntensity={2.2}
+                roughness={0.1}
+              />
+            </mesh>
+          </group>
+        </group>
+      )}
+
+      {/* END DIMENSION THEME: Obsidian Pillar & Floating Animated End Crystal */}
+      {theme.id === 'end' && (
+        <group>
+          {/* Mighty Obsidian Pillar */}
+          <group position={[0, 0, -32]}>
+            <mesh position={[0, 1, 0]}>
+              <boxGeometry args={[4, 12, 4]} />
+              <meshStandardMaterial color="#120c1f" roughness={0.5} metalness={0.3} />
+            </mesh>
+            {/* Bedrock Base Cap */}
+            <mesh position={[0, 7.2, 0]}>
+              <boxGeometry args={[4.4, 0.6, 4.4]} />
+              <meshStandardMaterial color="#2d2238" roughness={0.9} />
+            </mesh>
+          </group>
+
+          {/* Floating Spinning End Crystal */}
+          <group ref={endCrystalRef} position={[0, 8.5, -32]}>
+            {/* Outer Glass Cube */}
+            <mesh>
+              <boxGeometry args={[1.8, 1.8, 1.8]} />
+              <meshStandardMaterial
+                color="#e9d5ff"
+                transparent
+                opacity={0.45}
+                roughness={0.1}
+              />
+            </mesh>
+            {/* Inner Rotating Purple Crystal Core */}
+            <mesh rotation={[Math.PI / 4, 0, Math.PI / 4]}>
+              <boxGeometry args={[1.1, 1.1, 1.1]} />
+              <meshStandardMaterial
+                color="#c084fc"
+                emissive="#a855f7"
+                emissiveIntensity={3.2}
+                roughness={0.1}
+              />
+            </mesh>
+          </group>
+        </group>
+      )}
+
+      {/* NETHER THEME: Molten Magma Fissures & Basalt Spires */}
+      {theme.id === 'nether' && (
+        <group>
+          {/* Jagged Basalt Spire */}
+          <group position={[-12, -4, -20]}>
+            <mesh position={[0, 3, 0]}>
+              <boxGeometry args={[2, 6, 2]} />
+              <meshStandardMaterial color="#1c1917" roughness={0.95} />
+            </mesh>
+            <mesh position={[1, 1, 1]}>
+              <boxGeometry args={[1.5, 3, 1.5]} />
+              <meshStandardMaterial color="#292524" roughness={0.95} />
+            </mesh>
+          </group>
+
+          {/* Blazing Magma Chamber Blocks */}
+          <group position={[10, -5, -20]}>
+            <mesh position={[0, 0, 0]}>
+              <boxGeometry args={[4, 1.5, 3]} />
+              <meshStandardMaterial
+                ref={lavaPulseRef}
+                color="#ea580c"
+                emissive="#f97316"
+                emissiveIntensity={1.8}
+                roughness={0.4}
+              />
+            </mesh>
+          </group>
         </group>
       )}
     </group>

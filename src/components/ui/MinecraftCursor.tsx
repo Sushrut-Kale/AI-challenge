@@ -33,7 +33,7 @@ export default function MinecraftCursor() {
     const mouse = { x: -100, y: -100 };
     let lastParticleTime = 0;
     const particles: Particle[] = [];
-    const colors = ['#22d3ee', '#38bdf8', '#67e8f9', '#10b981', '#fbbf24', '#ffffff'];
+    const colors = ['#fbbf24', '#f59e0b', '#38bdf8', '#22d3ee', '#10b981', '#ffffff'];
     let animId: number;
 
     const canvas = canvasRef.current;
@@ -53,7 +53,8 @@ export default function MinecraftCursor() {
       mouse.y = e.clientY;
 
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`;
+        // Offset so the hammer striking face is precisely at (mouse.x, mouse.y)
+        cursorRef.current.style.transform = `translate3d(${mouse.x - 8}px, ${mouse.y - 6}px, 0)`;
       }
 
       // Check hovered interactive target
@@ -70,18 +71,18 @@ export default function MinecraftCursor() {
         setIsTextInput(isText);
       }
 
-      // Trailing critical hit & diamond sparkle particles
+      // Trailing anvil/diamond sparks when moving
       const now = performance.now();
-      if (!prefersReducedMotion && now - lastParticleTime > 40 && particles.length < 24) {
+      if (!prefersReducedMotion && now - lastParticleTime > 45 && particles.length < 24) {
         lastParticleTime = now;
         particles.push({
-          x: mouse.x + (Math.random() * 8 - 4),
-          y: mouse.y + 14 + (Math.random() * 6 - 3),
-          size: Math.floor(Math.random() * 3) + 3,
-          alpha: 0.9,
+          x: mouse.x + (Math.random() * 6 - 3),
+          y: mouse.y + 6 + (Math.random() * 6 - 3),
+          size: Math.floor(Math.random() * 2) + 2,
+          alpha: 0.85,
           color: colors[Math.floor(Math.random() * colors.length)],
-          vx: (Math.random() - 0.5) * 1.2,
-          vy: Math.random() * 1.2 + 0.4,
+          vx: (Math.random() - 0.5) * 1.0,
+          vy: Math.random() * 1.0 + 0.3,
         });
       }
     };
@@ -89,15 +90,15 @@ export default function MinecraftCursor() {
     const handleMouseDown = (e: MouseEvent) => {
       setIsClicking(true);
 
-      // Spawn burst of critical hit sparkles on click!
+      // Spawn burst of smithing hammer impact sparks on click!
       if (!prefersReducedMotion) {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 9; i++) {
           const angle = Math.random() * Math.PI * 2;
-          const speed = Math.random() * 2.5 + 1.2;
+          const speed = Math.random() * 3.2 + 1.5;
           particles.push({
             x: e.clientX,
             y: e.clientY,
-            size: Math.floor(Math.random() * 3) + 4,
+            size: Math.floor(Math.random() * 3) + 3,
             alpha: 1,
             color: colors[Math.floor(Math.random() * colors.length)],
             vx: Math.cos(angle) * speed,
@@ -122,7 +123,7 @@ export default function MinecraftCursor() {
           const p = particles[i];
           p.x += p.vx;
           p.y += p.vy;
-          p.alpha -= 0.035;
+          p.alpha -= 0.04;
 
           if (p.alpha <= 0) {
             particles.splice(i, 1);
@@ -131,7 +132,7 @@ export default function MinecraftCursor() {
 
           ctx.fillStyle = p.color;
           ctx.globalAlpha = p.alpha;
-          // Minecraft square block particle
+          // Minecraft block particle
           ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
         }
         ctx.globalAlpha = 1;
@@ -154,7 +155,7 @@ export default function MinecraftCursor() {
 
   return (
     <>
-      {/* Background canvas for sword sparkles */}
+      {/* Background canvas for sparks */}
       {!prefersReducedMotion && (
         <canvas
           ref={canvasRef}
@@ -164,7 +165,7 @@ export default function MinecraftCursor() {
         />
       )}
 
-      {/* Main Big Minecraft Diamond Sword Cursor */}
+      {/* Main Character with Hammer Cursor */}
       <div
         ref={cursorRef}
         aria-hidden="true"
@@ -176,70 +177,134 @@ export default function MinecraftCursor() {
         }}
       >
         <div
-          className="relative transition-transform duration-75 ease-out select-none"
+          className="relative transition-transform duration-100 select-none"
           style={{
-            transformOrigin: '4px 4px',
-            transform: isClicking
-              ? 'rotate(-38deg) scale(1.18) translate(-2px, 6px)'
-              : isHovering
-              ? 'scale(1.12) rotate(6deg)'
-              : 'scale(1) rotate(0deg)',
+            transform: isHovering ? 'scale(1.1)' : 'scale(1)',
             filter: isHovering
-              ? 'drop-shadow(0 0 10px rgba(251,191,36,0.9)) drop-shadow(0 0 16px rgba(16,185,129,0.7))'
-              : 'drop-shadow(0 4px 8px rgba(0,0,0,0.85))',
+              ? 'drop-shadow(0 0 8px rgba(251,191,36,0.95)) drop-shadow(0 0 14px rgba(34,211,238,0.7))'
+              : 'drop-shadow(0 3px 6px rgba(0,0,0,0.85))',
           }}
         >
-          {/* Authentic Minecraft Smithing Hammer Pixel Art SVG (Striking Hotspot at 4, 4) */}
+          {/* Animated SVG Character (Steve/Agent) holding Hammer */}
           <svg
-            width="38"
-            height="38"
-            viewBox="0 0 38 38"
+            width="56"
+            height="56"
+            viewBox="0 0 56 56"
             fill="none"
             style={{ imageRendering: 'pixelated' }}
+            className="overflow-visible"
           >
-            {/* Hammer Head - Heavy Double-Beveled Steel Anvil Head */}
-            {/* Dark Outline */}
-            <rect x="0" y="2" width="16" height="12" fill="#0f172a" rx="1" />
-            <rect x="2" y="0" width="12" height="16" fill="#0f172a" rx="1" />
+            {/* CHARACTER BODY (Left Side) */}
+            <g
+              style={{
+                transformOrigin: '28px 46px',
+                transform: isClicking
+                  ? 'rotate(8deg) translateY(2px)'
+                  : isHovering
+                  ? 'translateY(-1px)'
+                  : 'none',
+                transition: 'transform 80ms ease-out',
+              }}
+            >
+              {/* Back Arm / Left Arm */}
+              <rect x="20" y="24" width="4" height="12" fill="#006666" rx="0.5" />
+              <rect x="20" y="31" width="4" height="5" fill="#d49b72" rx="0.5" />
 
-            {/* Iron / Steel Face Plates */}
-            <rect x="2" y="3" width="12" height="10" fill="#475569" />
-            <rect x="3" y="2" width="10" height="12" fill="#64748b" />
-            <rect x="3" y="3" width="6" height="5" fill="#cbd5e1" />
-            <rect x="2" y="2" width="4" height="4" fill="#f8fafc" />
+              {/* Legs */}
+              {/* Left leg */}
+              <rect x="22" y="38" width="5" height="11" fill="#1e293b" />
+              <rect x="22" y="38" width="5" height="8" fill="#1d4ed8" />
+              <rect x="22" y="46" width="5" height="3" fill="#0f172a" />
+              {/* Right leg */}
+              <rect x="28" y="38" width="5" height="11" fill="#1e293b" />
+              <rect x="28" y="38" width="5" height="8" fill="#2563eb" />
+              <rect x="28" y="46" width="5" height="3" fill="#0f172a" />
 
-            {/* Steel Striking Edge Highlight */}
-            <rect x="1" y="4" width="2" height="8" fill="#e2e8f0" />
-            <rect x="13" y="4" width="2" height="8" fill="#334155" />
+              {/* Torso - Agentcraft Cyan Shirt */}
+              <rect x="22" y="23" width="11" height="15" fill="#0d9488" rx="1" />
+              <rect x="24" y="23" width="7" height="14" fill="#14b8a6" />
+              <rect x="25" y="24" width="5" height="3" fill="#d49b72" /> {/* Neck */}
+              <rect x="22" y="36" width="11" height="2" fill="#042f2e" /> {/* Belt */}
 
-            {/* Gold / Brass Reinforcement Collar Socket */}
-            <rect x="7" y="12" width="6" height="4" fill="#78350f" />
-            <rect x="8" y="13" width="4" height="3" fill="#fbbf24" />
-            <rect x="9" y="14" width="2" height="1" fill="#fef08a" />
+              {/* Character Head */}
+              {/* Hair Base */}
+              <rect x="21" y="10" width="13" height="13" fill="#382215" rx="1" />
+              <rect x="21" y="10" width="13" height="4" fill="#24140b" />
+              {/* Skin */}
+              <rect x="22" y="14" width="11" height="9" fill="#d49b72" />
+              {/* Hair Bangs */}
+              <rect x="21" y="12" width="3" height="4" fill="#382215" />
+              <rect x="31" y="12" width="3" height="4" fill="#382215" />
+              <rect x="24" y="13" width="7" height="2" fill="#382215" />
+              {/* Eyes */}
+              <rect x="23" y="16" width="3" height="2" fill="#ffffff" />
+              <rect x="24" y="16" width="2" height="2" fill="#2563eb" /> {/* Eye pupil */}
+              <rect x="29" y="16" width="3" height="2" fill="#ffffff" />
+              <rect x="30" y="16" width="2" height="2" fill="#2563eb" /> {/* Eye pupil */}
+              {/* Nose & Mouth */}
+              <rect x="26" y="18" width="3" height="2" fill="#b97c55" />
+              <rect x="25" y="20" width="5" height="2" fill="#6c3b24" />
+            </g>
 
-            {/* Angled Oak Wood Shaft */}
-            <rect x="11" y="16" width="4" height="4" fill="#382516" />
-            <rect x="12" y="17" width="3" height="3" fill="#78471f" />
-            <rect x="14" y="19" width="4" height="4" fill="#382516" />
-            <rect x="15" y="20" width="3" height="3" fill="#a06028" />
-            <rect x="17" y="22" width="4" height="4" fill="#382516" />
-            <rect x="18" y="23" width="3" height="3" fill="#78471f" />
-            <rect x="20" y="25" width="4" height="4" fill="#382516" />
-            <rect x="21" y="26" width="3" height="3" fill="#a06028" />
-            <rect x="23" y="28" width="4" height="4" fill="#382516" />
-            <rect x="24" y="29" width="3" height="3" fill="#78471f" />
+            {/* SWINGING RIGHT ARM + HAMMER GROUP */}
+            <g
+              style={{
+                transformOrigin: '28px 24px', // Right shoulder pivot
+                transform: isClicking
+                  ? 'rotate(-55deg) translate(-10px, 8px)'
+                  : isHovering
+                  ? 'rotate(-10deg) translate(-1px, -2px)'
+                  : 'rotate(0deg)',
+                transition: 'transform 70ms cubic-bezier(0.18, 0.89, 0.32, 1.28)',
+              }}
+            >
+              {/* Right Arm (Reaching forward towards hammer) */}
+              <rect x="27" y="22" width="6" height="5" fill="#0d9488" rx="0.5" />
+              <rect x="23" y="20" width="7" height="4" fill="#14b8a6" />
+              <rect x="18" y="18" width="7" height="4" fill="#d49b72" /> {/* Hand gripping */}
 
-            {/* Hammer Pommel / End Cap */}
-            <rect x="26" y="31" width="5" height="5" fill="#0f172a" />
-            <rect x="27" y="32" width="3" height="3" fill="#94a3b8" />
-            <rect x="28" y="33" width="1" height="1" fill="#f8fafc" />
+              {/* MINECRAFT SMITHING HAMMER */}
+              {/* Wooden Handle */}
+              <rect x="15" y="14" width="4" height="15" fill="#3d2314" transform="rotate(-30 17 21)" />
+              <rect x="16" y="15" width="2" height="13" fill="#854d0e" transform="rotate(-30 17 21)" />
+              {/* Gold Collar Band */}
+              <rect x="13" y="11" width="5" height="3" fill="#fbbf24" transform="rotate(-30 15 12)" />
 
-            {/* Glowing Golden Sparkle when hovering */}
-            {isHovering && (
+              {/* Heavy Double-Beveled Steel Anvil Head */}
+              {/* Dark Outline */}
+              <rect x="2" y="2" width="14" height="10" fill="#0f172a" rx="1" />
+              <rect x="4" y="0" width="10" height="14" fill="#0f172a" rx="1" />
+
+              {/* Steel Head Face */}
+              <rect x="3" y="2" width="12" height="10" fill="#475569" />
+              <rect x="4" y="1" width="10" height="12" fill="#64748b" />
+              {/* Metallic Highlights */}
+              <rect x="4" y="2" width="5" height="4" fill="#cbd5e1" />
+              <rect x="3" y="1" width="3" height="3" fill="#f8fafc" />
+              <rect x="2" y="3" width="2" height="6" fill="#f1f5f9" /> {/* Striking face */}
+              <rect x="12" y="3" width="2" height="6" fill="#1e293b" /> {/* Back face */}
+
+              {/* Gold Core Accent on Hammer */}
+              <rect x="7" y="5" width="4" height="4" fill="#d97706" />
+              <rect x="8" y="6" width="2" height="2" fill="#fef08a" />
+            </g>
+
+            {/* IMPACT SPARK AT STRIKE POINT (when clicking) */}
+            {isClicking && (
+              <g className="animate-ping">
+                <rect x="0" y="0" width="6" height="6" fill="#fbbf24" />
+                <rect x="1" y="1" width="4" height="4" fill="#ffffff" />
+                <rect x="-3" y="2" width="12" height="2" fill="#38bdf8" />
+                <rect x="2" y="-3" width="2" height="12" fill="#38bdf8" />
+              </g>
+            )}
+
+            {/* Hover Sparkle */}
+            {isHovering && !isClicking && (
               <g className="animate-pulse">
-                <rect x="0" y="0" width="2" height="2" fill="#fbbf24" />
-                <rect x="14" y="2" width="2" height="2" fill="#fef08a" />
-                <rect x="4" y="14" width="2" height="2" fill="#38bdf8" />
+                <rect x="0" y="0" width="3" height="3" fill="#fbbf24" />
+                <rect x="14" y="0" width="2" height="2" fill="#fef08a" />
+                <rect x="2" y="12" width="2" height="2" fill="#38bdf8" />
               </g>
             )}
           </svg>
