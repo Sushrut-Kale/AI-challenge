@@ -18,7 +18,16 @@ export default function RulesSection() {
         subtitle="Verified team parameters, evaluation streams, and submission standards from the official AGENTCRAFT briefing."
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
+        {/* Minecraft Enchanting Table Galactic Runes (Section Effect) */}
+        <div className="pointer-events-none absolute -top-8 left-1/4 hidden md:flex gap-8 select-none z-20">
+          <span className="font-pixel text-xs text-cyan-300 animate-rune-drift" style={{ animationDelay: '0s' }}>ᔑ</span>
+          <span className="font-pixel text-xs text-purple-300 animate-rune-drift" style={{ animationDelay: '0.8s' }}>ᓵ</span>
+          <span className="font-pixel text-xs text-sky-400 animate-rune-drift" style={{ animationDelay: '1.6s' }}>ᒷ</span>
+          <span className="font-pixel text-xs text-cyan-200 animate-rune-drift" style={{ animationDelay: '2.4s' }}>⎓</span>
+          <span className="font-pixel text-xs text-purple-400 animate-rune-drift" style={{ animationDelay: '3.1s' }}>ꖌ</span>
+        </div>
+
         {/* Left Column: Team & Registration Parameters */}
         <div className="lg:col-span-5 space-y-6">
           <PixelCard

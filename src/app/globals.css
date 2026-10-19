@@ -318,6 +318,137 @@ body {
   box-shadow: inset 2px 2px 0 #7a5438, inset -2px -2px 0 #1b120a, 0 6px 16px rgba(0,0,0,0.7);
 }
 
+/* 1. Minecraft Torch Flame Flicker & Glow */
+@keyframes mcTorchFlicker {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.7));
+  }
+  25% {
+    transform: scale(1.08, 0.95) translateY(-1px);
+    filter: drop-shadow(0 0 14px rgba(245, 158, 11, 0.9));
+  }
+  50% {
+    transform: scale(0.96, 1.05) translateY(1px);
+    filter: drop-shadow(0 0 6px rgba(234, 88, 12, 0.6));
+  }
+  75% {
+    transform: scale(1.04, 0.98) translateY(-0.5px);
+    filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.85));
+  }
+}
+.animate-torch-flicker {
+  animation: mcTorchFlicker 0.9s ease-in-out infinite;
+}
+
+/* 2. Redstone Energy Circuit Pulse */
+@keyframes redstonePulse {
+  0% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 4px #ef4444);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: drop-shadow(0 0 14px #dc2626);
+  }
+  100% {
+    background-position: 0% 50%;
+    filter: drop-shadow(0 0 4px #ef4444);
+  }
+}
+.animate-redstone-pulse {
+  background-size: 200% 200%;
+  animation: redstonePulse 2.2s linear infinite;
+}
+
+/* 3. Minecraft Enchanted Item Foil Glimmer */
+@keyframes enchantedFoil {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 200%;
+  }
+}
+.mc-enchanted-foil {
+  position: relative;
+  overflow: hidden;
+}
+.mc-enchanted-foil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(168, 85, 247, 0.25) 40%,
+    rgba(236, 72, 153, 0.3) 50%,
+    rgba(56, 189, 248, 0.25) 60%,
+    transparent 80%
+  );
+  background-size: 250% 250%;
+  animation: enchantedFoil 4s linear infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* 4. Galactic Enchanting Runes Drift */
+@keyframes runeDrift {
+  0% {
+    transform: translateY(0) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  70% {
+    opacity: 0.7;
+    transform: translateY(-24px) scale(1.1) rotate(6deg);
+  }
+  100% {
+    transform: translateY(-48px) scale(0.9) rotate(-6deg);
+    opacity: 0;
+  }
+}
+.animate-rune-drift {
+  animation: runeDrift 3.5s ease-out infinite;
+}
+
+/* 5. Minecraft Beacon Beam Pulse */
+@keyframes beaconBeam {
+  0%, 100% {
+    opacity: 0.6;
+    filter: drop-shadow(0 0 10px #38bdf8);
+  }
+  50% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 24px #0ea5e9);
+  }
+}
+.animate-beacon-beam {
+  animation: beaconBeam 2s ease-in-out infinite;
+}
+
+/* 6. Nether Portal Swirl */
+@keyframes portalSwirl {
+  0% {
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    background-position: 100% 100%;
+    filter: hue-rotate(25deg);
+  }
+  100% {
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg);
+  }
+}
+.animate-portal-swirl {
+  background-size: 200% 200%;
+  animation: portalSwirl 6s ease-in-out infinite;
+}
+
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -82,14 +82,23 @@ export default function TimelineSection() {
                       className="w-10 h-auto object-contain filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                     />
                   ) : (
-                    <div className="w-8 h-8 border-2 border-[#1f2e14] bg-[#222] flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-                      <div
-                        className={`w-3.5 h-3.5 ${
-                          isFinal
-                            ? 'bg-amber-400 shadow-[0_0_8px_#f59e0b] animate-pulse'
-                            : 'bg-emerald-400 shadow-[0_0_8px_#10b981]'
-                        }`}
-                      />
+                    <div className="relative flex items-center justify-center">
+                      {/* Vertical Beacon Beam (Section Effect on Grand Finale) */}
+                      {isFinal && (
+                        <div
+                          aria-hidden="true"
+                          className="pointer-events-none absolute bottom-4 w-3.5 h-64 bg-gradient-to-t from-cyan-400 via-sky-300 to-transparent animate-beacon-beam z-10 shadow-[0_0_20px_#38bdf8]"
+                        />
+                      )}
+                      <div className="w-8 h-8 border-2 border-[#1f2e14] bg-[#222] flex items-center justify-center shadow-[0_0_12px_rgba(0,0,0,0.8)] relative z-20">
+                        <div
+                          className={`w-3.5 h-3.5 ${
+                            isFinal
+                              ? 'bg-amber-400 shadow-[0_0_12px_#f59e0b] animate-pulse'
+                              : 'bg-emerald-400 shadow-[0_0_8px_#10b981]'
+                          }`}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

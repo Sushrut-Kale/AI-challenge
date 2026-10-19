@@ -13,11 +13,40 @@ export default function AboutSection() {
 
   return (
     <SectionContainer id="about" variant="alt" showTopSeam>
-      <SectionHeading
-        tag="MISSION & ARCHITECTURE"
-        title="ABOUT AGENTCRAFT"
-        subtitle="Build Intelligent Agents. Solve Real-World Problems. Create Sustainable Impact."
-      />
+      {/* Minecraft Wall Torches (Section Effect) */}
+      <div className="relative max-w-4xl mx-auto">
+        <div className="hidden sm:flex absolute -left-6 md:-left-12 top-4 flex-col items-center pointer-events-none select-none z-20">
+          <div className="relative w-8 h-10 animate-torch-flicker">
+            <Image
+              src="/assets/items/torch.png"
+              alt="Minecraft Torch"
+              fill
+              className="object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
+          <div className="w-16 h-16 rounded-full bg-amber-500/20 blur-xl pointer-events-none -mt-8" />
+        </div>
+
+        <div className="hidden sm:flex absolute -right-6 md:-right-12 top-4 flex-col items-center pointer-events-none select-none z-20">
+          <div className="relative w-8 h-10 animate-torch-flicker" style={{ animationDelay: '0.45s' }}>
+            <Image
+              src="/assets/items/torch.png"
+              alt="Minecraft Torch"
+              fill
+              className="object-contain"
+              style={{ imageRendering: 'pixelated' }}
+            />
+          </div>
+          <div className="w-16 h-16 rounded-full bg-amber-500/20 blur-xl pointer-events-none -mt-8" />
+        </div>
+
+        <SectionHeading
+          tag="MISSION & ARCHITECTURE"
+          title="ABOUT AGENTCRAFT"
+          subtitle="Build Intelligent Agents. Solve Real-World Problems. Create Sustainable Impact."
+        />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
         {/* Left Column: Mission Overview & Poster Mascot */}

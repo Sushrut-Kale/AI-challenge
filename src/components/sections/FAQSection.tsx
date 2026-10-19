@@ -43,6 +43,17 @@ export default function FAQSection() {
                 data-interactive="true"
               >
                 <span className="flex items-center gap-3">
+                  {/* Minecraft Redstone Lamp Indicator (Section Effect) */}
+                  <span
+                    className={`w-4 h-4 shrink-0 border-2 transition-all duration-200 flex items-center justify-center ${
+                      isOpen
+                        ? 'bg-[#fbbf24] border-[#d97706] shadow-[0_0_10px_#f59e0b]'
+                        : 'bg-[#2b140d] border-[#4a2215]'
+                    }`}
+                    title={isOpen ? 'Redstone Lamp: ON' : 'Redstone Lamp: OFF'}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-[#78350f]' : 'bg-[#180a06]'}`} />
+                  </span>
                   <span className="text-emerald-400 font-pixel text-xs shrink-0 font-bold">
                     Q{idx + 1}.
                   </span>

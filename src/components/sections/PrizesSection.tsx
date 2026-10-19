@@ -21,8 +21,8 @@ export default function PrizesSection() {
       />
 
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Main Grand Trophy Showcase Card */}
-        <div className="p-6 sm:p-10 border-4 border-[#3a2816] bg-[#1a1208] shadow-[0_16px_36px_rgba(0,0,0,0.85)] relative overflow-hidden text-center">
+        {/* Main Grand Trophy Showcase Card with Enchanted Foil Effect */}
+        <div className="p-6 sm:p-10 border-4 border-[#3a2816] bg-[#1a1208] shadow-[0_16px_36px_rgba(0,0,0,0.85)] relative overflow-hidden text-center mc-enchanted-foil">
           {/* Subtle gold inner border */}
           <div className="pointer-events-none absolute inset-1.5 border-2 border-[#543b22]" />
 

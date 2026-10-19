@@ -13,10 +13,16 @@ export default function ContactSection() {
 
   return (
     <SectionContainer id="contact" variant="default" showTopSeam>
-      {/* Registration Anchor Card */}
-      <div id="registration" className="mb-20 scroll-mt-24">
-        <div className="max-w-4xl mx-auto p-6 sm:p-10 border-4 border-[#3a2816] bg-[#1a1208] shadow-[0_16px_36px_rgba(0,0,0,0.85)] relative overflow-hidden text-center">
-          <div className="pointer-events-none absolute inset-1.5 border-2 border-[#543b22]" />
+      {/* Registration Anchor Card with Nether Portal Frame (Section Effect) */}
+      <div id="registration" className="mb-20 scroll-mt-24 relative">
+        {/* Obsidian Portal Corner Bricks */}
+        <div className="pointer-events-none absolute -top-2 -left-2 w-4 h-4 bg-[#140b20] border-2 border-[#3b1762] z-20" />
+        <div className="pointer-events-none absolute -top-2 -right-2 w-4 h-4 bg-[#140b20] border-2 border-[#3b1762] z-20" />
+        <div className="pointer-events-none absolute -bottom-2 -left-2 w-4 h-4 bg-[#140b20] border-2 border-[#3b1762] z-20" />
+        <div className="pointer-events-none absolute -bottom-2 -right-2 w-4 h-4 bg-[#140b20] border-2 border-[#3b1762] z-20" />
+
+        <div className="max-w-4xl mx-auto p-6 sm:p-10 border-4 border-[#3b1762] bg-[#12081f] shadow-[0_0_30px_rgba(168,85,247,0.25)] relative overflow-hidden text-center animate-portal-swirl">
+          <div className="pointer-events-none absolute inset-1.5 border-2 border-[#581c87]/60" />
 
           <div className="relative z-10 flex flex-col items-center">
             <PixelBadge variant="gold" icon="🔮" className="mb-4">

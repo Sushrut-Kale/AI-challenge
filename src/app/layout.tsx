@@ -6,7 +6,7 @@ import MinecraftHotbar from '@/components/ui/MinecraftHotbar';
 import MinecraftAmbientParticles from '@/components/ui/MinecraftAmbientParticles';
 import { ThemeProvider } from '@/context/ThemeContext';
 import WorldBackground from '@/components/world/WorldBackground';
-import ThemeSelector from '@/components/ui/ThemeSelector';
+import MinecraftAudioManager from '@/components/ui/MinecraftAudioManager';
 
 const pixelFont = Press_Start_2P({
   weight: '400',
@@ -60,7 +60,7 @@ export default function RootLayout({
           <MinecraftCursor />
           <MinecraftAmbientParticles />
           <WorldBackground />
-          <ThemeSelector />
+          <MinecraftAudioManager />
           {children}
           <MinecraftHotbar />
         </ThemeProvider>
