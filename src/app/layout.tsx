@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Press_Start_2P, Inter } from 'next/font/google';
 import './globals.css';
 import MinecraftCursor from '@/components/ui/MinecraftCursor';
+import MinecraftHotbar from '@/components/ui/MinecraftHotbar';
+import MinecraftAmbientParticles from '@/components/ui/MinecraftAmbientParticles';
 
 const pixelFont = Press_Start_2P({
   weight: '400',
@@ -50,9 +52,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${pixelFont.variable} ${sansFont.variable}`}>
-      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans">
+      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans pb-20">
         <MinecraftCursor />
+        <MinecraftAmbientParticles />
         {children}
+        <MinecraftHotbar />
       </body>
     </html>
   );

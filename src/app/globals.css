@@ -293,6 +293,31 @@ body {
   animation: emeraldPulse 2.5s ease-in-out infinite;
 }
 
+/* Minecraft Sign Swing Keyframes */
+@keyframes mcSignSwing {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1.5deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.mc-swing {
+  transform-origin: top center;
+  transition: transform 0.2s ease;
+}
+
+.mc-swing:hover {
+  animation: mcSignSwing 2s ease-in-out infinite;
+}
+
+/* Minecraft Item Frame Bevel */
+.mc-item-frame {
+  background: #2a1d12;
+  border: 4px solid #583d29;
+  box-shadow: inset 2px 2px 0 #7a5438, inset -2px -2px 0 #1b120a, 0 6px 16px rgba(0,0,0,0.7);
+}
+
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
