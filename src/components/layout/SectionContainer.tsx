@@ -18,10 +18,10 @@ export default function SectionContainer({
   showTopSeam = false,
 }: SectionContainerProps) {
   const bgStyles = {
-    default: 'bg-[#0c0e14]',
-    alt: 'bg-[#10131b] border-y border-white/5',
-    stone: 'bg-[#151821] border-y border-neutral-800',
-    grid: 'bg-[#0c0e14] bg-minecraft-grid',
+    default: 'bg-[#0d0b09]',
+    alt: 'bg-[#14110e] border-y border-[#261d15]',
+    stone: 'bg-[#181512] border-y border-[#2b2118]',
+    grid: 'bg-[#0d0b09] bg-minecraft-grid',
   };
 
   return (

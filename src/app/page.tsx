@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import IntroExperience, { IntroLifecycle } from '@/components/intro/IntroExperience';
+import React, { useState } from 'react';
+import IntroExperience from '@/components/intro/IntroExperience';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import TracksSection from '@/components/sections/TracksSection';
 import TimelineSection from '@/components/sections/TimelineSection';
@@ -16,72 +15,37 @@ import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
 
 export default function HomePage() {
-  const [introState, setIntroState] = useState<IntroLifecycle>('INTRO');
+  const [heroProgress, setHeroProgress] = useState(0);
 
-  useEffect(() => {
-    // Intro Persistence Policy:
-    // 1. In a new session, intro plays once.
-    // 2. Once entered, sessionStorage suppresses intro on refresh to avoid disrupting repeat navigation.
-    // 3. User can explicitly re-trigger via ?replay=true or ?intro=true in the URL.
-    // 4. Scrolling upward, clicking anchors, or re-renders can NEVER revive the intro once in MAIN_SITE.
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get('replay') === 'true' || params.get('intro') === 'true') {
-        sessionStorage.removeItem('agentcraft_intro_viewed');
-        setIntroState('INTRO');
-        return;
-      }
-      const viewed = sessionStorage.getItem('agentcraft_intro_viewed');
-      if (viewed) {
-        setIntroState('MAIN_SITE');
-      }
-    }
-  }, []);
-
-  // Idempotent start transition callback
-  const handleStartTransition = useCallback(() => {
-    setIntroState((prev) => {
-      if (prev !== 'INTRO') return prev;
-      return 'TRANSITIONING';
-    });
-  }, []);
-
-  // Idempotent complete transition callback
-  const handleCompleteTransition = useCallback(() => {
-    setIntroState('MAIN_SITE');
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('agentcraft_intro_viewed', 'true');
-    }
-  }, []);
-
-  const isIntro = introState === 'INTRO';
-  const isMainSite = introState === 'MAIN_SITE';
+  // Compact navbar during early intro frames (<0.68), full navigation bar in later frames and site
+  const isIntroNavbar = heroProgress < 0.68;
 
   return (
     <>
-      {/* Three.js Opening Cinematic Knowledge Hall Intro:
-          Mounted during INTRO and TRANSITIONING, permanently unmounted in MAIN_SITE */}
-      {!isMainSite && (
-        <IntroExperience
-          introState={introState}
-          onStartTransition={handleStartTransition}
-          onCompleteTransition={handleCompleteTransition}
-        />
-      )}
-
-      {/* Minecraft-styled Experience Progress Bar (active after entering main site) */}
-      {isMainSite && <ScrollProgress />}
+      {/* Minecraft-styled Experience Progress Bar */}
+      <ScrollProgress />
 
       {/* Minecraft Top Navigation: Compact during intro, full after entering */}
-      <Navbar isIntro={isIntro} />
+      <Navbar isIntro={isIntroNavbar} />
+
+      {/* 4-5 Frame Minecraft Scrollytelling Sequence (Advances on Scroll Down, Reverses on Scroll Up) */}
+      <IntroExperience onProgressChange={setHeroProgress} />
+
+      {/* Wooden Seam Section Divider */}
+      <div className="relative z-20 h-0">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none w-full aspect-[1266/110] -translate-y-1/2 bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/assets/wooden_seam.png)',
+            backgroundSize: '100% 100%',
+            imageRendering: 'pixelated',
+          }}
+        />
+      </div>
 
       {/* Conventional Minecraft Event Landing Page */}
-      <main
-        className={`relative flex flex-col w-full min-h-screen bg-[#0c0e14] transition-opacity duration-700 ${
-          isIntro ? 'opacity-0 pointer-events-none h-screen overflow-hidden' : 'opacity-100'
-        }`}
-      >
-        <HeroSection />
+      <main className="relative flex flex-col w-full min-h-screen bg-[#0d0b09]">
         <AboutSection />
         <TracksSection />
         <TimelineSection />

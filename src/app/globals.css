@@ -28,8 +28,8 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: #0c0e14;
-  color: #e5e7eb;
+  background-color: #0d0b09;
+  color: #f3ede4;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -59,8 +59,8 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #14161f;
-  border-left: 2px solid #232736;
+  background: #14110e;
+  border-left: 2px solid #281d14;
 }
 ::-webkit-scrollbar-thumb {
   background: #456e21;
@@ -158,9 +158,9 @@ body {
 }
 
 .mc-card-stone {
-  background-color: #1e222d;
-  border-color: #4a5268 #0f1118 #0f1118 #4a5268;
-  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.08), inset -2px -2px 0 rgba(0, 0, 0, 0.5), 0 8px 24px rgba(0, 0, 0, 0.5);
+  background-color: #1a1715;
+  border-color: #4a423b #12100e #12100e #4a423b;
+  box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.08), inset -2px -2px 0 rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.6);
 }
 
 .mc-card-grass {

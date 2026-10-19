@@ -51,7 +51,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
 
           {/* Dirt Textured Compact Container */}
           <div
-            className="flex items-center gap-3 px-5 py-2.5 rounded-b-[12px] border-2 border-[#1f2e14] shadow-[0_10px_28px_rgba(0,0,0,0.7)]"
+            className="flex items-center justify-center px-6 py-2.5 rounded-b-[12px] border-2 border-[#1f2e14] shadow-[0_10px_28px_rgba(0,0,0,0.7)]"
             style={{
               backgroundImage: 'url(/assets/dirt.png)',
               backgroundSize: '32px 32px',
@@ -59,25 +59,17 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               imageRendering: 'pixelated',
             }}
           >
-            {/* Real Official AGENTCRAFT Logo */}
-            <div className="relative h-7 sm:h-8 w-auto shrink-0 flex items-center">
+            {/* Real Official AGENTCRAFT 3D Minecraft Wordmark */}
+            <div className="relative h-8 sm:h-9 w-auto shrink-0 flex items-center">
               <Image
-                src="/assets/agentcraft_official_logo.png"
+                src="/assets/agentcraft_navbar_logo.png"
                 alt="AGENTCRAFT"
-                width={120}
-                height={40}
-                className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                width={220}
+                height={36}
+                className="h-8 sm:h-9 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
                 priority
               />
             </div>
-
-            {/* Event Name */}
-            <span
-              className="font-pixel text-[11px] sm:text-xs tracking-[0.14em] uppercase text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-              style={{ textShadow: '1px 1px 0 #000' }}
-            >
-              {EVENT_DATA.name}
-            </span>
           </div>
         </div>
       </header>
@@ -112,27 +104,21 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
             imageRendering: 'pixelated',
           }}
         >
-          {/* Brand Logo & Name */}
+          {/* Brand Logo */}
           <a
             href="#hero"
-            className="flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 outline-none"
+            className="flex items-center transition-transform hover:scale-105 active:scale-95 outline-none"
             aria-label="AGENTCRAFT Home"
             data-interactive="true"
           >
             <Image
-              src="/assets/agentcraft_official_logo.png"
+              src="/assets/agentcraft_navbar_logo.png"
               alt="AGENTCRAFT"
-              width={110}
-              height={36}
-              className="h-6 sm:h-7 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
+              width={200}
+              height={32}
+              className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               priority
             />
-            <span
-              className="font-pixel text-[10px] sm:text-xs tracking-wider text-white hidden sm:inline-block"
-              style={{ textShadow: '1px 1px 0 #000' }}
-            >
-              AGENTCRAFT
-            </span>
           </a>
 
           {/* Desktop Navigation Links */}

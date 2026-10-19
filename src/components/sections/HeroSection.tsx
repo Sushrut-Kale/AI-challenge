@@ -14,12 +14,12 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-[95vh] flex items-center justify-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0d14] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
+      className="relative min-h-[95vh] flex items-center justify-center pt-24 sm:pt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0d0b09] overflow-hidden scroll-mt-20 sm:scroll-mt-24"
     >
       {/* Background Minecraft grid & subtle illumination */}
-      <div className="absolute inset-0 bg-minecraft-grid opacity-50" aria-hidden="true" />
+      <div className="absolute inset-0 bg-minecraft-grid opacity-40" aria-hidden="true" />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-[#10b981]/5 to-[#0c0e14]"
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-500/5 to-[#0d0b09]"
         aria-hidden="true"
       />
 
@@ -87,8 +87,8 @@ export default function HeroSection() {
         {/* Event Statistics Cards with Animated Numeric Counters */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5 w-full max-w-3xl mb-8 text-left">
           {/* Prize Pool Counter */}
-          <div className="p-3 sm:p-4 bg-[#141824]/90 border-2 border-emerald-600/50 shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#090c12]">
-            <span className="font-pixel text-[8px] sm:text-[9px] text-emerald-400 block uppercase">
+          <div className="p-3 sm:p-4 bg-[#1a1714]/90 border-2 border-[#543b22] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#0a0806]">
+            <span className="font-pixel text-[8px] sm:text-[9px] text-amber-400 block uppercase">
               PRIZE POOL
             </span>
             <div className="font-pixel text-sm sm:text-xl text-white mt-1.5 flex items-center">
@@ -105,8 +105,8 @@ export default function HeroSection() {
           </div>
 
           {/* Registration Fee */}
-          <div className="p-3 sm:p-4 bg-[#141824]/90 border-2 border-neutral-700/80 shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#090c12]">
-            <span className="font-pixel text-[8px] sm:text-[9px] text-neutral-400 block uppercase">
+          <div className="p-3 sm:p-4 bg-[#1a1714]/90 border-2 border-[#3d2e20] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#0a0806]">
+            <span className="font-pixel text-[8px] sm:text-[9px] text-emerald-400 block uppercase">
               ENTRY FEE
             </span>
             <div className="font-pixel text-sm sm:text-xl text-white mt-1.5">
@@ -123,7 +123,7 @@ export default function HeroSection() {
           </div>
 
           {/* Team Size */}
-          <div className="p-3 sm:p-4 bg-[#141824]/90 border-2 border-neutral-700/80 shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#090c12]">
+          <div className="p-3 sm:p-4 bg-[#1a1714]/90 border-2 border-[#3d2e20] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#0a0806]">
             <span className="font-pixel text-[8px] sm:text-[9px] text-neutral-400 block uppercase">
               TEAM SIZE
             </span>
@@ -136,7 +136,7 @@ export default function HeroSection() {
           </div>
 
           {/* Rounds */}
-          <div className="p-3 sm:p-4 bg-[#141824]/90 border-2 border-neutral-700/80 shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#090c12]">
+          <div className="p-3 sm:p-4 bg-[#1a1714]/90 border-2 border-[#3d2e20] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),0_4px_0_#0a0806]">
             <span className="font-pixel text-[8px] sm:text-[9px] text-neutral-400 block uppercase">
               COMPETITION
             </span>
