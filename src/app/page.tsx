@@ -19,8 +19,18 @@ export default function HomePage() {
   const [introState, setIntroState] = useState<IntroLifecycle>('INTRO');
 
   useEffect(() => {
-    // If user has already visited in this session, skip intro directly to MAIN_SITE
+    // Intro Persistence Policy:
+    // 1. In a new session, intro plays once.
+    // 2. Once entered, sessionStorage suppresses intro on refresh to avoid disrupting repeat navigation.
+    // 3. User can explicitly re-trigger via ?replay=true or ?intro=true in the URL.
+    // 4. Scrolling upward, clicking anchors, or re-renders can NEVER revive the intro once in MAIN_SITE.
     if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('replay') === 'true' || params.get('intro') === 'true') {
+        sessionStorage.removeItem('agentcraft_intro_viewed');
+        setIntroState('INTRO');
+        return;
+      }
       const viewed = sessionStorage.getItem('agentcraft_intro_viewed');
       if (viewed) {
         setIntroState('MAIN_SITE');

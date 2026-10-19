@@ -87,11 +87,25 @@ export default function IntroExperience({
     [onStartTransition, onCompleteTransition, prefersReducedMotion, scrollProgress]
   );
 
+function isWebGLAvailable(): boolean {
+  if (typeof window === 'undefined') return true;
+  try {
+    const canvas = document.createElement('canvas');
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch {
+    return false;
+  }
+}
+
   // Attach event listeners ONLY while in INTRO state and transition hasn't started
   useEffect(() => {
     if (introState !== 'INTRO' || hasStartedTransitionRef.current) return;
 
-    if (prefersReducedMotion) {
+    // Graceful fallback: If WebGL is unavailable or reduced motion is preferred, immediately show main site
+    if (prefersReducedMotion || !isWebGLAvailable()) {
       startSmoothExit(true);
       return;
     }
