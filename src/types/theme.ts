@@ -67,11 +67,11 @@ export const THEMES: Record<ThemeId, ThemeConfig> = {
     badgeBg: 'rgba(56, 161, 105, 0.15)',
     sky: {
       top: '#080d22',
-      mid: '#22154d',
-      horizon: '#d97706',
-      bottom: '#0c0714',
-      fog: '#1e1428',
-      fogDensity: 0.012,
+      mid: '#1a1038',
+      horizon: '#78350f',
+      bottom: '#0d0b09',
+      fog: '#0d0b09',
+      fogDensity: 0.02,
     },
     lighting: {
       ambientColor: '#c7d2fe',

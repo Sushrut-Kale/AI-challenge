@@ -102,7 +102,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
     <section
       id="home"
       ref={containerRef}
-      className="relative w-full"
+      className="relative w-full bg-[#0d0b09]"
       style={{ height: '380vh' }}
       aria-label="AGENTCRAFT 3D Minecraft Scrollytelling Sequence"
     >
@@ -233,9 +233,9 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             visibility: frame4Opacity > 0.02 ? 'visible' : 'hidden',
           }}
         >
-          <div className="flex max-w-3xl flex-col items-center gap-3 sm:gap-4 pointer-events-auto">
+          <div className="flex max-w-3xl flex-col items-center gap-2 sm:gap-3.5 pointer-events-auto max-h-[82vh] overflow-y-auto scrollbar-none py-1 px-1 sm:px-2">
             {/* Grand 3D AGENTCRAFT Logo */}
-            <div className="relative w-full max-w-md sm:max-w-lg md:max-w-xl">
+            <div className="relative w-full max-w-[200px] xs:max-w-[260px] sm:max-w-lg md:max-w-xl">
               <Image
                 src="/assets/agentcraft_official_logo.png"
                 alt="AGENTCRAFT — National Agentic AI Challenge"
@@ -247,14 +247,14 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             </div>
 
             {/* Date & Finale Pill */}
-            <div className="inline-flex flex-wrap items-center justify-center gap-2 border-2 border-[#dba213]/80 bg-[#1a1209]/90 px-3.5 py-1.5 font-pixel text-[9px] sm:text-[11px] uppercase tracking-wider text-[#ffd875] backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 border-2 border-[#dba213]/80 bg-[#1a1209]/90 px-2.5 sm:px-3.5 py-1 sm:py-1.5 font-pixel text-[8px] xs:text-[9px] sm:text-[11px] uppercase tracking-wider text-[#ffd875] backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
               <span>17 November 2026</span>
               <span className="opacity-50">•</span>
               <span className="text-amber-400">Grand Finale at MIT AOE</span>
             </div>
 
             {/* Live Countdown to Grand Finale */}
-            <div className="w-full max-w-md p-2.5 border-2 border-[#3d2a1a] bg-[#140e08]/90 backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+            <div className="w-full max-w-[320px] xs:max-w-sm sm:max-w-md p-2 sm:p-2.5 border-2 border-[#3d2a1a] bg-[#140e08]/90 backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
               <EventCountdown
                 targetDateISO={EVENT_DATA.details.eventDateISO}
                 label="COUNTDOWN TO GRAND FINALE AT MIT AOE"
@@ -262,25 +262,25 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             </div>
 
             {/* Venue & Organizer Details */}
-            <div className="space-y-1">
-              <p className="font-pixel text-[9px] sm:text-xs text-[#e0dacb] uppercase tracking-wider drop-shadow">
+            <div className="space-y-0.5 sm:space-y-1">
+              <p className="font-pixel text-[8px] xs:text-[9px] sm:text-xs text-[#e0dacb] uppercase tracking-wider drop-shadow">
                 MIT Academy of Engineering, Alandi, Pune
               </p>
-              <p className="font-pixel text-[8px] sm:text-[10px] text-emerald-400 uppercase tracking-widest drop-shadow">
+              <p className="font-pixel text-[7px] xs:text-[8px] sm:text-[10px] text-emerald-400 uppercase tracking-widest drop-shadow">
                 Organized by ASTRA Student Association (Dept. of CSE-AIML)
               </p>
-              <p className="font-sans text-[11px] sm:text-xs text-neutral-300">
+              <p className="font-sans text-[10px] xs:text-[11px] sm:text-xs text-neutral-300">
                 In association with AAAI Global Professional Chapter & AlgoVedas
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1">
               <a
                 href="https://unstop.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-6 py-2.5 font-pixel text-[10px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
+                className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-4 sm:px-6 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
                 data-interactive="true"
               >
                 REGISTER ↗
@@ -288,7 +288,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-5 py-2.5 font-pixel text-[10px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all"
+                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-3.5 sm:px-5 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all"
                 data-interactive="true"
               >
                 🔑 LOGIN
@@ -296,7 +296,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
               <button
                 type="button"
                 onClick={handleSkipToContent}
-                className="border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-5 py-2.5 font-pixel text-[10px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-all"
+                className="border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-3.5 sm:px-5 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-all"
                 data-interactive="true"
               >
                 EXPLORE CHALLENGE ↓

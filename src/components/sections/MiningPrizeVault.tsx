@@ -258,7 +258,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
         </h3>
 
         {/* Grand ₹30,000 Championship Counter */}
-        <div className="font-pixel text-4xl sm:text-6xl md:text-7xl text-amber-300 tracking-wider mb-2 drop-shadow-[0_4px_24px_rgba(251,191,36,0.6)] animate-pulse">
+        <div className="font-pixel text-3xl xs:text-4xl sm:text-6xl md:text-7xl text-amber-300 tracking-wider mb-2 drop-shadow-[0_4px_24px_rgba(251,191,36,0.6)] animate-pulse">
           <AnimatedCounter value={totalPoolAmount} prefix="₹" suffix="/-" />
         </div>
       </div>
@@ -276,7 +276,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
               handleMineClick(e as unknown as React.MouseEvent<HTMLDivElement>);
             }
           }}
-          className={`relative p-8 sm:p-10 border-4 border-[#3a220e] shadow-[0_16px_36px_rgba(0,0,0,0.95)] rounded-none cursor-pointer transition-all duration-150 ${
+          className={`relative p-6 sm:p-10 border-4 border-[#3a220e] shadow-[0_16px_36px_rgba(0,0,0,0.95)] rounded-none cursor-pointer transition-all duration-150 ${
             isShattering
               ? 'scale-110 opacity-0 filter blur-[2px]'
               : isShaking
@@ -321,9 +321,9 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
           <div className="pointer-events-none absolute bottom-1.5 right-1.5 w-3 h-3 bg-[#3d2511] border border-[#a66d38]" />
 
           {/* EXACTLY ONE LINE OF TEXT AS EXPLICITLY REQUESTED */}
-          <div className="relative z-10 flex flex-col items-center text-center py-2">
-            <div className="inline-flex items-center gap-2 border-2 border-[#3d220b] bg-[#2a1708]/90 px-5 py-2.5 shadow-[inset_1px_1px_0_#8b5527,0_4px_12px_rgba(0,0,0,0.9)]">
-              <span className="font-pixel text-[11px] sm:text-xs text-amber-200 font-bold uppercase tracking-wider">
+          <div className="relative z-10 flex flex-col items-center text-center py-1 sm:py-2">
+            <div className="inline-flex items-center gap-1.5 sm:gap-2 border-2 border-[#3d220b] bg-[#2a1708]/90 px-3 sm:px-5 py-2 sm:py-2.5 shadow-[inset_1px_1px_0_#8b5527,0_4px_12px_rgba(0,0,0,0.9)] max-w-full">
+              <span className="font-pixel text-[9px] xs:text-[10px] sm:text-xs text-amber-200 font-bold uppercase tracking-wider whitespace-nowrap">
                 ⛏️ MINE TO REVEAL PRIZE ⛏️
               </span>
             </div>

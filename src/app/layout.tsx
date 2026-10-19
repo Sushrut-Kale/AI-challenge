@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Press_Start_2P, Inter } from 'next/font/google';
 import './globals.css';
 import MinecraftCursor from '@/components/ui/MinecraftCursor';
@@ -6,7 +6,7 @@ import MinecraftHotbar from '@/components/ui/MinecraftHotbar';
 import MinecraftAmbientParticles from '@/components/ui/MinecraftAmbientParticles';
 import { ThemeProvider } from '@/context/ThemeContext';
 import WorldBackground from '@/components/world/WorldBackground';
-import MinecraftAudioManager from '@/components/ui/MinecraftAudioManager';
+import { AudioProvider } from '@/components/ui/MinecraftAudioManager';
 
 const pixelFont = Press_Start_2P({
   weight: '400',
@@ -20,6 +20,13 @@ const sansFont = Inter({
   variable: '--font-sans',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0d0b09',
+};
 
 export const metadata: Metadata = {
   title: 'AGENTCRAFT — National Agentic AI Challenge 2026 | MIT AOE',
@@ -55,14 +62,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${pixelFont.variable} ${sansFont.variable}`}>
-      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans pb-20">
+      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:pb-24">
         <ThemeProvider>
-          <MinecraftCursor />
-          <MinecraftAmbientParticles />
-          <WorldBackground />
-          <MinecraftAudioManager />
-          {children}
-          <MinecraftHotbar />
+          <AudioProvider>
+            <MinecraftCursor />
+            <MinecraftAmbientParticles />
+            <WorldBackground />
+            {children}
+            <MinecraftHotbar />
+          </AudioProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -30,7 +30,7 @@ export default function SectionHeading({
         </div>
       )}
 
-      <h2 className="pixel-heading text-xl sm:text-3xl md:text-4xl text-white tracking-wider">
+      <h2 className="pixel-heading text-lg xs:text-xl sm:text-3xl md:text-4xl text-white tracking-wide sm:tracking-wider">
         {title}
       </h2>
 

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import MinecraftButton from '@/components/ui/MinecraftButton';
 import LoginModal from '@/components/auth/LoginModal';
 import { EVENT_DATA } from '@/data/event';
+import { AudioNavbarButton, AudioDrawerControl } from '@/components/ui/MinecraftAudioManager';
 
 const NAV_LINKS = [
   { label: 'ABOUT', href: '#about' },
@@ -166,6 +167,11 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               <span>🔑 LOGIN</span>
             </button>
 
+            {/* Desktop Top-Right Minecraft Audio Control */}
+            <div className="hidden sm:flex items-center">
+              <AudioNavbarButton />
+            </div>
+
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -243,6 +249,9 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               >
                 🔑 TEAM LOGIN
               </button>
+
+              {/* Mobile Drawer Minecraft Audio Settings */}
+              <AudioDrawerControl />
             </div>
           </div>
         )}

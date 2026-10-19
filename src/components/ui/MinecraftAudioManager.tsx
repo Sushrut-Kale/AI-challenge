@@ -333,12 +333,33 @@ class MinecraftAmbientMusicEngine {
 
 const ambientMusic = new MinecraftAmbientMusicEngine();
 
-export default function MinecraftAudioManager() {
+interface AudioContextType {
+  sfxEnabled: boolean;
+  bgmEnabled: boolean;
+  volume: number;
+  toggleSfx: () => void;
+  toggleBgm: () => void;
+  toggleAll: () => void;
+  setVolume: (val: number) => void;
+}
+
+const AudioCtx = React.createContext<AudioContextType | undefined>(undefined);
+
+export function useAudio(): AudioContextType {
+  const context = React.useContext(AudioCtx);
+  if (!context) {
+    throw new Error('useAudio must be used within an AudioProvider');
+  }
+  return context;
+}
+
+export function AudioProvider({ children }: { children: React.ReactNode }) {
   const [sfxEnabled, setSfxEnabled] = useState(true);
   const [bgmEnabled, setBgmEnabled] = useState(false);
+  const [volume, setVolumeState] = useState(0.4);
   const [hasInteracted, setHasInteracted] = useState(false);
 
-  // Initialize preferences
+  // Initialize audio preferences from storage
   useEffect(() => {
     try {
       const savedSfx = localStorage.getItem('agentcraft_sfx');
@@ -348,6 +369,14 @@ export default function MinecraftAudioManager() {
       const savedBgm = localStorage.getItem('agentcraft_bgm');
       if (savedBgm === 'true') {
         setBgmEnabled(true);
+      }
+      const savedVol = localStorage.getItem('agentcraft_volume');
+      if (savedVol !== null) {
+        const v = parseFloat(savedVol);
+        if (!isNaN(v)) {
+          setVolumeState(v);
+          ambientMusic.setVolume(v);
+        }
       }
     } catch {
       // ignore storage errors
@@ -375,17 +404,14 @@ export default function MinecraftAudioManager() {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      // Check if target or any parent is interactive
       const interactiveEl = target.closest(
         'button, a, input, select, textarea, summary, [role="button"], [data-interactive="true"], .mc-card, .mc-hotbar-slot'
       );
 
       if (interactiveEl) {
-        // Special check: if sword slot clicked
         if (interactiveEl.getAttribute('data-slot') === '9') {
           playMinecraftSwordSweep();
         } else {
-          // Play classic Minecraft wooden click
           playMinecraftClick();
         }
       }
@@ -406,43 +432,40 @@ export default function MinecraftAudioManager() {
     };
   }, [sfxEnabled]);
 
-  const toggleSfx = () => {
-    const next = !sfxEnabled;
-    setSfxEnabled(next);
-    try {
-      localStorage.setItem('agentcraft_sfx', next ? 'true' : 'false');
-    } catch {
-      // ignore
-    }
-    if (next) {
-      playMinecraftPop(1.2);
-    }
-  };
+  const toggleSfx = useCallback(() => {
+    setSfxEnabled((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('agentcraft_sfx', next ? 'true' : 'false');
+      } catch {}
+      if (next) {
+        playMinecraftPop(1.2);
+      }
+      return next;
+    });
+  }, []);
 
-  const toggleBgm = () => {
+  const toggleBgm = useCallback(() => {
     setHasInteracted(true);
     getAudioContext();
-    const next = !bgmEnabled;
-    setBgmEnabled(next);
-    try {
-      localStorage.setItem('agentcraft_bgm', next ? 'true' : 'false');
-    } catch {
-      // ignore
-    }
-    if (next) {
-      ambientMusic.start();
-    } else {
-      ambientMusic.stop();
-    }
-  };
+    setBgmEnabled((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('agentcraft_bgm', next ? 'true' : 'false');
+      } catch {}
+      if (next) {
+        ambientMusic.start();
+      } else {
+        ambientMusic.stop();
+      }
+      return next;
+    });
+  }, []);
 
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const toggleAll = () => {
+  const toggleAll = useCallback(() => {
     setHasInteracted(true);
     getAudioContext();
     if (bgmEnabled || sfxEnabled) {
-      // Turn both off
       setBgmEnabled(false);
       setSfxEnabled(false);
       ambientMusic.stop();
@@ -451,7 +474,6 @@ export default function MinecraftAudioManager() {
         localStorage.setItem('agentcraft_sfx', 'false');
       } catch {}
     } else {
-      // Turn both on
       setBgmEnabled(true);
       setSfxEnabled(true);
       ambientMusic.start();
@@ -461,81 +483,232 @@ export default function MinecraftAudioManager() {
         localStorage.setItem('agentcraft_sfx', 'true');
       } catch {}
     }
-  };
+  }, [bgmEnabled, sfxEnabled]);
+
+  const setVolume = useCallback((val: number) => {
+    const clamped = Math.max(0, Math.min(1, val));
+    setVolumeState(clamped);
+    ambientMusic.setVolume(clamped);
+    try {
+      localStorage.setItem('agentcraft_volume', clamped.toString());
+    } catch {}
+  }, []);
+
+  const value = React.useMemo(
+    () => ({
+      sfxEnabled,
+      bgmEnabled,
+      volume,
+      toggleSfx,
+      toggleBgm,
+      toggleAll,
+      setVolume,
+    }),
+    [sfxEnabled, bgmEnabled, volume, toggleSfx, toggleBgm, toggleAll, setVolume]
+  );
+
+  return <AudioCtx.Provider value={value}>{children}</AudioCtx.Provider>;
+}
+
+/**
+ * Top-Right Desktop Audio Control Button for Navbar
+ */
+export function AudioNavbarButton() {
+  const { sfxEnabled, bgmEnabled, volume, toggleSfx, toggleBgm, toggleAll, setVolume } = useAudio();
+  const [isOpen, setIsOpen] = useState(false);
+  const popoverRef = useRef<HTMLDivElement>(null);
+
+  // Close popover when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => window.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
+
+  const isAudioActive = bgmEnabled || sfxEnabled;
 
   return (
-    <aside
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end pointer-events-auto select-none"
-      aria-label="Minecraft Audio Control"
-    >
-      {/* Expanded Control Mini Drawer */}
-      {isExpanded && (
-        <div className="mb-2 p-2 bg-[#14100c]/95 border-2 border-[#3d2e20] shadow-[0_8px_24px_rgba(0,0,0,0.9)] flex flex-col gap-1.5 animate-in fade-in zoom-in-95 duration-150 backdrop-blur-sm">
-          <div className="px-1 text-[8px] font-pixel text-neutral-400 tracking-wider uppercase border-b border-[#2d2218] pb-1 flex justify-between items-center gap-4">
-            <span>AUDIO SETTINGS</span>
-            <span className="text-amber-400 font-mono text-[7px]">C418 / SFX</span>
+    <div className="relative" ref={popoverRef}>
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`border-2 px-2.5 sm:px-3 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.25),0_3px_0_#1a1309] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 ${
+          isAudioActive
+            ? 'border-[#2d5a27] bg-[#1d4319] hover:bg-[#255720] text-emerald-300'
+            : 'border-[#4a3928] bg-[#211810] hover:bg-[#322315] text-neutral-400'
+        }`}
+        title={isAudioActive ? 'Audio Settings (Active)' : 'Audio Settings (Muted)'}
+        aria-label="Audio Controls"
+        aria-expanded={isOpen}
+        data-interactive="true"
+      >
+        <span>{bgmEnabled ? '🎵' : sfxEnabled ? '🔊' : '🔇'}</span>
+        <span className="hidden xl:inline">{bgmEnabled ? 'MUSIC' : sfxEnabled ? 'SFX ON' : 'MUTED'}</span>
+        <span className="text-[7px] opacity-75">{isOpen ? '▲' : '▼'}</span>
+      </button>
+
+      {/* Minecraft-styled Audio Popover Menu */}
+      {isOpen && (
+        <div className="absolute right-0 top-full mt-2 w-64 p-3 bg-[#14100c]/98 border-2 border-[#5a3f24] shadow-[0_12px_32px_rgba(0,0,0,0.95)] z-[100] backdrop-blur-md animate-in fade-in zoom-in-95 duration-150">
+          {/* Header */}
+          <div className="flex items-center justify-between border-b border-[#3d2a17] pb-2 mb-2.5 font-pixel text-[8px] text-amber-300 tracking-wider uppercase">
+            <span>MINECRAFT AUDIO</span>
+            <span className="text-emerald-400 text-[7px]">C418 SYNTH</span>
           </div>
 
-          <div className="flex gap-1.5">
-            {/* SFX Toggle */}
-            <button
-              onClick={toggleSfx}
-              type="button"
-              className={`px-2 py-1.5 flex items-center gap-1 border-2 font-pixel text-[8px] uppercase transition-all ${
-                sfxEnabled
-                  ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
-                  : 'bg-[#1a1714] border-[#373737] text-neutral-400 hover:text-neutral-200'
-              }`}
-            >
-              <span>{sfxEnabled ? '🔊 SFX ON' : '🔇 SFX OFF'}</span>
-            </button>
+          <div className="space-y-2">
+            {/* Background Music Toggle */}
+            <div className="flex items-center justify-between gap-2 p-1.5 bg-black/40 border border-[#302112]">
+              <div className="flex flex-col">
+                <span className="font-pixel text-[8px] text-neutral-200">BGM MUSIC</span>
+                <span className="text-[9px] text-neutral-400 font-sans">Subwoofer Lullaby</span>
+              </div>
+              <button
+                type="button"
+                onClick={toggleBgm}
+                className={`px-2.5 py-1 border font-pixel text-[8px] uppercase transition-all ${
+                  bgmEnabled
+                    ? 'bg-[#2b1f48] border-[#a855f7] text-[#c084fc] animate-pulse'
+                    : 'bg-[#1a1714] border-[#444] text-neutral-400 hover:text-neutral-200'
+                }`}
+                data-interactive="true"
+              >
+                {bgmEnabled ? 'ON' : 'OFF'}
+              </button>
+            </div>
 
-            {/* BGM Toggle */}
+            {/* Sound FX Toggle */}
+            <div className="flex items-center justify-between gap-2 p-1.5 bg-black/40 border border-[#302112]">
+              <div className="flex flex-col">
+                <span className="font-pixel text-[8px] text-neutral-200">SOUND FX</span>
+                <span className="text-[9px] text-neutral-400 font-sans">Clicks & Sweeps</span>
+              </div>
+              <button
+                type="button"
+                onClick={toggleSfx}
+                className={`px-2.5 py-1 border font-pixel text-[8px] uppercase transition-all ${
+                  sfxEnabled
+                    ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
+                    : 'bg-[#1a1714] border-[#444] text-neutral-400 hover:text-neutral-200'
+                }`}
+                data-interactive="true"
+              >
+                {sfxEnabled ? 'ON' : 'OFF'}
+              </button>
+            </div>
+
+            {/* Volume Slider */}
+            <div className="p-1.5 bg-black/40 border border-[#302112]">
+              <div className="flex justify-between font-pixel text-[7px] text-neutral-300 uppercase mb-1">
+                <span>VOLUME</span>
+                <span className="text-amber-400">{Math.round(volume * 100)}%</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                className="w-full accent-amber-500 h-1.5 bg-[#261a0f] rounded cursor-pointer"
+                aria-label="Volume slider"
+              />
+            </div>
+
+            {/* Quick Master Mute / Unmute Button */}
             <button
-              onClick={toggleBgm}
               type="button"
-              className={`px-2 py-1.5 flex items-center gap-1 border-2 font-pixel text-[8px] uppercase transition-all ${
-                bgmEnabled
-                  ? 'bg-[#2b1f48] border-[#a855f7] text-[#c084fc] animate-pulse'
-                  : 'bg-[#1a1714] border-[#373737] text-neutral-400 hover:text-neutral-200'
-              }`}
+              onClick={toggleAll}
+              className="w-full py-1.5 border border-[#4a3520] bg-[#1e140b] hover:bg-[#2b1d0f] font-pixel text-[8px] uppercase tracking-wider text-amber-200 transition-colors text-center"
+              data-interactive="true"
             >
-              <span>{bgmEnabled ? '🎵 MUSIC ON' : '🎵 MUSIC OFF'}</span>
+              {isAudioActive ? '🔇 MUTE ALL SOUNDS' : '🔊 UNMUTE ALL SOUNDS'}
             </button>
           </div>
         </div>
       )}
+    </div>
+  );
+}
 
-      {/* Main Consolidated Single Audio Button in Bottom Right Corner */}
-      <div className="flex items-center gap-1">
+/**
+ * Mobile Drawer Audio Control Block
+ * Integrated inside the hamburger drawer
+ */
+export function AudioDrawerControl() {
+  const { sfxEnabled, bgmEnabled, volume, toggleSfx, toggleBgm, toggleAll, setVolume } = useAudio();
+  const isAudioActive = bgmEnabled || sfxEnabled;
+
+  return (
+    <div className="mt-3 p-2.5 bg-black/60 border-2 border-[#3b2716] rounded shadow-inner">
+      <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-[#3b2716] font-pixel text-[8px] text-amber-300 uppercase tracking-wider">
+        <span>🔊 AUDIO CONTROLS</span>
         <button
-          onClick={toggleAll}
           type="button"
-          title={bgmEnabled || sfxEnabled ? 'Click to Mute Audio' : 'Click to Enable Minecraft Music & SFX'}
-          aria-label="Toggle Minecraft Audio"
-          className={`h-9 px-3 flex items-center gap-2 border-2 font-pixel text-[9px] uppercase transition-all shadow-[inset_1px_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.85)] ${
-            bgmEnabled || sfxEnabled
-              ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
-              : 'bg-[#1a1714]/95 border-[#3d2e20] text-neutral-400 hover:text-neutral-200'
+          onClick={toggleAll}
+          className="text-[7px] text-amber-400 hover:underline font-mono"
+        >
+          {isAudioActive ? 'MUTE ALL' : 'UNMUTE ALL'}
+        </button>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 mb-2">
+        <button
+          type="button"
+          onClick={toggleBgm}
+          className={`py-2 px-1 border font-pixel text-[8px] uppercase tracking-wider text-center transition-all ${
+            bgmEnabled
+              ? 'bg-[#2b1f48] border-[#a855f7] text-[#c084fc]'
+              : 'bg-[#18130e] border-[#422e1b] text-neutral-400'
           }`}
           data-interactive="true"
         >
-          <span className="text-xs">{bgmEnabled ? '🎵' : sfxEnabled ? '🔊' : '🔇'}</span>
-          <span>{bgmEnabled ? 'MUSIC ON' : sfxEnabled ? 'SFX ON' : 'MUTED'}</span>
+          🎵 MUSIC {bgmEnabled ? 'ON' : 'OFF'}
         </button>
 
-        {/* Small Expand Settings Arrow */}
         <button
-          onClick={() => setIsExpanded((prev) => !prev)}
           type="button"
-          aria-expanded={isExpanded}
-          aria-label="Open detailed sound settings"
-          className="h-9 w-7 flex items-center justify-center bg-[#1a1714]/95 border-2 border-[#3d2e20] text-neutral-400 hover:text-amber-400 transition-colors shadow-[0_4px_12px_rgba(0,0,0,0.85)] text-[10px]"
+          onClick={toggleSfx}
+          className={`py-2 px-1 border font-pixel text-[8px] uppercase tracking-wider text-center transition-all ${
+            sfxEnabled
+              ? 'bg-[#1b3d1c] border-[#48bb78] text-[#48bb78]'
+              : 'bg-[#18130e] border-[#422e1b] text-neutral-400'
+          }`}
           data-interactive="true"
         >
-          {isExpanded ? '▼' : '▲'}
+          🔊 SFX {sfxEnabled ? 'ON' : 'OFF'}
         </button>
       </div>
-    </aside>
+
+      <div className="flex items-center gap-2 px-1">
+        <span className="font-pixel text-[7px] text-neutral-400 uppercase">VOL</span>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.05"
+          value={volume}
+          onChange={(e) => setVolume(parseFloat(e.target.value))}
+          className="w-full accent-amber-500 h-1.5 bg-[#261a0f] rounded cursor-pointer"
+          aria-label="Volume slider"
+        />
+        <span className="font-pixel text-[7px] text-amber-400 w-7 text-right">
+          {Math.round(volume * 100)}%
+        </span>
+      </div>
+    </div>
   );
+}
+
+/**
+ * Backwards-compatible dummy component (floating bottom-right widget removed)
+ */
+export default function MinecraftAudioManager() {
+  return null;
 }

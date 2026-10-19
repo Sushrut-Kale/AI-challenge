@@ -92,6 +92,8 @@ export default function MinecraftHotbar() {
   const [hoveredSlot, setHoveredSlot] = useState<HotbarSlot | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLevelUp, setIsLevelUp] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const tooltipTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   // Track active section and scroll progress
   useEffect(() => {
@@ -134,6 +136,13 @@ export default function MinecraftHotbar() {
     const slot = HOTBAR_SLOTS.find((s) => s.id === slotId);
     if (!slot) return;
 
+    // Show tooltip briefly on touch
+    setHoveredSlot(slot);
+    if (tooltipTimeoutRef.current) clearTimeout(tooltipTimeoutRef.current);
+    tooltipTimeoutRef.current = setTimeout(() => {
+      setHoveredSlot(null);
+    }, 1800);
+
     if (slotId === 9) {
       // Slot 9 triggers a celebratory slash attack!
       triggerLevelUpCelebration();
@@ -159,14 +168,24 @@ export default function MinecraftHotbar() {
 
   return (
     <aside
-      className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-auto select-none transition-all duration-200"
+      className="fixed bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-auto select-none transition-all duration-200"
       aria-label="Minecraft Hotbar Quick Navigation"
     >
-      {/* Minecraft Item Tooltip on Hover */}
+      {/* Mobile Collapse / Expand Badge */}
+      <button
+        type="button"
+        onClick={() => setIsCollapsed((prev) => !prev)}
+        className="mb-1 px-2 py-0.5 border border-[#3d2e20] bg-black/80 font-pixel text-[7px] text-amber-300 uppercase tracking-widest hover:text-white transition-colors backdrop-blur-sm"
+        aria-label={isCollapsed ? 'Show hotbar' : 'Hide hotbar'}
+      >
+        {isCollapsed ? '▲ SHOW HOTBAR' : '▼ HIDE'}
+      </button>
+
+      {/* Minecraft Item Tooltip on Hover / Touch */}
       {hoveredSlot && (
-        <div className="mb-2 px-3 py-1.5 bg-[#100028]/95 border-2 border-[#2b005e] shadow-[inset_1px_1px_0_#460098,inset_-1px_-1px_0_#1a003a,0_4px_16px_rgba(0,0,0,0.85)] flex flex-col items-center animate-in fade-in zoom-in-95 duration-100">
+        <div className="mb-1.5 px-3 py-1 bg-[#100028]/95 border-2 border-[#2b005e] shadow-[inset_1px_1px_0_#460098,inset_-1px_-1px_0_#1a003a,0_4px_16px_rgba(0,0,0,0.85)] flex flex-col items-center animate-in fade-in zoom-in-95 duration-100 max-w-[280px] text-center">
           <span
-            className={`font-pixel text-[10px] sm:text-xs font-bold tracking-wide ${
+            className={`font-pixel text-[9px] sm:text-xs font-bold tracking-wide ${
               hoveredSlot.rarity === 'epic'
                 ? 'text-[#d946ef]'
                 : hoveredSlot.rarity === 'rare'
@@ -178,14 +197,14 @@ export default function MinecraftHotbar() {
           >
             {hoveredSlot.name}
           </span>
-          <span className="font-sans text-[11px] text-neutral-300 font-medium">
+          <span className="font-sans text-[10px] sm:text-[11px] text-neutral-300 font-medium truncate w-full">
             [{hoveredSlot.id}] {hoveredSlot.tooltip}
           </span>
         </div>
       )}
 
       {/* Minecraft Experience Bar (XP Bar) */}
-      <div className="w-[310px] sm:w-[420px] mb-1.5 flex flex-col items-center">
+      <div className="w-[280px] xs:w-[310px] sm:w-[420px] mb-1 flex flex-col items-center">
         {/* Level Number with classic lime green font and 3D pixel shadow */}
         <div
           onClick={triggerLevelUpCelebration}
@@ -201,7 +220,7 @@ export default function MinecraftHotbar() {
         </div>
 
         {/* Green Pixelated XP Bar with authentic segment ticks */}
-        <div className="w-full h-2.5 bg-[#0a0d0a] border-2 border-[#1c241c] shadow-[inset_1px_1px_0_#000,0_2px_8px_rgba(0,0,0,0.8)] relative overflow-hidden flex items-center">
+        <div className="w-full h-2 sm:h-2.5 bg-[#0a0d0a] border-2 border-[#1c241c] shadow-[inset_1px_1px_0_#000,0_2px_8px_rgba(0,0,0,0.8)] relative overflow-hidden flex items-center">
           {/* Progress fill */}
           <div
             className="h-full bg-gradient-to-r from-[#44aa00] via-[#80ff20] to-[#b3ff66] transition-all duration-150 shadow-[0_0_10px_rgba(128,255,32,0.8)]"
@@ -218,10 +237,11 @@ export default function MinecraftHotbar() {
       </div>
 
       {/* 9-Slot Hotbar HUD Container with dark bedrock/deepslate styling */}
-      <div
-        className="flex items-center p-1.5 bg-[#161311]/95 border-2 border-[#3d2e20] shadow-[inset_1px_1px_0_#543b22,inset_-1px_-1px_0_#0a0806,0_12px_32px_rgba(0,0,0,0.95)] backdrop-blur-md rounded-none gap-1 sm:gap-1.5"
-        style={{ imageRendering: 'pixelated' }}
-      >
+      {!isCollapsed && (
+        <div
+          className="flex items-center p-1 sm:p-1.5 bg-[#161311]/95 border-2 border-[#3d2e20] shadow-[inset_1px_1px_0_#543b22,inset_-1px_-1px_0_#0a0806,0_12px_32px_rgba(0,0,0,0.95)] backdrop-blur-md rounded-none gap-0.5 sm:gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-150"
+          style={{ imageRendering: 'pixelated' }}
+        >
         {HOTBAR_SLOTS.map((slot) => {
           const isSelected = activeSlot === slot.id;
 
@@ -279,6 +299,7 @@ export default function MinecraftHotbar() {
           );
         })}
       </div>
+      )}
     </aside>
   );
 }
