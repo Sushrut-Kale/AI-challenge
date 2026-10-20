@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LoginModal from '@/components/auth/LoginModal';
 import { useAuth } from '@/context/AuthContext';
-import { AudioDrawerControl, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
+import { AudioDrawerControl, MobileNavbarSoundButton, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 import CursorToggleButton from '@/components/ui/CursorToggleButton';
 
 const NAV_LINKS = [
@@ -84,9 +84,14 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
           </div>
         </div>
 
-        {/* Top-Right Cursor Toggle during Intro */}
+        {/* Top-Right: Custom Cursor Toggle on PC, Sound Button on Mobile during Intro */}
         <div className="fixed top-4 right-4 z-50 pointer-events-auto flex items-center">
-          <CursorToggleButton />
+          <div className="hidden md:flex items-center">
+            <CursorToggleButton />
+          </div>
+          <div className="flex md:hidden items-center">
+            <MobileNavbarSoundButton />
+          </div>
         </div>
       </header>
     );
@@ -207,9 +212,12 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               </>
             )}
 
-            {/* Top-Right Custom Cursor Toggle */}
-            <div className="flex items-center shrink-0">
+            {/* Top-Right: Custom Cursor Toggle on PC, Sound Button on Mobile */}
+            <div className="hidden md:flex items-center shrink-0">
               <CursorToggleButton />
+            </div>
+            <div className="flex md:hidden items-center shrink-0">
+              <MobileNavbarSoundButton />
             </div>
 
             {/* Mobile/Tablet Menu Button */}
