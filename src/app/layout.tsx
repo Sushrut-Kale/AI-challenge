@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/context/ThemeContext';
 import { CursorProvider } from '@/context/CursorContext';
 import { AuthProvider } from '@/context/AuthContext';
 import WorldBackground from '@/components/world/WorldBackground';
-import { AudioProvider } from '@/components/ui/MinecraftAudioManager';
+import { AudioProvider, FloatingSoundButton } from '@/components/ui/MinecraftAudioManager';
 
 const pixelFont = Press_Start_2P({
   weight: '400',
@@ -94,6 +94,7 @@ export default function RootLayout({
                 <WorldBackground />
                 {children}
                 <MinecraftHotbar />
+                <FloatingSoundButton />
               </AudioProvider>
             </CursorProvider>
           </AuthProvider>
