@@ -8,32 +8,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUserTeam, getServiceClient, logAuditEvent } from '@/lib/supabase-server';
 import { cookies } from 'next/headers';
+import { getDemoSubmission, updateDemoSubmission } from '@/lib/demo-state';
 
 export const dynamic = 'force-dynamic';
-
-// In-memory demo submission state for local preview
-let demoSubmissionState: any = {
-  id: 'demo-sub-1',
-  project_name: 'EcoAgent — Autonomous Precision Agriculture Drone Fleet',
-  track: 'SDG 13: Climate Action',
-  synopsis:
-    'An autonomous multi-agent swarm architecture utilizing small language models on edge devices to orchestrate precision drone operations for carbon sequestration monitoring, soil moisture tracking, and chemical fertilizer reduction across agricultural acreage.',
-  repo_url: 'https://github.com/agentcraft-ai/eco-agent-swarm',
-  demo_url: 'https://youtu.be/dQw4w9WgXcQ',
-  hosted_url: 'https://ecoagent-demo.vercel.app',
-  status: 'draft',
-  submitted_at: null,
-  files: [
-    {
-      id: 'f1',
-      file_name: 'EcoAgent_Pitch_Deck_v2.pdf',
-      file_type: 'pitch_deck',
-      file_path: 'submissions/AC-2026-0001/draft/pitch_deck/deck.pdf',
-      file_size_bytes: 4280000,
-      mime_type: 'application/pdf',
-    },
-  ],
-};
 
 export async function GET() {
   try {
@@ -43,8 +20,9 @@ export async function GET() {
     const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-10-31T23:59:59+05:30';
 
     if (demoRole === 'team' || demoRole === 'admin') {
+      const currentSub = getDemoSubmission();
       return NextResponse.json({
-        submission: demoSubmissionState,
+        submission: currentSub,
         team: {
           id: 'demo-team-uuid',
           team_id: 'AC-001',
@@ -131,7 +109,8 @@ export async function POST(request: NextRequest) {
 
     // Demo Mode Handler
     if (demoRole === 'team' || demoRole === 'admin') {
-      if (demoSubmissionState.status === 'submitted') {
+      const currentSub = getDemoSubmission();
+      if (currentSub.status === 'submitted') {
         return NextResponse.json(
           { error: 'Your submission has already been finalized and locked. Edits, unlocking, and resubmissions are permanently prohibited.' },
           { status: 403 }
@@ -141,22 +120,21 @@ export async function POST(request: NextRequest) {
       const status = is_final ? 'submitted' : 'draft';
       const submittedAt = is_final ? new Date().toISOString() : null;
 
-      demoSubmissionState = {
-        ...demoSubmissionState,
-        project_name: project_name?.trim() || demoSubmissionState.project_name,
-        track: track?.trim() || demoSubmissionState.track,
-        synopsis: synopsis?.trim() || demoSubmissionState.synopsis,
-        repo_url: repo_url?.trim() || demoSubmissionState.repo_url,
-        demo_url: demo_url?.trim() || demoSubmissionState.demo_url,
-        hosted_url: hosted_url?.trim() || demoSubmissionState.hosted_url,
+      const updated = updateDemoSubmission({
+        project_name: project_name?.trim() || currentSub.project_name,
+        track: track?.trim() || currentSub.track,
+        synopsis: synopsis?.trim() || currentSub.synopsis,
+        repo_url: repo_url?.trim() || currentSub.repo_url,
+        demo_url: demo_url?.trim() || currentSub.demo_url,
+        hosted_url: hosted_url?.trim() || currentSub.hosted_url,
         status,
         submitted_at: submittedAt,
-        files: files && files.length > 0 ? files : demoSubmissionState.files,
-      };
+        files: files && files.length > 0 ? files : currentSub.files,
+      });
 
       return NextResponse.json({
         success: true,
-        submissionId: 'demo-sub-1',
+        submissionId: updated.id,
         status,
         message: is_final ? 'Project successfully submitted!' : 'Draft saved successfully.',
       });

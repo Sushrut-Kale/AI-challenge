@@ -7,21 +7,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUserTeam, getServiceClient } from '@/lib/supabase-server';
 import { getPresignedDownloadUrl } from '@/lib/r2-storage';
+import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const authData = await getCurrentUserTeam();
-    if (!authData || !authData.user) {
-      return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
-    }
+    const cookieStore = await cookies();
+    const demoRole = cookieStore.get('agentcraft_demo_session')?.value;
 
     const { searchParams } = new URL(request.url);
     const fileId = searchParams.get('fileId');
 
     if (!fileId) {
       return NextResponse.json({ error: 'fileId parameter is required.' }, { status: 400 });
+    }
+
+    if (demoRole === 'admin' || demoRole === 'team') {
+      return NextResponse.json({
+        downloadUrl: `https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf`,
+        fileName: 'Submission_Document.pdf',
+        isMock: true,
+      });
+    }
+
+    const authData = await getCurrentUserTeam();
+    if (!authData || !authData.user) {
+      return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
     }
 
     const serviceClient = getServiceClient();

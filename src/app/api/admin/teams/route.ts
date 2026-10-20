@@ -7,67 +7,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser, getServiceClient, isAdminUser, logAuditEvent } from '@/lib/supabase-server';
 import { cookies } from 'next/headers';
+import { getDemoTeams } from '@/lib/demo-state';
 
 export const dynamic = 'force-dynamic';
-
-const DEMO_TEAMS: any[] = [
-  {
-    id: 'team-demo-1',
-    team_id: 'AC-2026-0001',
-    team_name: 'Voxel Agents',
-    leader_name: 'Alex Chen',
-    leader_email: 'team@agentcraft.ai',
-    leader_phone: '+91 98765 43210',
-    college: 'MIT Academy of Engineering, Pune',
-    track: 'SDG 13: Climate Action',
-    is_active: true,
-    auth_user_id: 'auth-user-1',
-    created_at: '2026-10-18T10:00:00Z',
-    members: [
-      { id: 'm1', name: 'Alex Chen', role: 'Leader' },
-      { id: 'm2', name: 'Maya Lin', role: 'Member' },
-      { id: 'm3', name: 'Rahul Sharma', role: 'Member' },
-    ],
-    submissions: [{ id: 'sub-1', status: 'draft', project_name: 'EcoAgent Swarm' }],
-  },
-  {
-    id: 'team-demo-2',
-    team_id: 'AC-2026-0002',
-    team_name: 'Neural Crafters',
-    leader_name: 'Priya Patel',
-    leader_email: 'priya@example.com',
-    leader_phone: '+91 91234 56789',
-    college: 'COEP Technological University',
-    track: 'SDG 3: Good Health & Well-Being',
-    is_active: true,
-    auth_user_id: 'auth-user-2',
-    created_at: '2026-10-18T11:30:00Z',
-    members: [
-      { id: 'm4', name: 'Priya Patel', role: 'Leader' },
-      { id: 'm5', name: 'Ananya Deshmukh', role: 'Member' },
-    ],
-    submissions: [{ id: 'sub-2', status: 'submitted', submitted_at: '2026-10-19T14:20:00Z', project_name: 'MedAgent Vision' }],
-  },
-  {
-    id: 'team-demo-3',
-    team_id: 'AC-2026-0003',
-    team_name: 'Quantum Pioneers',
-    leader_name: 'Rohan Joshi',
-    leader_email: 'rohan.j@gmail.com',
-    leader_phone: '+91 99887 76655',
-    college: 'PICT Pune',
-    track: 'SDG 7: Affordable & Clean Energy',
-    is_active: true,
-    auth_user_id: null,
-    created_at: '2026-10-19T08:15:00Z',
-    members: [
-      { id: 'm6', name: 'Rohan Joshi', role: 'Leader' },
-      { id: 'm7', name: 'Sneha Kulkarni', role: 'Member' },
-      { id: 'm8', name: 'Vikram Rao', role: 'Member' },
-    ],
-    submissions: [],
-  },
-];
 
 export async function GET(request: NextRequest) {
   try {
@@ -80,7 +22,8 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status') || '';
 
     if (demoRole === 'admin') {
-      let filtered = [...DEMO_TEAMS];
+      const demoTeams = getDemoTeams();
+      let filtered = [...demoTeams];
       if (search) {
         filtered = filtered.filter(
           (t) =>
@@ -156,7 +99,8 @@ export async function PATCH(request: NextRequest) {
     }
 
     if (demoRole === 'admin') {
-      const target = DEMO_TEAMS.find((t) => t.id === body.id);
+      const demoTeams = getDemoTeams();
+      const target = demoTeams.find((t) => t.id === body.id);
       if (target) target.is_active = body.is_active;
       return NextResponse.json({ success: true, team: target });
     }

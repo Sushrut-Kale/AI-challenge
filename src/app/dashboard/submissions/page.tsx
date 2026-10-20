@@ -131,11 +131,47 @@ export default function SubmissionsPage() {
       // ignore
     }
 
+    try {
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project_name: formData.projectTitle,
+          track: INITIAL_TEAM_DATA.track,
+          synopsis: formData.abstract,
+          repo_url: formData.githubUrl,
+          demo_url: formData.demoVideoUrl,
+          hosted_url: formData.liveDemoUrl,
+          is_final: false,
+          files: [
+            ...(formData.pptUrl ? [{
+              id: 'file-ppt',
+              file_name: 'Project_Presentation.pdf',
+              file_type: 'pitch_deck',
+              file_path: formData.pptUrl,
+              file_size_bytes: 3500000,
+              mime_type: 'application/pdf',
+            }] : []),
+            ...(formData.docUrl ? [{
+              id: 'file-doc',
+              file_name: 'Project_Documentation.pdf',
+              file_type: 'report',
+              file_path: formData.docUrl,
+              file_size_bytes: 2800000,
+              mime_type: 'application/pdf',
+            }] : []),
+          ],
+        }),
+      });
+    } catch {
+      // ignore
+    }
+
     if (isSupabaseConfigured) {
       await saveSubmissionToSupabase(INITIAL_TEAM_DATA.teamId, updated);
       setSaveToast('✓ Draft saved to local cache & Supabase!');
     } else {
-      setSaveToast('✓ Draft saved to local cache!');
+      setSaveToast('✓ Draft saved successfully!');
     }
     playMinecraftPop(1.2);
     setTimeout(() => setSaveToast(null), 3000);
@@ -189,7 +225,7 @@ export default function SubmissionsPage() {
     }
 
     try {
-      await fetch('/api/submissions', {
+      const res = await fetch('/api/submissions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -200,8 +236,33 @@ export default function SubmissionsPage() {
           demo_url: formData.demoVideoUrl,
           hosted_url: formData.liveDemoUrl,
           is_final: true,
+          files: [
+            ...(formData.pptUrl ? [{
+              id: 'file-ppt',
+              file_name: 'Project_Presentation.pdf',
+              file_type: 'pitch_deck',
+              file_path: formData.pptUrl,
+              file_size_bytes: 3500000,
+              mime_type: 'application/pdf',
+            }] : []),
+            ...(formData.docUrl ? [{
+              id: 'file-doc',
+              file_name: 'Project_Documentation.pdf',
+              file_type: 'report',
+              file_path: formData.docUrl,
+              file_size_bytes: 2800000,
+              mime_type: 'application/pdf',
+            }] : []),
+          ],
         }),
       });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data?.error) {
+          alert(data.error);
+        }
+      }
     } catch {
       // ignore
     }

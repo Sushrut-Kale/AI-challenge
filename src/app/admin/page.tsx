@@ -104,7 +104,7 @@ export default function AdminPage() {
       if (teamTrackFilter) params.set('track', teamTrackFilter);
       if (teamStatusFilter) params.set('status', teamStatusFilter);
 
-      const res = await fetch(`/api/admin/teams?${params.toString()}`);
+      const res = await fetch(`/api/admin/teams?${params.toString()}`, { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setTeams(data.teams || []);
@@ -124,7 +124,7 @@ export default function AdminPage() {
       if (subTrackFilter) params.set('track', subTrackFilter);
       if (subStatusFilter) params.set('status', subStatusFilter);
 
-      const res = await fetch(`/api/admin/submissions?${params.toString()}`);
+      const res = await fetch(`/api/admin/submissions?${params.toString()}`, { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         setSubmissions(data.submissions || []);
