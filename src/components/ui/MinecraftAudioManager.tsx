@@ -540,11 +540,11 @@ export function AudioNavbarButton() {
   const isAudioActive = bgmEnabled || sfxEnabled;
 
   return (
-    <div className="relative" ref={popoverRef}>
+    <div className="relative shrink-0" ref={popoverRef}>
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`border-2 px-2.5 sm:px-3 py-2 min-h-[40px] font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.25),0_3px_0_#1a1309] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 cursor-pointer ${
+        className={`border-2 px-2.5 sm:px-3 py-2 min-h-[40px] font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.25),0_3px_0_#1a1309] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
           isAudioActive
             ? 'border-[#2d5a27] bg-[#1d4319] hover:bg-[#255720] text-emerald-300'
             : 'border-[#4a3928] bg-[#211810] hover:bg-[#322315] text-neutral-400'
@@ -555,7 +555,7 @@ export function AudioNavbarButton() {
         data-interactive="true"
       >
         <span>{bgmEnabled ? '🎵' : sfxEnabled ? '🔊' : '🔇'}</span>
-        <span className="hidden xl:inline">{bgmEnabled ? 'MUSIC' : sfxEnabled ? 'SFX ON' : 'MUTED'}</span>
+        <span className="hidden xl:inline whitespace-nowrap">{bgmEnabled ? 'MUSIC' : sfxEnabled ? 'SFX ON' : 'MUTED'}</span>
         <span className="text-[7px] opacity-75">{isOpen ? '▲' : '▼'}</span>
       </button>
 
