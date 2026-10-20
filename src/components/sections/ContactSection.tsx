@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import SectionContainer from '@/components/layout/SectionContainer';
 import SectionHeading from '@/components/ui/SectionHeading';
 import PixelCard from '@/components/ui/PixelCard';
@@ -74,37 +75,61 @@ export default function ContactSection() {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-        {/* Campus Venue */}
-        <PixelCard
-          variant="stone"
-          title="Campus Venue"
-          headerIcon="📍"
-          badge={<PixelBadge variant="emerald">OFFLINE FINALE</PixelBadge>}
-        >
-          <h4 className="font-pixel text-xs sm:text-sm text-white mb-2">
-            {organizers.institution.name}
-          </h4>
-          <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed mb-4">
-            {contact.venueAddress}
-          </p>
-          <div className="p-3 bg-black/40 border border-neutral-700 font-pixel text-[9px] text-neutral-400">
-            {organizers.institution.affiliation}
+        {/* Campus Venue in Minecraft Frame */}
+        <div className="mc-arena-frame p-5 sm:p-6 shadow-[0_12px_28px_rgba(0,0,0,0.85)]">
+          {/* Top Slot Header Bar */}
+          <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-[#3b1c10]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 border-2 border-[#583d29] bg-[#2a1d12] flex items-center justify-center p-1 shadow-inner">
+                <Image
+                  src="/assets/items/compass.png"
+                  alt="Compass"
+                  width={28}
+                  height={28}
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <h3 className="font-pixel text-xs sm:text-sm text-white uppercase tracking-wider font-bold">
+                Campus Venue
+              </h3>
+            </div>
+            <PixelBadge variant="emerald">OFFLINE FINALE</PixelBadge>
           </div>
-        </PixelCard>
 
-        {/* Official Contact Person from Poster */}
-        <PixelCard
-          variant="stone"
-          title="Official Contact Desk"
-          headerIcon="📞"
-          badge={<PixelBadge variant="gold">STUDENT COORDINATOR</PixelBadge>}
-        >
-          <div className="space-y-4 font-sans text-sm text-neutral-300">
+          <div>
+            <h4 className="font-pixel text-xs sm:text-sm text-amber-300 mb-2 font-bold">
+              {organizers.institution.name}
+            </h4>
+            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed mb-4 font-medium">
+              {contact.venueAddress}
+            </p>
+            <div className="p-3 bg-black/60 border border-[#3b1c10] font-pixel text-[9px] text-neutral-400 leading-relaxed">
+              {organizers.institution.affiliation}
+            </div>
+          </div>
+        </div>
+
+        {/* Official Contact Desk in Minecraft Frame */}
+        <div className="mc-arena-frame p-5 sm:p-6 shadow-[0_12px_28px_rgba(0,0,0,0.85)]">
+          {/* Top Slot Header Bar */}
+          <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-[#3b1c10]">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 border-2 border-[#583d29] bg-[#2a1d12] flex items-center justify-center p-1 text-lg shadow-inner">
+                📞
+              </div>
+              <h3 className="font-pixel text-xs sm:text-sm text-white uppercase tracking-wider font-bold">
+                Official Contact Desk
+              </h3>
+            </div>
+            <PixelBadge variant="gold">STUDENT COORDINATOR</PixelBadge>
+          </div>
+
+          <div className="space-y-4 font-sans text-sm">
             <div>
               <span className="font-pixel text-[9px] text-neutral-400 block uppercase mb-1">
                 Contact Person
               </span>
-              <span className="font-pixel text-sm text-amber-300">
+              <span className="font-pixel text-sm text-amber-300 font-bold">
                 {contact.name}
               </span>
             </div>
@@ -115,7 +140,7 @@ export default function ContactSection() {
               </span>
               <a
                 href={`tel:${contact.phone.replace(/\s+/g, '')}`}
-                className="font-pixel text-xs sm:text-sm text-emerald-400 hover:underline block"
+                className="font-pixel text-xs sm:text-sm text-emerald-400 hover:underline block font-bold"
                 data-interactive="true"
               >
                 {contact.phone}
@@ -126,12 +151,12 @@ export default function ContactSection() {
               <span className="font-pixel text-[9px] text-neutral-400 block uppercase mb-1">
                 Organizing Chapter
               </span>
-              <p className="text-xs text-neutral-300">
-                {organizers.lead} in association with AlgoVedas & ASTRA
+              <p className="text-xs text-neutral-200 font-medium">
+                {organizers.lead} in association with AlgoVedas & AAAI
               </p>
             </div>
           </div>
-        </PixelCard>
+        </div>
       </div>
     </SectionContainer>
   );

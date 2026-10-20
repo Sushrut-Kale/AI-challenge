@@ -266,7 +266,7 @@ export default function MinecraftPanel({
                         className="px-2 py-0.5 text-[9px] font-bold text-white rounded-none"
                         style={{ backgroundColor: track.color }}
                       >
-                        SDG {track.id}
+                        {typeof track.id === 'number' ? `SDG ${track.id}` : track.id}
                       </span>
                       <h4 className="text-white font-bold text-xs">{track.name}</h4>
                     </div>

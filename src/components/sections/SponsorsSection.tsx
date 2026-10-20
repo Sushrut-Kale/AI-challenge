@@ -9,9 +9,9 @@ import PixelBadge from '@/components/ui/PixelBadge';
 import { EVENT_DATA } from '@/data/event';
 
 const SPONSOR_LOGOS: Record<string, string> = {
-  'SAGVEEK Technologies Pvt. Ltd.': '/assets/logos/sagveek_clean.png',
-  'AiSyntelligence LLP': '/assets/logos/aisyntelligence_clean.png',
-  'Capabl.': '/assets/logos/capabl_clean.png',
+  'SAGVEEK Technologies Pvt. Ltd.': '/assets/logos_v2/sagveek_clean.png',
+  'AiSyntelligence LLP': '/assets/logos_v2/aisyntelligence_clean.png',
+  'Capabl.': '/assets/logos_v2/capabl_clean.png',
 };
 
 export default function SponsorsSection() {
@@ -28,136 +28,212 @@ export default function SponsorsSection() {
       {/* Official Institutional Organizers */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <span className="font-pixel text-[10px] sm:text-[11px] text-amber-400 uppercase tracking-widest block font-bold">
-            OFFICIAL PRESENTING ORGANIZATIONS
+          <span className="font-pixel text-[10px] sm:text-[11px] text-amber-400 uppercase tracking-widest block font-bold mb-1">
+            ► PRESENTING ORGANIZATIONS
           </span>
+          <h3 className="font-pixel text-base sm:text-xl text-white uppercase tracking-wider" style={{ textShadow: '2px 2px 0 #000' }}>
+            ORGANIZED IN COOPERATION WITH
+          </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Primary Student Organizer: ASTRA (First & Most Prominent) */}
-          <PixelCard
-            variant="emerald"
-            title="Primary Organizer"
-            badge={<PixelBadge variant="gold">PRIMARY ORGANIZER</PixelBadge>}
-            className="ring-2 ring-amber-400/50 shadow-[0_0_20px_rgba(251,191,36,0.2)]"
-          >
-            <div className="flex flex-col items-center text-center p-2">
-              <div className="h-20 w-full flex items-center justify-center mb-4 bg-[#120e0a]/90 border border-amber-400/30 p-2 rounded shadow-inner">
+          {/* Primary Student Organizer: ASTRA */}
+          <div className="p-4 sm:p-5 border-3 border-[#543822] bg-[#1a130c] shadow-[inset_2px_2px_0_#7a5232,inset_-2px_-2px_0_#0f0a06,0_8px_24px_rgba(0,0,0,0.7)] flex flex-col justify-between hover:-translate-y-1 transition-transform">
+            <div>
+              {/* Top Header Badge */}
+              <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-[#3e2c1c]">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 border border-amber-500/60 bg-[#2b190a] flex items-center justify-center p-1 shadow-inner">
+                    <Image
+                      src="/assets/items/emerald.png"
+                      alt="Emerald"
+                      width={24}
+                      height={24}
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+                  <span className="font-pixel text-[10px] text-amber-300 uppercase font-bold tracking-wider">
+                    PRIMARY ORGANIZER
+                  </span>
+                </div>
+                <PixelBadge variant="gold">LEAD</PixelBadge>
+              </div>
+
+              {/* Large Visible Logo Slot on White Background */}
+              <div className="h-28 sm:h-32 w-full bg-white border-2 border-[#3e2c1c] rounded flex items-center justify-center p-3 mb-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.4)]">
                 <Image
-                  src="/assets/logos/astra_clean.png"
+                  src="/assets/logos_v2/astra_clean.png"
                   alt="ASTRA Student Association"
-                  width={140}
-                  height={60}
-                  className="max-h-16 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  width={200}
+                  height={80}
+                  className="max-h-20 sm:max-h-24 w-auto max-w-[90%] object-contain"
                 />
               </div>
-              <h4 className="font-pixel text-xs sm:text-sm text-amber-300 mb-2 font-bold">
+
+              <h4 className="font-pixel text-xs sm:text-sm text-amber-300 mb-1.5 font-bold text-center">
                 ASTRA Student Association
               </h4>
-              <p className="font-sans text-xs sm:text-sm text-neutral-100 leading-relaxed font-medium">
-                Primary student organizing body at MIT Academy of Engineering (Department of CSE-AIML)
-                leading the AGENTCRAFT National Challenge and student innovation.
-              </p>
             </div>
-          </PixelCard>
+
+            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+              Primary student organizing body at MIT Academy of Engineering (Department of CSE-AIML) leading challenge operations.
+            </p>
+          </div>
 
           {/* Associated Professional Chapter: AAAI */}
-          <PixelCard
-            variant="stone"
-            title="Professional Chapter"
-            badge={<PixelBadge variant="emerald">ASSOCIATED CHAPTER</PixelBadge>}
-          >
-            <div className="flex flex-col items-center text-center p-2">
-              <div className="h-20 w-full flex items-center justify-center mb-4 bg-[#120e0a]/90 border border-white/10 p-2 rounded shadow-inner">
+          <div className="p-4 sm:p-5 border-3 border-[#543822] bg-[#1a130c] shadow-[inset_2px_2px_0_#7a5232,inset_-2px_-2px_0_#0f0a06,0_8px_24px_rgba(0,0,0,0.7)] flex flex-col justify-between hover:-translate-y-1 transition-transform">
+            <div>
+              {/* Top Header Badge */}
+              <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-[#3e2c1c]">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 border border-sky-500/60 bg-[#0a1e2b] flex items-center justify-center p-1 shadow-inner">
+                    <Image
+                      src="/assets/items/diamond.png"
+                      alt="Diamond"
+                      width={24}
+                      height={24}
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+                  <span className="font-pixel text-[10px] text-sky-300 uppercase font-bold tracking-wider">
+                    PROFESSIONAL CHAPTER
+                  </span>
+                </div>
+                <PixelBadge variant="emerald">GLOBAL</PixelBadge>
+              </div>
+
+              {/* Large Visible Logo Slot on White Background */}
+              <div className="h-28 sm:h-32 w-full bg-white border-2 border-[#3e2c1c] rounded flex items-center justify-center p-3 mb-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.4)]">
                 <Image
-                  src="/assets/logos/aaai_clean.png"
+                  src="/assets/logos_v2/aaai_clean.png"
                   alt="AAAI Global Professional Chapter"
-                  width={160}
-                  height={60}
-                  className="max-h-16 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  width={200}
+                  height={80}
+                  className="max-h-20 sm:max-h-24 w-auto max-w-[90%] object-contain"
                 />
               </div>
-              <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
+
+              <h4 className="font-pixel text-xs sm:text-sm text-white mb-1.5 font-bold text-center">
                 AAAI Global Professional Chapter
               </h4>
-              <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                Global artificial intelligence professional association advancing research,
-                technical rigor, and responsible deployment of autonomous agentic systems.
-              </p>
             </div>
-          </PixelCard>
+
+            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+              Global artificial intelligence professional association advancing technical research and responsible AI agent architectures.
+            </p>
+          </div>
 
           {/* Department Technical Society: AlgoVedas */}
-          <PixelCard
-            variant="stone"
-            title="Department Community"
-            badge={<PixelBadge variant="diamond">CSE AIML</PixelBadge>}
-          >
-            <div className="flex flex-col items-center text-center p-2">
-              <div className="h-20 w-full flex items-center justify-center mb-4 bg-[#120e0a]/90 border border-white/10 p-2 rounded shadow-inner">
+          <div className="p-4 sm:p-5 border-3 border-[#543822] bg-[#1a130c] shadow-[inset_2px_2px_0_#7a5232,inset_-2px_-2px_0_#0f0a06,0_8px_24px_rgba(0,0,0,0.7)] flex flex-col justify-between hover:-translate-y-1 transition-transform">
+            <div>
+              {/* Top Header Badge */}
+              <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-[#3e2c1c]">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 border border-red-500/60 bg-[#2b0d0a] flex items-center justify-center p-1 shadow-inner">
+                    <Image
+                      src="/assets/items/redstone.png"
+                      alt="Redstone"
+                      width={24}
+                      height={24}
+                      className="w-5 h-5 object-contain"
+                    />
+                  </div>
+                  <span className="font-pixel text-[10px] text-amber-300 uppercase font-bold tracking-wider">
+                    DEPARTMENT SOCIETY
+                  </span>
+                </div>
+                <PixelBadge variant="diamond">CSE AIML</PixelBadge>
+              </div>
+
+              {/* Large Visible Logo Slot on White Background */}
+              <div className="h-28 sm:h-32 w-full bg-white border-2 border-[#3e2c1c] rounded flex items-center justify-center p-3 mb-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.4)]">
                 <Image
-                  src="/assets/logos/algovedas_clean.png"
+                  src="/assets/logos_v2/algovedas_clean.png"
                   alt="AlgoVedas CSE AIML"
-                  width={140}
-                  height={60}
-                  className="max-h-16 w-auto object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
+                  width={200}
+                  height={80}
+                  className="max-h-20 sm:max-h-24 w-auto max-w-[90%] object-contain"
                 />
               </div>
-              <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
-                AlgoVedas
+
+              <h4 className="font-pixel text-xs sm:text-sm text-white mb-1.5 font-bold text-center">
+                AlgoVedas (CSE AIML)
               </h4>
-              <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                Department of Computer Science & Engineering (Artificial Intelligence & Machine Learning)
-                technical community driving competitive student innovation.
-              </p>
             </div>
-          </PixelCard>
+
+            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+              Department technical community driving competitive student hackathons and intelligent system development.
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Official Industry Sponsors with Genuine Logos */}
+      {/* Official Industry Sponsors with High-Contrast Visible Logos */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <span className="font-pixel text-[10px] sm:text-[11px] text-emerald-400 uppercase tracking-widest block font-bold">
-            OUR INDUSTRY SPONSORS
+          <span className="font-pixel text-[10px] sm:text-[11px] text-emerald-400 uppercase tracking-widest block font-bold mb-1">
+            ► INDUSTRY COLLABORATORS
           </span>
+          <h3 className="font-pixel text-base sm:text-xl text-white uppercase tracking-wider" style={{ textShadow: '2px 2px 0 #000' }}>
+            OUR INDUSTRY SPONSORS
+          </h3>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {sponsors.map((sponsor) => {
+          {sponsors.map((sponsor, index) => {
             const logoSrc = SPONSOR_LOGOS[sponsor.name];
+            const sponsorIcons = [
+              '/assets/items/iron_pickaxe.png',
+              '/assets/items/ender_eye.png',
+              '/assets/items/totem.png',
+            ];
+            const iconSrc = sponsorIcons[index % sponsorIcons.length];
 
             return (
               <div
                 key={sponsor.name}
-                className="p-5 sm:p-6 border-2 border-[#382618] bg-[#1a130c] shadow-[0_8px_20px_rgba(0,0,0,0.65)] flex flex-col justify-between text-center hover:-translate-y-1 transition-transform"
+                className="p-4 sm:p-5 border-3 border-[#543822] bg-[#1a130c] shadow-[inset_2px_2px_0_#7a5232,inset_-2px_-2px_0_#0f0a06,0_8px_24px_rgba(0,0,0,0.7)] flex flex-col justify-between hover:-translate-y-1 transition-transform"
               >
                 <div>
-                  <span className="font-pixel text-[9px] text-amber-400 uppercase tracking-wider block mb-3 font-semibold">
-                    {sponsor.tier}
-                  </span>
+                  {/* Top Header Badge */}
+                  <div className="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-[#3e2c1c]">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 border border-amber-600/60 bg-[#261609] flex items-center justify-center p-1 shadow-inner">
+                        <Image
+                          src={iconSrc}
+                          alt="Icon"
+                          width={24}
+                          height={24}
+                          className="w-5 h-5 object-contain"
+                        />
+                      </div>
+                      <span className="font-pixel text-[10px] text-amber-400 uppercase font-bold tracking-wider">
+                        {sponsor.tier}
+                      </span>
+                    </div>
+                  </div>
 
-                  {/* Themed Logo Container on Minecraft Deepslate Slot */}
-                  <div className="h-20 w-full bg-[#120e0a]/90 border border-[#3e2c1c] rounded flex items-center justify-center p-3 mb-4 shadow-inner">
+                  {/* Large Visible Logo Slot on White Background */}
+                  <div className="h-28 sm:h-32 w-full bg-white border-2 border-[#3e2c1c] rounded flex items-center justify-center p-3 mb-4 shadow-[inset_0_2px_4px_rgba(0,0,0,0.06),0_4px_12px_rgba(0,0,0,0.4)]">
                     {logoSrc ? (
                       <Image
                         src={logoSrc}
                         alt={sponsor.name}
-                        width={180}
-                        height={60}
-                        className="max-h-14 w-auto object-contain filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]"
+                        width={220}
+                        height={80}
+                        className="max-h-20 sm:max-h-24 w-auto max-w-[90%] object-contain"
                       />
                     ) : (
-                      <span className="font-pixel text-xs text-white">{sponsor.name}</span>
+                      <span className="font-pixel text-xs text-neutral-800">{sponsor.name}</span>
                     )}
                   </div>
 
-                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-1.5 font-bold">
+                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-1.5 font-bold text-center">
                     {sponsor.name}
                   </h4>
                 </div>
 
-                <p className="font-sans text-xs sm:text-sm text-neutral-300 mt-2 font-medium">
+                <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed font-medium text-center mt-2">
                   {sponsor.role}
                 </p>
               </div>

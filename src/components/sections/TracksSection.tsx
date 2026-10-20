@@ -109,17 +109,28 @@ export default function TracksSection() {
             SDG PROBLEM STATEMENT TRACKS
           </h3>
           <p className="font-sans text-xs sm:text-sm text-neutral-200 max-w-2xl mx-auto leading-relaxed">
-            Teams must align their autonomous multi-agent AI system with one of the following official United Nations Sustainable Development Goals. Evaluation rubrics reward real-world deployability and social impact.
+            Teams can align their autonomous multi-agent AI system with one of our curated United Nations Sustainable Development Goals or propose a groundbreaking domain under the Open Innovation track. Evaluation rubrics reward real-world deployability and social impact.
           </p>
+           {/* Horizontal Wooden Support Beam with Hanging Chains (Ref: Image 1) */}
+        <div className="relative mb-2 px-6">
+          <div className="mc-wood-beam h-5 w-full rounded-sm flex items-center justify-between px-8 relative z-20">
+            <span className="w-2.5 h-2.5 bg-[#1f1006] rounded-full border border-[#8b5d32] shadow-inner" />
+            <span className="w-2.5 h-2.5 bg-[#1f1006] rounded-full border border-[#8b5d32] shadow-inner" />
+          </div>
+          {/* Top Hanging Chains */}
+          <div className="flex justify-between px-16 -mt-1 relative z-10 pointer-events-none">
+            <div className="mc-chain-link" />
+            <div className="mc-chain-link" />
+          </div>
         </div>
 
-        {/* The 4 SDGs stacked ONE BELOW THE OTHER */}
-        <div className="flex flex-col gap-4">
+        {/* The Hanging Oak Wood Signs Stacked Vertically with Connecting Chains */}
+        <div className="flex flex-col items-center">
           {/* SDG 7 */}
-          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#d97706]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-amber-400 transition-colors">
+          <div className="w-full mc-oak-sign p-5 sm:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-transform">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 shrink-0 border-2 border-amber-500 bg-[#2b190a] flex items-center justify-center shadow-[0_0_12px_rgba(245,158,11,0.35)]">
+                <div className="w-12 h-12 shrink-0 border-2 border-[#7a4e23] bg-[#916538] flex items-center justify-center shadow-[inset_2px_2px_0_#4a2e12,inset_-2px_-2px_0_#deb689]">
                   <Image
                     src="/assets/items/redstone.png"
                     alt="Redstone Dust"
@@ -128,15 +139,21 @@ export default function TracksSection() {
                     className="w-8 h-8 object-contain drop-shadow"
                   />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <PixelBadge variant="gold">SDG 07</PixelBadge>
-                    <span className="font-pixel text-[9px] text-amber-300 uppercase font-bold">Clean Energy</span>
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="px-2 py-0.5 bg-[#8b5219] border border-[#522d08] text-[#ffe6a3] font-pixel text-[9px] uppercase font-bold shadow-[inset_1px_1px_0_#b87832]">
+                      SDG 07
+                    </span>
+                    <span className="font-pixel text-[9px] text-[#5c3008] uppercase font-bold tracking-wide">
+                      Clean Energy
+                    </span>
                   </div>
-                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
+                  <h4 className="font-pixel text-xs sm:text-sm text-[#2b1708] mb-2 font-bold tracking-wide" style={{ textShadow: '1px 1px 0 #ebd0af' }}>
                     Affordable & Clean Energy
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  {/* Colored Divider Line (Ref: Image 1) */}
+                  <div className="h-0.5 w-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600 mb-2 shadow-[0_1px_0_rgba(255,255,255,0.4)]" />
+                  <p className="font-sans text-xs sm:text-sm text-[#261406] leading-relaxed font-semibold">
                     Build autonomous agent architectures for smart micro-grid balancing, renewable energy forecasting, battery load optimization, and decentralized energy distribution.
                   </p>
                 </div>
@@ -144,11 +161,17 @@ export default function TracksSection() {
             </div>
           </div>
 
+          {/* Connecting Chains */}
+          <div className="flex justify-between w-full px-16 -my-1 relative z-20 pointer-events-none">
+            <div className="mc-chain-link" />
+            <div className="mc-chain-link" />
+          </div>
+
           {/* SDG 9 */}
-          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#ea580c]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-orange-400 transition-colors">
+          <div className="w-full mc-oak-sign p-5 sm:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-transform">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 shrink-0 border-2 border-orange-500 bg-[#2d1206] flex items-center justify-center shadow-[0_0_12px_rgba(234,88,12,0.35)]">
+                <div className="w-12 h-12 shrink-0 border-2 border-[#7a4e23] bg-[#916538] flex items-center justify-center shadow-[inset_2px_2px_0_#4a2e12,inset_-2px_-2px_0_#deb689]">
                   <Image
                     src="/assets/items/iron_pickaxe.png"
                     alt="Iron Pickaxe"
@@ -157,15 +180,21 @@ export default function TracksSection() {
                     className="w-8 h-8 object-contain drop-shadow"
                   />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <PixelBadge variant="dirt">SDG 09</PixelBadge>
-                    <span className="font-pixel text-[9px] text-orange-300 uppercase font-bold">Infrastructure</span>
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="px-2 py-0.5 bg-[#8b5219] border border-[#522d08] text-[#ffe6a3] font-pixel text-[9px] uppercase font-bold shadow-[inset_1px_1px_0_#b87832]">
+                      SDG 09
+                    </span>
+                    <span className="font-pixel text-[9px] text-[#5c3008] uppercase font-bold tracking-wide">
+                      Infrastructure
+                    </span>
                   </div>
-                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
+                  <h4 className="font-pixel text-xs sm:text-sm text-[#2b1708] mb-2 font-bold tracking-wide" style={{ textShadow: '1px 1px 0 #ebd0af' }}>
                     Industry, Innovation & Infrastructure
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  {/* Colored Divider Line (Ref: Image 1) */}
+                  <div className="h-0.5 w-full bg-gradient-to-r from-orange-600 via-orange-400 to-orange-600 mb-2 shadow-[0_1px_0_rgba(255,255,255,0.4)]" />
+                  <p className="font-sans text-xs sm:text-sm text-[#261406] leading-relaxed font-semibold">
                     Develop multi-agent networks for predictive factory maintenance, sustainable supply-chain self-healing, automated bridge/structure inspection, and circular manufacturing.
                   </p>
                 </div>
@@ -173,11 +202,17 @@ export default function TracksSection() {
             </div>
           </div>
 
+          {/* Connecting Chains */}
+          <div className="flex justify-between w-full px-16 -my-1 relative z-20 pointer-events-none">
+            <div className="mc-chain-link" />
+            <div className="mc-chain-link" />
+          </div>
+
           {/* SDG 11 */}
-          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#10b981]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-emerald-400 transition-colors">
+          <div className="w-full mc-oak-sign p-5 sm:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-transform">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 shrink-0 border-2 border-emerald-500 bg-[#0d2618] flex items-center justify-center shadow-[0_0_12px_rgba(16,185,129,0.35)]">
+                <div className="w-12 h-12 shrink-0 border-2 border-[#7a4e23] bg-[#916538] flex items-center justify-center shadow-[inset_2px_2px_0_#4a2e12,inset_-2px_-2px_0_#deb689]">
                   <Image
                     src="/assets/items/compass.png"
                     alt="Compass"
@@ -186,15 +221,21 @@ export default function TracksSection() {
                     className="w-8 h-8 object-contain drop-shadow"
                   />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <PixelBadge variant="emerald">SDG 11</PixelBadge>
-                    <span className="font-pixel text-[9px] text-emerald-300 uppercase font-bold">Smart Communities</span>
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="px-2 py-0.5 bg-[#8b5219] border border-[#522d08] text-[#ffe6a3] font-pixel text-[9px] uppercase font-bold shadow-[inset_1px_1px_0_#b87832]">
+                      SDG 11
+                    </span>
+                    <span className="font-pixel text-[9px] text-[#5c3008] uppercase font-bold tracking-wide">
+                      Smart Communities
+                    </span>
                   </div>
-                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
+                  <h4 className="font-pixel text-xs sm:text-sm text-[#2b1708] mb-2 font-bold tracking-wide" style={{ textShadow: '1px 1px 0 #ebd0af' }}>
                     Sustainable Cities & Communities
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  {/* Colored Divider Line (Ref: Image 1) */}
+                  <div className="h-0.5 w-full bg-gradient-to-r from-emerald-600 via-emerald-400 to-emerald-600 mb-2 shadow-[0_1px_0_rgba(255,255,255,0.4)]" />
+                  <p className="font-sans text-xs sm:text-sm text-[#261406] leading-relaxed font-semibold">
                     Orchestrate cooperative agent fleets for decentralized municipal traffic regulation, emergency response coordination, dynamic waste routing, and urban air quality monitoring.
                   </p>
                 </div>
@@ -202,11 +243,17 @@ export default function TracksSection() {
             </div>
           </div>
 
+          {/* Connecting Chains */}
+          <div className="flex justify-between w-full px-16 -my-1 relative z-20 pointer-events-none">
+            <div className="mc-chain-link" />
+            <div className="mc-chain-link" />
+          </div>
+
           {/* SDG 13 */}
-          <div className="p-5 sm:p-6 bg-[#16120e] border-2 border-[#06b6d4]/70 shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:border-cyan-400 transition-colors">
+          <div className="w-full mc-oak-sign p-5 sm:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-transform">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 shrink-0 border-2 border-cyan-500 bg-[#07242a] flex items-center justify-center shadow-[0_0_12px_rgba(6,182,212,0.35)]">
+                <div className="w-12 h-12 shrink-0 border-2 border-[#7a4e23] bg-[#916538] flex items-center justify-center shadow-[inset_2px_2px_0_#4a2e12,inset_-2px_-2px_0_#deb689]">
                   <Image
                     src="/assets/items/ender_eye.png"
                     alt="Eye of Ender"
@@ -215,21 +262,69 @@ export default function TracksSection() {
                     className="w-8 h-8 object-contain drop-shadow"
                   />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                    <PixelBadge variant="diamond">SDG 13</PixelBadge>
-                    <span className="font-pixel text-[9px] text-cyan-300 uppercase font-bold">Climate Action</span>
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="px-2 py-0.5 bg-[#8b5219] border border-[#522d08] text-[#ffe6a3] font-pixel text-[9px] uppercase font-bold shadow-[inset_1px_1px_0_#b87832]">
+                      SDG 13
+                    </span>
+                    <span className="font-pixel text-[9px] text-[#5c3008] uppercase font-bold tracking-wide">
+                      Climate Action
+                    </span>
                   </div>
-                  <h4 className="font-pixel text-xs sm:text-sm text-white mb-2 font-bold">
+                  <h4 className="font-pixel text-xs sm:text-sm text-[#2b1708] mb-2 font-bold tracking-wide" style={{ textShadow: '1px 1px 0 #ebd0af' }}>
                     Climate Action
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  {/* Colored Divider Line (Ref: Image 1) */}
+                  <div className="h-0.5 w-full bg-gradient-to-r from-cyan-600 via-cyan-400 to-cyan-600 mb-2 shadow-[0_1px_0_rgba(255,255,255,0.4)]" />
+                  <p className="font-sans text-xs sm:text-sm text-[#261406] leading-relaxed font-semibold">
                     Deploy reflective reasoning agents for wildfire telemetry monitoring, automated carbon footprint verification, flood simulation, and ecosystem restoration planning.
                   </p>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* Connecting Chains */}
+          <div className="flex justify-between w-full px-16 -my-1 relative z-20 pointer-events-none">
+            <div className="mc-chain-link" />
+            <div className="mc-chain-link" />
+          </div>
+
+          {/* Open Innovation */}
+          <div className="w-full mc-oak-sign p-5 sm:p-6 shadow-[0_10px_28px_rgba(0,0,0,0.7)] hover:scale-[1.01] transition-transform">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 shrink-0 border-2 border-[#7a4e23] bg-[#916538] flex items-center justify-center shadow-[inset_2px_2px_0_#4a2e12,inset_-2px_-2px_0_#deb689]">
+                  <Image
+                    src="/assets/items/end_crystal.png"
+                    alt="End Crystal"
+                    width={36}
+                    height={36}
+                    className="w-8 h-8 object-contain drop-shadow"
+                  />
+                </div>
+                <div className="w-full">
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="px-2 py-0.5 bg-[#4c1d95] border border-[#2e1065] text-[#e9d5ff] font-pixel text-[9px] uppercase font-bold shadow-[inset_1px_1px_0_#7c3aed]">
+                      OPEN TRACK
+                    </span>
+                    <span className="font-pixel text-[9px] text-[#581c87] uppercase font-bold tracking-wide">
+                      Frontier AI
+                    </span>
+                  </div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-[#2b1708] mb-2 font-bold tracking-wide" style={{ textShadow: '1px 1px 0 #ebd0af' }}>
+                    Open Innovation & Emerging Frontiers
+                  </h4>
+                  {/* Colored Divider Line (Ref: Image 1) */}
+                  <div className="h-0.5 w-full bg-gradient-to-r from-purple-600 via-fuchsia-400 to-purple-600 mb-2 shadow-[0_1px_0_rgba(255,255,255,0.4)]" />
+                  <p className="font-sans text-xs sm:text-sm text-[#261406] leading-relaxed font-semibold">
+                    Pioneer novel agentic solutions beyond standard tracks — build autonomous multi-agent ecosystems for healthcare diagnostics, cybersecurity defense, decentralized finance, adaptive education, or automated scientific discovery.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
 
         {/* Detailed templates notice */}

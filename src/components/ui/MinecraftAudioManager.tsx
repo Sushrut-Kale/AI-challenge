@@ -271,6 +271,11 @@ class MinecraftAmbientMusicEngine {
     [164.81, 196.0, 246.94, 293.66],
   ];
   private chordIndex = 0;
+  private volume = 0.4;
+
+  setVolume(val: number) {
+    this.volume = Math.max(0, Math.min(1, val));
+  }
 
   start() {
     if (this.isPlaying) return;
@@ -311,9 +316,10 @@ class MinecraftAmbientMusicEngine {
       // Slow gentle attack and long, nostalgic release
       const startTime = now + noteIdx * 0.12;
       const duration = 5.5;
+      const targetGain = Math.max(0.001, 0.045 * this.volume);
 
       gain.gain.setValueAtTime(0.001, startTime);
-      gain.gain.linearRampToValueAtTime(0.045, startTime + 0.8);
+      gain.gain.linearRampToValueAtTime(targetGain, startTime + 0.8);
       gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
       osc.connect(filter);

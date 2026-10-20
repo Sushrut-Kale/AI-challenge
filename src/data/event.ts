@@ -75,7 +75,7 @@ export interface EventData {
   challenge: {
     overview: string;
     sdgTracks: Array<{
-      id: number;
+      id: number | string;
       name: string;
       color: string;
       description: string;
@@ -287,6 +287,12 @@ export const EVENT_DATA: EventData = {
         name: 'Climate Action (SDG 13)',
         color: '#06b6d4',
         description: 'Carbon emission monitoring, environmental sensor network coordination, and climate telemetry.',
+      },
+      {
+        id: 'OPEN',
+        name: 'Open Innovation Track',
+        color: '#a855f7',
+        description: 'Pioneer novel autonomous agentic ecosystems for healthcare, education, cybersecurity, decentralized finance, or emerging frontiers.',
       },
     ],
   },

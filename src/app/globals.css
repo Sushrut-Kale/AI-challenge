@@ -565,6 +565,125 @@ body {
   animation: portalSwirl 6s ease-in-out infinite;
 }
 
+/* Authentic Minecraft Frames from User Reference */
+
+/* 1. Oak Wood Hanging Signs & Suspension Chains (Ref: Image 1) */
+.mc-oak-sign {
+  background-color: #c49a6c;
+  background-image: repeating-linear-gradient(
+    180deg,
+    #c49a6c 0px,
+    #c49a6c 22px,
+    #b38758 23px,
+    #d6ac7c 24px
+  );
+  border: 4px solid #4a2e12;
+  box-shadow:
+    inset 3px 3px 0 #ebbf8b,
+    inset -3px -3px 0 #7a4b1e,
+    0 8px 24px rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.mc-chain-link {
+  width: 8px;
+  height: 20px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    #636b73 0px,
+    #636b73 3px,
+    #8b949c 4px,
+    #3c4146 5px,
+    #25292c 6px,
+    #636b73 7px
+  );
+  border-left: 2px solid #23272a;
+  border-right: 2px solid #23272a;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.mc-wood-beam {
+  background-color: #5c3c1e;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #5c3c1e 0px,
+    #5c3c1e 28px,
+    #472d15 29px,
+    #704a26 30px
+  );
+  border: 3px solid #2b180a;
+  box-shadow:
+    inset 2px 2px 0 #8b5d32,
+    inset -2px -2px 0 #1f1006,
+    0 6px 16px rgba(0, 0, 0, 0.8);
+}
+
+/* 2. Authentic Minecraft GUI Inventory Frames (Ref: Image 4) */
+.mc-gui-frame {
+  background-color: #c6c6c6;
+  border: 4px solid #373737;
+  box-shadow:
+    inset 3px 3px 0 #ffffff,
+    inset -3px -3px 0 #555555,
+    0 12px 28px rgba(0, 0, 0, 0.75);
+  position: relative;
+}
+
+.mc-gui-slot {
+  background-color: #8b8b8b;
+  border: 2px solid #373737;
+  box-shadow:
+    inset 2px 2px 0 #373737,
+    inset -2px -2px 0 #ffffff;
+}
+
+.mc-gui-nameplate {
+  background: #12161c;
+  border: 2px solid #232b36;
+  box-shadow:
+    inset 2px 2px 0 #07090c,
+    inset -2px -2px 0 #3a4759;
+}
+
+.mc-gui-logo-frame {
+  background-color: #2b1a0e;
+  border: 3px solid #7a5022;
+  box-shadow:
+    inset 2px 2px 0 #d97706,
+    inset -2px -2px 0 #180d06,
+    0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. Authentic Nether / Arena Stone Frame (Ref: Image 2) */
+.mc-arena-frame {
+  background-color: #140b07;
+  border: 4px solid #3b1c10;
+  box-shadow:
+    inset 3px 3px 0 #683520,
+    inset -3px -3px 0 #190903,
+    0 16px 36px rgba(0, 0, 0, 0.85);
+  position: relative;
+}
+
+/* 4. Minecraft Voxel Crown Crest & Tier Banners (Ref: Image 3) */
+.mc-crown-gold {
+  background: linear-gradient(180deg, #ffd700 0%, #b8860b 100%);
+  border: 3px solid #5a3d02;
+  box-shadow:
+    inset 2px 2px 0 #fff3a8,
+    inset -2px -2px 0 #4a3200,
+    0 0 16px rgba(251, 191, 36, 0.6);
+}
+
+.mc-crown-silver {
+  background: linear-gradient(180deg, #e2e8f0 0%, #64748b 100%);
+  border: 3px solid #1e293b;
+  box-shadow:
+    inset 2px 2px 0 #ffffff,
+    inset -2px -2px 0 #334155,
+    0 0 16px rgba(148, 163, 184, 0.5);
+}
+
 /* Respect Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,

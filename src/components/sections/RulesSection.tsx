@@ -12,86 +12,114 @@ export default function RulesSection() {
 
   return (
     <SectionContainer id="rules" variant="default" showTopSeam>
-      <SectionHeading
-        tag="CRITERIA & ELIGIBILITY"
-        title="RULES & EVALUATION"
-        subtitle="Verified team parameters, evaluation streams, and submission standards from the official AGENTCRAFT briefing."
-      />
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative">
-        {/* Minecraft Enchanting Table Galactic Runes (Section Effect) */}
-        <div className="pointer-events-none absolute -top-8 left-1/4 hidden md:flex gap-8 select-none z-20">
-          <span className="font-pixel text-xs text-cyan-300 animate-rune-drift" style={{ animationDelay: '0s' }}>ᔑ</span>
-          <span className="font-pixel text-xs text-purple-300 animate-rune-drift" style={{ animationDelay: '0.8s' }}>ᓵ</span>
-          <span className="font-pixel text-xs text-sky-400 animate-rune-drift" style={{ animationDelay: '1.6s' }}>ᒷ</span>
-          <span className="font-pixel text-xs text-cyan-200 animate-rune-drift" style={{ animationDelay: '2.4s' }}>⎓</span>
-          <span className="font-pixel text-xs text-purple-400 animate-rune-drift" style={{ animationDelay: '3.1s' }}>ꖌ</span>
+      {/* Nether Arena Rules Frame (Ref: Image 2) */}
+      <div className="max-w-4xl mx-auto mb-12">
+        <div className="text-center mb-6">
+          <span className="font-pixel text-[10px] sm:text-xs text-[#f87171] tracking-widest uppercase mb-2 inline-flex items-center gap-1.5 font-bold">
+            <span className="text-[#ef4444]">►</span> The Laws of the Arena
+          </span>
+          <h2
+            className="font-pixel text-2xl sm:text-4xl text-[#ff4545] tracking-wide uppercase mb-3"
+            style={{
+              textShadow: '0 0 20px rgba(239,68,68,0.8), 3px 3px 0 #1f0b06',
+            }}
+          >
+            RULES OF ENGAGEMENT
+          </h2>
+          <p className="font-sans text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+            Verified team parameters, evaluation streams, and submission standards from the official AGENTCRAFT briefing.
+          </p>
         </div>
 
-        {/* Left Column: Team & Registration Parameters */}
-        <div className="lg:col-span-5 space-y-6">
-          <PixelCard
-            variant="wood"
-            title="Team & Entry Parameters"
-            headerIcon="📜"
-            badge={<PixelBadge variant="gold">OFFICIAL</PixelBadge>}
-          >
-            <div className="space-y-4 font-sans text-xs sm:text-sm text-amber-100">
-              <div className="p-3 bg-black/40 border border-amber-900/60">
-                <span className="font-pixel text-[9px] text-amber-400 block uppercase mb-1">
-                  Team Size
-                </span>
-                <span className="text-white font-medium">
-                  {details.teamSize} + {details.mentorAllowed}
-                </span>
-                <p className="text-[11px] text-neutral-400 mt-0.5">
-                  Interdisciplinary combinations across engineering branches welcome.
-                </p>
-              </div>
+        {/* Authentic Minecraft Nether Stone Arena Frame */}
+        <div className="mc-arena-frame p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.9)] relative overflow-hidden">
+          {/* Obsidian Corner Accents */}
+          <div className="pointer-events-none absolute top-1.5 left-1.5 w-3 h-3 bg-[#3b1c10] border border-[#ef4444]/40" />
+          <div className="pointer-events-none absolute top-1.5 right-1.5 w-3 h-3 bg-[#3b1c10] border border-[#ef4444]/40" />
+          <div className="pointer-events-none absolute bottom-1.5 left-1.5 w-3 h-3 bg-[#3b1c10] border border-[#ef4444]/40" />
+          <div className="pointer-events-none absolute bottom-1.5 right-1.5 w-3 h-3 bg-[#3b1c10] border border-[#ef4444]/40" />
 
-              <div className="p-3 bg-black/40 border border-amber-900/60">
-                <span className="font-pixel text-[9px] text-amber-400 block uppercase mb-1">
-                  Registration Fee
-                </span>
-                <span className="text-emerald-400 font-pixel text-xs">
-                  {details.registrationFee}
-                </span>
-                <p className="text-[11px] text-neutral-400 mt-0.5">
-                  Single nominal fee per team covering screening and offline finale access.
-                </p>
-              </div>
-
-              <div className="p-3 bg-black/40 border border-amber-900/60">
-                <span className="font-pixel text-[9px] text-amber-400 block uppercase mb-1">
-                  Venue Location
-                </span>
-                <span className="text-white font-medium">
-                  {details.venue}
-                </span>
-                <p className="text-[11px] text-neutral-400 mt-0.5">
-                  Round 1 online; Round 2 in-person presentation on campus.
+          {/* Numbered Rules List (Ref: Image 2) */}
+          <div className="space-y-6 sm:space-y-7 relative z-10 mb-8 border-b-2 border-[#3b1c10] pb-8">
+            <div className="flex items-start gap-4 sm:gap-6">
+              <span
+                className="font-pixel text-base sm:text-xl text-[#ef4444] shrink-0 font-bold tracking-tight"
+                style={{ textShadow: '0 0 10px rgba(239,68,68,0.6)' }}
+              >
+                01.
+              </span>
+              <div>
+                <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
+                  Teams of {details.teamSize} Players Only
+                </h4>
+                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  {details.teamSize} + {details.mentorAllowed}. Interdisciplinary combinations across engineering branches welcome.
                 </p>
               </div>
             </div>
-          </PixelCard>
-        </div>
 
-        {/* Right Column: Evaluation Streams & Guidelines */}
-        <div className="lg:col-span-7 space-y-6">
-          <PixelCard
-            variant="stone"
-            title="Two Dedicated Evaluation Tracks"
-            headerIcon="⚖️"
-            badge={<PixelBadge variant="emerald">FAIR EVALUATION</PixelBadge>}
-          >
-            <p className="font-sans text-sm text-neutral-300 leading-relaxed mb-6">
-              To encourage budding engineers while providing a rigorous stage for senior developers,
-              AGENTCRAFT partitions projects into two distinct judging categories:
-            </p>
+            <div className="flex items-start gap-4 sm:gap-6">
+              <span
+                className="font-pixel text-base sm:text-xl text-[#ef4444] shrink-0 font-bold tracking-tight"
+                style={{ textShadow: '0 0 10px rgba(239,68,68,0.6)' }}
+              >
+                02.
+              </span>
+              <div>
+                <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
+                  2-Stage Challenge Structure
+                </h4>
+                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  Round 1 online screening presentation & demo; Round 2 in-person prototype presentation on campus at {details.venue}.
+                </p>
+              </div>
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div className="flex items-start gap-4 sm:gap-6">
+              <span
+                className="font-pixel text-base sm:text-xl text-[#ef4444] shrink-0 font-bold tracking-tight"
+                style={{ textShadow: '0 0 10px rgba(239,68,68,0.6)' }}
+              >
+                03.
+              </span>
+              <div>
+                <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
+                  Open-Source Libraries & APIs Allowed
+                </h4>
+                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  Python, LangGraph, AutoGen, CrewAI, LlamaIndex, or custom agent runtime loops are permitted. Pre-built proprietary projects are disqualified.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 sm:gap-6">
+              <span
+                className="font-pixel text-base sm:text-xl text-[#ef4444] shrink-0 font-bold tracking-tight"
+                style={{ textShadow: '0 0 10px rgba(239,68,68,0.6)' }}
+              >
+                04.
+              </span>
+              <div>
+                <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
+                  Registration Parameters
+                </h4>
+                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                  Single nominal fee of <strong className="text-emerald-400 font-pixel text-xs">{details.registrationFee}</strong> per team covering screening and offline finale access.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Two Dedicated Evaluation Tracks Inside Arena Frame */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <PixelBadge variant="gold">EVALUATION TRACKS</PixelBadge>
+              <span className="font-pixel text-[10px] text-amber-300 uppercase font-bold">Fair Evaluation Matrix</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* FY Stream */}
-              <div className="p-4 bg-[#111e16] border-2 border-emerald-500/70">
+              <div className="p-4 bg-[#111e16] border-2 border-emerald-500/70 shadow-[inset_2px_2px_0_#052e16]">
                 <PixelBadge variant="emerald" className="mb-2">
                   TRACK A
                 </PixelBadge>
@@ -105,7 +133,7 @@ export default function RulesSection() {
               </div>
 
               {/* Upper Years Stream */}
-              <div className="p-4 bg-[#161310] border-2 border-sky-500/70">
+              <div className="p-4 bg-[#161310] border-2 border-sky-500/70 shadow-[inset_2px_2px_0_#082f49]">
                 <PixelBadge variant="diamond" className="mb-2">
                   TRACK B
                 </PixelBadge>
@@ -118,19 +146,7 @@ export default function RulesSection() {
                 </p>
               </div>
             </div>
-
-            {/* Technical Framework Advisory */}
-            <div className="p-4 bg-black/60 border border-neutral-700/80">
-              <span className="font-pixel text-[10px] text-amber-400 uppercase tracking-wider block mb-1 font-bold">
-                Technical Advisory (Guidance)
-              </span>
-              <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed">
-                Teams may implement solutions using Python, LangGraph, AutoGen, CrewAI, LlamaIndex,
-                or custom agent runtime loops. Official submission portal guidelines and rubric weighting
-                will be published to all registered teams ahead of Round 1.
-              </p>
-            </div>
-          </PixelCard>
+          </div>
         </div>
       </div>
     </SectionContainer>
