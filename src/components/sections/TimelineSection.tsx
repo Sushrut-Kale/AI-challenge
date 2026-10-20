@@ -16,7 +16,7 @@ export default function TimelineSection() {
       badge: 'DEADLINE',
       variant: 'wood' as const,
       description:
-        'Final deadline for team registration (₹400 / Team). Teams must finalize rosters (2–4 students + 1 optional mentor) across FY or Open to All streams.',
+        'Final deadline for team registration (₹400 / Team). Teams must finalize rosters (2–4 students + 1 optional mentor) across FY or SY, TY & Open to All streams.',
     },
     {
       step: '02',

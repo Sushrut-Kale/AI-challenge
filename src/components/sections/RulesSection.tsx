@@ -132,16 +132,16 @@ export default function RulesSection() {
                 </p>
               </div>
 
-              {/* Open to All Stream */}
+              {/* SY, TY & Open to All Stream */}
               <div className="p-4 bg-[#161310] border-2 border-sky-500/70 shadow-[inset_2px_2px_0_#082f49]">
                 <PixelBadge variant="diamond" className="mb-2">
                   TRACK B
                 </PixelBadge>
                 <h4 className="font-pixel text-xs sm:text-sm text-white uppercase mb-2">
-                  Open to All Stream
+                  SY, TY & Open to All Stream
                 </h4>
                 <p className="font-terminal text-sm sm:text-base text-sky-200/90 leading-relaxed font-medium">
-                  Developers across all years and backgrounds are evaluated on architectural rigor, multi-agent tool loops,
+                  Developers across SY, TY & Open to All tracks are evaluated on architectural rigor, multi-agent tool loops,
                   autonomous error recovery, and benchmark performance on SDG domains.
                 </p>
               </div>
