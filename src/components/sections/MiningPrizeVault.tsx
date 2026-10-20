@@ -299,6 +299,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
             imageRendering: 'pixelated',
           }}
           data-interactive="true"
+          data-custom-sound="true"
           title="Click 8 times to mine and reveal prize!"
         >
           {/* Classical Minecraft Wood Plank Seams & Nail Head Accents */}

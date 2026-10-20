@@ -142,7 +142,8 @@ export function playMinecraftSwordSweep() {
 
 /**
  * Authentic Minecraft Stone Hit / Dig Sound (`block.stone.hit`)
- * Produces crisp mineral impact crunch + low deepslate body resonance
+ * Produces crisp mineral impact crunch + solid low deepslate body resonance
+ * Consistently sounds the same every time and remains active regardless of music mute status.
  */
 export function playMinecraftStoneHit() {
   const ctx = getAudioContext();
@@ -150,7 +151,7 @@ export function playMinecraftStoneHit() {
 
   const now = ctx.currentTime;
 
-  // Mineral crunch noise
+  // Mineral crunch noise (consistent 1500Hz bandpass filter)
   const bufferSize = ctx.sampleRate * 0.05;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const data = noiseBuffer.getChannelData(0);
@@ -163,7 +164,7 @@ export function playMinecraftStoneHit() {
 
   const filter = ctx.createBiquadFilter();
   filter.type = 'bandpass';
-  filter.frequency.setValueAtTime(1400 + Math.random() * 400, now);
+  filter.frequency.setValueAtTime(1500, now);
   filter.Q.setValueAtTime(1.8, now);
 
   const gain = ctx.createGain();
@@ -177,15 +178,15 @@ export function playMinecraftStoneHit() {
   noise.start(now);
   noise.stop(now + 0.06);
 
-  // Rock body impact thud
+  // Rock body impact thud (consistent solid 190Hz pitch every time)
   const osc = ctx.createOscillator();
   const oscGain = ctx.createGain();
   osc.type = 'triangle';
-  const rockPitch = 180 + Math.random() * 40;
+  const rockPitch = 190;
   osc.frequency.setValueAtTime(rockPitch, now);
   osc.frequency.exponentialRampToValueAtTime(70, now + 0.06);
 
-  oscGain.gain.setValueAtTime(0.3, now);
+  oscGain.gain.setValueAtTime(0.32, now);
   oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.065);
 
   osc.connect(oscGain);
@@ -471,6 +472,9 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       );
 
       if (interactiveEl) {
+        if (interactiveEl.getAttribute('data-custom-sound') === 'true') {
+          return;
+        }
         if (interactiveEl.getAttribute('data-slot') === '9') {
           playMinecraftSwordSweep();
         } else {
@@ -785,8 +789,8 @@ export function FloatingSoundButton() {
           ? 'border-2 border-[#10b981] bg-[#0c2617]/90 hover:bg-[#133822] shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_4px_14px_rgba(16,185,129,0.45)] text-emerald-300'
           : 'border-2 border-[#4a3928] bg-[#1a140e]/90 hover:bg-[#281e15] shadow-[inset_2px_2px_0_rgba(255,255,255,0.1),inset_-2px_-2px_0_rgba(0,0,0,0.6),0_4px_10px_rgba(0,0,0,0.7)] text-neutral-400 hover:text-neutral-200'
       }`}
-      aria-label={bgmEnabled ? 'Mute background music' : 'Play background music'}
-      title={bgmEnabled ? 'Music: ON (Click to Mute)' : 'Music: OFF (Click to Play)'}
+      aria-label={bgmEnabled ? 'Mute background music (hit sounds remain active)' : 'Play background music'}
+      title={bgmEnabled ? 'Music: ON (Click to Mute) • Hit sound remains active' : 'Music: MUTED (Click to Play) • Hit sound remains active'}
       data-interactive="true"
     >
       {bgmEnabled ? (
@@ -796,7 +800,7 @@ export function FloatingSoundButton() {
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
         </svg>
       ) : (
         <svg
@@ -805,7 +809,7 @@ export function FloatingSoundButton() {
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+          <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 7h4V3h-6v4.18l2 2V7z" />
         </svg>
       )}
     </button>
