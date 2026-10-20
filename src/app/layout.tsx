@@ -56,14 +56,18 @@ export const metadata: Metadata = {
       'Build Intelligent Agents. Solve Real-World Problems. Create Sustainable Impact. 17th November 2026 at MIT Academy of Engineering, Alandi, Pune.',
     type: 'website',
   },
+  manifest: '/manifest.json',
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
-      { url: '/assets/items/grass_block.png', type: 'image/png', sizes: '128x128' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+      { url: '/icon-192x192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/assets/agentcraft_app_icon.png', type: 'image/png', sizes: '1024x1024' },
     ],
     apple: [
       { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/assets/agentcraft_app_icon.png', sizes: '1024x1024', type: 'image/png' },
     ],
     shortcut: '/favicon.ico',
   },
