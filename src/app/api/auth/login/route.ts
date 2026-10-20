@@ -84,8 +84,7 @@ export async function POST(request: NextRequest) {
     if (!supabaseUrl || !supabaseAnonKey || !serviceKey) {
       return NextResponse.json(
         {
-          error:
-            'Invalid credentials. Use Admin (admin / admin123) or Team (AC-001 / pass).',
+          error: 'Invalid credentials. Please verify your details and password.',
         },
         { status: 401 }
       );
@@ -158,7 +157,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       return NextResponse.json(
-        { error: 'Invalid credentials format. Enter your Team ID (AC-2026-XXXX) or registered email.' },
+        { error: 'Invalid credentials format. Enter your Team ID or registered email.' },
         { status: 400 }
       );
     }
