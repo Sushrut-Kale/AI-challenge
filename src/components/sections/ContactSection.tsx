@@ -41,7 +41,7 @@ export default function ContactSection() {
             <p className="font-terminal text-base sm:text-lg text-amber-100/90 max-w-xl mx-auto leading-relaxed mb-6">
               Compete for exclusive <strong>championship awards</strong> and career-defining{' '}
               <strong>internship opportunities</strong>. Open to FY innovators (separate track) and
-              SY, TY, B.Tech student developers.
+              Open to All student developers.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3">

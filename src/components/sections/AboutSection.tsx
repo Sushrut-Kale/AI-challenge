@@ -181,7 +181,7 @@ export default function AboutSection() {
                     Evaluation Streams
                   </strong>
                   <span className="text-neutral-100 font-medium">
-                    FY (Separate Evaluation Track) & SY, TY, B.Tech Open Tier
+                    FY (Separate Evaluation Track) & Open to All Tier
                   </span>
                 </div>
               </div>

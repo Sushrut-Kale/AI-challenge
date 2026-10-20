@@ -48,7 +48,7 @@ AI-challenge/
 │   │   ├── sections/             # Challenge sections:
 │   │   │   ├── HeroSection.tsx
 │   │   │   ├── AboutSection.tsx
-│   │   │   ├── TracksSection.tsx (First-Year & B.Tech Open tracks)
+│   │   │   ├── TracksSection.tsx (First-Year & Open to All tracks)
 │   │   │   ├── TimelineSection.tsx (Milestone roadmaps)
 │   │   │   ├── RulesSection.tsx
 │   │   │   ├── PrizesSection.tsx

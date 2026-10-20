@@ -164,8 +164,8 @@ const prizeList: PrizeItem[] = [
     badge: '🥈',
   },
   {
-    place: 'Track B: Senior Developers',
-    title: 'SY, TY, B.Tech Agentic Architecture Award',
+    place: 'Track B: Open Tier',
+    title: 'Open to All Agentic Architecture Award',
     reward: 'Cash Prize, Trophy & Fast-Track Internship Pathways',
     badge: '🎖️',
   },
@@ -259,14 +259,14 @@ export const EVENT_DATA: EventData = {
     registrationFeeAmount: 400,
     teamSize: '2–4 Students',
     mentorAllowed: '1 Mentor (Optional)',
-    eligibility: 'Open to engineering students across India (FY dedicated track; SY, TY, B.Tech open stream)',
+    eligibility: 'Open to students across India (FY dedicated track; Open to All stream)',
     evaluationCategories: [
       {
         category: 'First Year (FY)',
         note: 'Separate Dedicated Evaluation Track for FY innovators',
       },
       {
-        category: 'Upper Years (SY, TY, B.Tech)',
+        category: 'Open to All',
         note: 'Open competitive tier across autonomous multi-agent systems',
       },
     ],
@@ -414,7 +414,7 @@ export const EVENT_DATA: EventData = {
       phase: 'Phase 1',
       title: 'Registration Closing',
       date: '30th October 2026',
-      description: 'Deadline to register teams (₹400 / Team) across FY and SY/TY/B.Tech streams.',
+      description: 'Deadline to register teams (₹400 / Team) across FY and Open to All streams.',
       status: 'active',
     },
     {
@@ -507,7 +507,7 @@ export const EVENT_DATA: EventData = {
     {
       question: 'Who is eligible to participate and how are teams evaluated?',
       answer:
-        'Students from all years are welcome! Teams consist of 2 to 4 students, plus 1 optional mentor. To ensure fair competition, there is a separate dedicated evaluation for First Year (FY) students, and a competitive tier for SY, TY, and B.Tech students.',
+        'Students from all years and disciplines are welcome! Teams consist of 2 to 4 students, plus 1 optional mentor. To ensure fair competition, there is a separate dedicated evaluation for First Year (FY) students, and a competitive tier Open to All students.',
     },
     {
       question: 'What are the competition rounds and dates?',
