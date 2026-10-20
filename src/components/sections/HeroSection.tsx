@@ -108,7 +108,7 @@ export default function HeroSection() {
               <AnimatedCounter
                 value={details.registrationFeeAmount}
                 prefix="₹"
-                suffix=" / Team"
+                suffix="/Team"
                 className="text-emerald-300"
               />
             </div>

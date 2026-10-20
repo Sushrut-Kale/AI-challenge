@@ -255,7 +255,7 @@ export const EVENT_DATA: EventData = {
     registrationDeadlineISO: '2026-10-30T23:59:59+05:30',
     venue: 'MIT Academy of Engineering, Alandi, Pune',
     format: '2 Rounds: Online Screening & Offline Grand Finale',
-    registrationFee: '₹400 / Team',
+    registrationFee: '₹400/Team',
     registrationFeeAmount: 400,
     teamSize: '2–4 Students',
     mentorAllowed: '1 Mentor (Optional)',
@@ -414,7 +414,7 @@ export const EVENT_DATA: EventData = {
       phase: 'Phase 1',
       title: 'Registration Closing',
       date: '30th October 2026',
-      description: 'Deadline to register teams (₹400 / Team) across FY and SY, TY & Open to All streams.',
+      description: 'Deadline to register teams (₹400/Team) across FY and SY, TY & Open to All streams.',
       status: 'active',
     },
     {
@@ -434,7 +434,7 @@ export const EVENT_DATA: EventData = {
   ],
   rules: [
     'Teams must comprise 2 to 4 student members, plus 1 optional mentor.',
-    'Registration fee of ₹400 / Team must be completed before the 30th October 2026 deadline.',
+    'Registration fee of ₹400/Team must be completed before the 30th October 2026 deadline.',
     'First Year (FY) innovators are evaluated in their own separate dedicated track.',
     'Round 1 deliverables: Solution PPT, architecture overview, and working AI agent demo.',
     'Round 2 finalists must present in person at MIT Academy of Engineering, Alandi, Pune on 17th November 2026.',
@@ -442,7 +442,7 @@ export const EVENT_DATA: EventData = {
   registration: {
     isOpen: true,
     url: '', // Left blank per instruction: do not invent fake registration URL
-    note: 'Registration is ₹400 / Team. Contact Ashish Lenka (+91 81170 31180) or visit the official WhatsApp community desk.',
+    note: 'Registration is ₹400/Team. Contact Ashish Lenka (+91 81170 31180) or visit the official WhatsApp community desk.',
   },
   prizes: prizesData,
   sponsors: sponsorsData,

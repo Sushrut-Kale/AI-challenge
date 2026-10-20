@@ -104,7 +104,7 @@ export default function RulesSection() {
                   Registration Parameters
                 </h4>
                 <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium">
-                  Single nominal fee of <strong className="text-emerald-400 font-pixel text-xs">{details.registrationFee}</strong> per team covering screening and offline finale access.
+                  Single nominal fee of <strong className="text-emerald-400 font-pixel text-xs">{details.registrationFee}</strong> covering screening and offline finale access.
                 </p>
               </div>
             </div>
