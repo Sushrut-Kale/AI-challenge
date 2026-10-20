@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { usePathname } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
 import useReducedMotion from '@/hooks/useReducedMotion';
@@ -27,11 +28,20 @@ function checkWebGLSupport(): boolean {
 }
 
 export default function WorldBackground() {
+  const pathname = usePathname();
   const [hasWebGL, setHasWebGL] = useState<boolean | null>(null);
 
   useEffect(() => {
     setHasWebGL(checkWebGLSupport());
   }, []);
+
+  // Isolate WebGL world to public site to keep dashboard ultra fast and responsive
+  if (
+    pathname?.startsWith('/dashboard') ||
+    pathname === '/login'
+  ) {
+    return null;
+  }
 
   if (hasWebGL === false) {
     return <WorldBackgroundFallback />;

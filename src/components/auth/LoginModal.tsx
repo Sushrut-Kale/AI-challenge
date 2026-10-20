@@ -37,9 +37,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         // Mock successful validation for development when Supabase keys are not set yet
         setTimeout(() => {
           setIsLoading(false);
-          setSuccessMessage('ACCESS GRANTED — Welcome to the AGENTCRAFT Portal! (Supabase client ready)');
+          setSuccessMessage('ACCESS GRANTED — Loading Team Dashboard...');
           playMinecraftPop(1.4);
-        }, 800);
+          setTimeout(() => {
+            onClose();
+            window.location.href = '/dashboard';
+          }, 400);
+        }, 600);
         return;
       }
 
@@ -55,6 +59,10 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       } else if (data.user) {
         setSuccessMessage(`ACCESS GRANTED — Welcome, ${data.user.email}!`);
         playMinecraftPop(1.5);
+        setTimeout(() => {
+          onClose();
+          window.location.href = '/dashboard';
+        }, 500);
       }
     } catch (err: unknown) {
       setIsLoading(false);
@@ -152,15 +160,25 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             />
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2 space-y-2">
             <button
               type="submit"
               disabled={isLoading}
               className="w-full py-3 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#78350f] font-pixel text-xs text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#451a03] hover:-translate-y-0.5 active:translate-y-0.5 transition-transform disabled:opacity-50"
               data-interactive="true"
             >
-              {isLoading ? 'AUTHENTICATING...' : 'LOGIN TO ARENA ➔'}
+              {isLoading ? 'AUTHENTICATING...' : 'ENTER TEAM DASHBOARD ➔'}
             </button>
+
+            <div className="pt-1 font-pixel text-[8px]">
+              <a
+                href="/dashboard"
+                onClick={() => onClose()}
+                className="block w-full py-2 border border-amber-600/70 bg-[#2b1708] text-amber-300 hover:bg-[#3d200b] text-center uppercase"
+              >
+                📊 Direct Team Dashboard Demo
+              </a>
+            </div>
           </div>
         </form>
 

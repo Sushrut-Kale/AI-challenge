@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 interface HotbarSlot {
   id: number;
@@ -88,12 +89,14 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
 ];
 
 export default function MinecraftHotbar() {
+  const pathname = usePathname();
   const [activeSlot, setActiveSlot] = useState<number>(1);
   const [hoveredSlot, setHoveredSlot] = useState<HotbarSlot | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const tooltipTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
 
   // Track active section and scroll progress
   useEffect(() => {
@@ -165,6 +168,14 @@ export default function MinecraftHotbar() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectSlot]);
+
+  // Hide hotbar completely on dashboard and login routes
+  if (
+    pathname?.startsWith('/dashboard') ||
+    pathname === '/login'
+  ) {
+    return null;
+  }
 
   return (
     <aside
