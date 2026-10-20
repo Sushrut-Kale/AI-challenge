@@ -69,7 +69,7 @@ export default function FAQSection() {
               </button>
 
               {isOpen && (
-                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-2 text-sm sm:text-base font-sans text-neutral-100 leading-relaxed border-t border-white/10 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-4 pb-5 sm:px-5 sm:pb-5 pt-2 text-base sm:text-lg font-terminal text-neutral-100 leading-relaxed border-t border-white/10 animate-in fade-in zoom-in-95 duration-150">
                   {faq.answer}
                 </div>
               )}

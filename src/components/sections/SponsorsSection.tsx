@@ -75,7 +75,7 @@ export default function SponsorsSection() {
               </h4>
             </div>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+            <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium text-center mt-2">
               Primary student organizing body at MIT Academy of Engineering (Department of CSE-AIML) leading challenge operations.
             </p>
           </div>
@@ -118,7 +118,7 @@ export default function SponsorsSection() {
               </h4>
             </div>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+            <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium text-center mt-2">
               Global artificial intelligence professional association advancing technical research and responsible AI agent architectures.
             </p>
           </div>
@@ -161,7 +161,7 @@ export default function SponsorsSection() {
               </h4>
             </div>
 
-            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium text-center mt-2">
+            <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium text-center mt-2">
               Department technical community driving competitive student hackathons and intelligent system development.
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function SponsorsSection() {
                   </h4>
                 </div>
 
-                <p className="font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed font-medium text-center mt-2">
+                <p className="font-terminal text-sm sm:text-base text-neutral-300 leading-relaxed font-medium text-center mt-2">
                   {sponsor.role}
                 </p>
               </div>
@@ -250,7 +250,7 @@ export default function SponsorsSection() {
         <h4 className="font-pixel text-sm sm:text-base text-white mb-3">
           {community.platform}
         </h4>
-        <p className="font-sans text-xs sm:text-sm text-emerald-100 leading-relaxed max-w-lg mx-auto mb-6">
+        <p className="font-terminal text-sm sm:text-base text-emerald-100 leading-relaxed max-w-lg mx-auto mb-6">
           Join the official AGENTCRAFT WhatsApp Community for round announcements, mentor office hours, problem statement templates, and team coordination.
         </p>
 
@@ -271,7 +271,7 @@ export default function SponsorsSection() {
             href="https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs sm:text-sm text-emerald-300 hover:text-emerald-100 underline underline-offset-4 break-all transition-colors"
+            className="font-terminal text-sm sm:text-base text-emerald-300 hover:text-emerald-100 underline underline-offset-4 break-all transition-colors"
             data-interactive="true"
           >
             https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A

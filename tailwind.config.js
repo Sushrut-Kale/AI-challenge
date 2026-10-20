@@ -8,9 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        minecraft: ['"Press Start 2P"', 'monospace'],
-        pixel: ['"Press Start 2P"', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        minecraft: ['var(--font-pixel)', '"Press Start 2P"', 'monospace'],
+        pixel: ['var(--font-pixel)', '"Press Start 2P"', 'monospace'],
+        terminal: ['var(--font-terminal)', 'VT323', 'monospace'],
+        sans: ['var(--font-terminal)', 'VT323', 'monospace'],
+        mono: ['var(--font-terminal)', 'VT323', 'monospace'],
       },
       colors: {
         minecraft: {

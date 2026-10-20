@@ -9,6 +9,8 @@
 }
 
 :root {
+  --font-pixel: "Press Start 2P", monospace;
+  --font-terminal: "VT323", monospace;
   --color-grass: #5D8A2E;
   --color-dirt: #8B6343;
   --color-stone: #737373;
@@ -38,16 +40,56 @@ body {
   overflow-x: clip;
   background-color: #0d0b09;
   color: #f3ede4;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-terminal), "VT323", monospace;
+  font-size: 1.125rem;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Minecraft pixel font utility */
-.font-pixel {
-  font-family: 'Press Start 2P', monospace;
+/* Headings default to Press Start 2P */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-pixel), "Press Start 2P", monospace;
   letter-spacing: -0.02em;
+}
+
+/* Buttons, navigation controls, and actions default to Press Start 2P */
+button,
+.mc-button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  font-family: var(--font-pixel), "Press Start 2P", monospace;
+}
+
+/* Inputs, textareas, selects, and form controls default to VT323 */
+input,
+textarea,
+select,
+option {
+  font-family: var(--font-terminal), "VT323", monospace;
+  letter-spacing: 0.02em;
+}
+
+input::placeholder,
+textarea::placeholder {
+  font-family: var(--font-terminal), "VT323", monospace;
+  letter-spacing: 0.02em;
+}
+
+/* Minecraft pixel font utilities */
+.font-pixel,
+.pixel-heading,
+.mc-button {
+  font-family: var(--font-pixel), "Press Start 2P", monospace !important;
+}
+
+/* Minecraft terminal font utilities */
+.font-terminal {
+  font-family: var(--font-terminal), "VT323", monospace !important;
 }
 
 /* Authentic Minecraft Mining Swing Animation */

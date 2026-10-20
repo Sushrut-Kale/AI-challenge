@@ -57,14 +57,14 @@ export default function LoginPage() {
             <h1 className="font-pixel text-base sm:text-lg text-white uppercase tracking-wider font-bold">
               PARTICIPANT AUTHENTICATION
             </h1>
-            <p className="font-sans text-xs text-neutral-300 mt-1">
+            <p className="font-terminal text-base text-neutral-300 mt-1">
               Sign in with credentials assigned to your registered team.
             </p>
           </div>
         </div>
 
         {/* Demo Fast-Login Notice */}
-        <div className="p-3 bg-[#11261a] border border-emerald-500/80 text-emerald-200 text-xs flex items-center justify-between gap-2">
+        <div className="p-3 bg-[#11261a] border border-emerald-500/80 text-emerald-200 font-terminal text-base flex items-center justify-between gap-2">
           <span>✓ Local Dev Environment Ready</span>
           <button
             type="button"
@@ -86,7 +86,7 @@ export default function LoginPage() {
               value={teamEmail}
               onChange={(e) => setTeamEmail(e.target.value)}
               placeholder="lead@mitaoe.ac.in"
-              className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-sm outline-none focus:border-amber-400"
+              className="w-full px-3.5 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-terminal text-base outline-none focus:border-amber-400"
             />
           </div>
 
@@ -100,7 +100,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••••••"
-              className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-sm outline-none focus:border-amber-400"
+              className="w-full px-3.5 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-terminal text-base outline-none focus:border-amber-400"
             />
           </div>
 

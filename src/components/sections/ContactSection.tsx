@@ -38,7 +38,7 @@ export default function ContactSection() {
               ENTRY: {details.registrationFee} • DEADLINE: {details.registrationDeadline}
             </p>
 
-            <p className="font-sans text-sm sm:text-base text-amber-100/90 max-w-xl mx-auto leading-relaxed mb-6">
+            <p className="font-terminal text-base sm:text-lg text-amber-100/90 max-w-xl mx-auto leading-relaxed mb-6">
               Compete for exclusive <strong>championship awards</strong> and career-defining{' '}
               <strong>internship opportunities</strong>. Open to FY innovators (separate track) and
               SY, TY, B.Tech student developers.
@@ -100,7 +100,7 @@ export default function ContactSection() {
             <h4 className="font-pixel text-xs sm:text-sm text-amber-300 mb-2 font-bold">
               {organizers.institution.name}
             </h4>
-            <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed mb-4 font-medium">
+            <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed mb-4 font-medium">
               {contact.venueAddress}
             </p>
             <div className="p-3 bg-black/60 border border-[#3b1c10] font-pixel text-[9px] text-neutral-400 leading-relaxed">
@@ -124,7 +124,7 @@ export default function ContactSection() {
             <PixelBadge variant="gold">STUDENT COORDINATOR</PixelBadge>
           </div>
 
-          <div className="space-y-4 font-sans text-sm">
+          <div className="space-y-4 font-terminal text-base">
             <div>
               <span className="font-pixel text-[9px] text-neutral-400 block uppercase mb-1">
                 Contact Person
@@ -153,7 +153,7 @@ export default function ContactSection() {
               </span>
               <a
                 href={`mailto:${contact.email}`}
-                className="font-mono text-xs sm:text-sm text-sky-400 hover:text-sky-300 hover:underline block font-bold break-all"
+                className="font-terminal text-sm sm:text-base text-sky-400 hover:text-sky-300 hover:underline block font-bold break-all"
                 data-interactive="true"
               >
                 {contact.email}

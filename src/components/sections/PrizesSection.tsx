@@ -63,13 +63,13 @@ export default function PrizesSection() {
                 <span className="font-pixel text-xs sm:text-sm text-emerald-300 uppercase block font-bold">
                   WINNERS GET INTERNSHIP OPPORTUNITIES *
                 </span>
-                <span className="text-xs sm:text-sm text-emerald-100 font-sans block mt-0.5 font-medium">
+                <span className="text-sm sm:text-base text-emerald-100 font-terminal block mt-0.5 font-medium">
                   Exclusive fast-track internship pathways with partner AI companies
                 </span>
               </div>
             </div>
 
-            <p className="text-xs sm:text-sm text-amber-200/90 font-sans max-w-lg leading-relaxed">
+            <p className="text-sm sm:text-base text-amber-200/90 font-terminal max-w-lg leading-relaxed">
               {prizes.note}
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function PrizesSection() {
               />
             }
           >
-            <p className="font-sans text-xs sm:text-sm text-emerald-100 leading-relaxed font-medium">
+            <p className="font-terminal text-sm sm:text-base text-emerald-100 leading-relaxed font-medium">
               Championship cash awards granted to top-performing teams across FY and senior evaluation tracks.
             </p>
           </PixelCard>
@@ -108,7 +108,7 @@ export default function PrizesSection() {
               />
             }
           >
-            <p className="font-sans text-xs sm:text-sm text-neutral-100 leading-relaxed font-medium">
+            <p className="font-terminal text-sm sm:text-base text-neutral-100 leading-relaxed font-medium">
               Direct technical evaluation by sponsor partner leaders for coveted AI engineering internships.
             </p>
           </PixelCard>
@@ -126,7 +126,7 @@ export default function PrizesSection() {
               />
             }
           >
-            <p className="font-sans text-xs sm:text-sm text-amber-100 leading-relaxed font-medium">
+            <p className="font-terminal text-sm sm:text-base text-amber-100 leading-relaxed font-medium">
               Official Certificates of Excellence authorized by AAAI Global Professional Chapter and MIT AOE.
             </p>
           </PixelCard>

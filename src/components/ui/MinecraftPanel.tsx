@@ -76,10 +76,7 @@ export default function MinecraftPanel({
                 ? '🔮'
                 : '❓'}
             </span>
-            <h2
-              className="text-[#373737] font-bold text-xs md:text-sm tracking-wider uppercase"
-              style={{ fontFamily: '"Press Start 2P", monospace' }}
-            >
+            <h2 className="text-[#373737] font-bold text-xs md:text-sm tracking-wider uppercase font-pixel">
               {isAgent && agentData
                 ? `${agentData.name} · ${agentData.role.split('&')[0]}`
                 : activeTab === 'about'
@@ -103,8 +100,7 @@ export default function MinecraftPanel({
           {/* Close Button — Minecraft Red Button Style */}
           <button
             onClick={onClose}
-            className="w-7 h-7 bg-[#d9534f] hover:bg-[#c9302c] active:bg-[#ac2925] text-white text-xs font-bold border-2 border-t-[#ff7675] border-l-[#ff7675] border-b-[#7c1d1d] border-r-[#7c1d1d] flex items-center justify-center cursor-pointer transition"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+            className="w-7 h-7 bg-[#d9534f] hover:bg-[#c9302c] active:bg-[#ac2925] text-white text-xs font-bold border-2 border-t-[#ff7675] border-l-[#ff7675] border-b-[#7c1d1d] border-r-[#7c1d1d] flex items-center justify-center cursor-pointer transition font-pixel"
             title="Close Panel (ESC)"
           >
             ✕
@@ -112,10 +108,7 @@ export default function MinecraftPanel({
         </div>
 
         {/* Content Area with Inset Dark Stone Panel */}
-        <div
-          className="flex-1 overflow-y-auto bg-[#2b2b2b] border-2 border-t-[#1a1a1a] border-l-[#1a1a1a] border-b-[#4a4a4a] border-r-[#4a4a4a] p-4 md:p-5 text-gray-200 text-xs leading-relaxed space-y-4"
-          style={{ fontFamily: 'monospace' }}
-        >
+        <div className="flex-1 overflow-y-auto bg-[#2b2b2b] border-2 border-t-[#1a1a1a] border-l-[#1a1a1a] border-b-[#4a4a4a] border-r-[#4a4a4a] p-4 md:p-5 text-gray-200 text-sm md:text-base leading-relaxed space-y-4 font-terminal">
           {/* ================= AGENT PROFILE VARIANT ================= */}
           {isAgent && agentData && (
             <div className="space-y-4">
@@ -132,18 +125,17 @@ export default function MinecraftPanel({
                 </div>
                 <div className="flex-1 text-center sm:text-left">
                   <h3
-                    className="font-bold text-sm tracking-wide"
+                    className="font-bold text-sm tracking-wide font-pixel"
                     style={{
                       color: agentData.color,
-                      fontFamily: '"Press Start 2P", monospace',
                     }}
                   >
                     {agentData.name}
                   </h3>
-                  <p className="text-[#fbbf24] text-[11px] font-bold mt-1">
+                  <p className="text-[#fbbf24] text-xs font-bold mt-1">
                     {agentData.role}
                   </p>
-                  <p className="text-gray-400 text-[10px] mt-0.5">
+                  <p className="text-gray-400 text-xs mt-0.5">
                     Target: {agentData.sdgFocus}
                   </p>
                 </div>
@@ -151,36 +143,27 @@ export default function MinecraftPanel({
 
               {/* Agent Thematic Description */}
               <div className="bg-[#1e1e1e]/60 p-3 border border-[#3a3a3a]">
-                <h4
-                  className="text-white text-[10px] font-bold mb-2 uppercase"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h4 className="text-white text-[10px] font-bold mb-2 uppercase font-pixel">
                   Agentic Purpose:
                 </h4>
-                <p className="text-gray-300 leading-relaxed text-xs">
+                <p className="text-gray-300 leading-relaxed text-sm">
                   {agentData.description}
                 </p>
               </div>
 
               {/* Special Ability */}
               <div className="p-3 bg-[#1e1e1e]/60 border border-[#3a3a3a]">
-                <h4
-                  className="text-[#10b981] text-[10px] font-bold mb-1 uppercase"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h4 className="text-[#10b981] text-[10px] font-bold mb-1 uppercase font-pixel">
                   Autonomous Core Capability:
                 </h4>
-                <p className="text-gray-200 text-xs">
+                <p className="text-gray-200 text-sm">
                   {agentData.specialAbility}
                 </p>
               </div>
 
               {/* Agent Stat Attributes */}
               <div className="p-3 bg-[#1e1e1e] border border-[#3a3a3a] space-y-2">
-                <h4
-                  className="text-white text-[10px] font-bold uppercase mb-2"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h4 className="text-white text-[10px] font-bold uppercase mb-2 font-pixel">
                   Agent Attribute Matrix:
                 </h4>
                 {[
@@ -214,10 +197,7 @@ export default function MinecraftPanel({
           {activeTab === 'about' && (
             <div className="space-y-4">
               <div className="bg-[#1e1e1e] p-3.5 border border-[#444]">
-                <h3
-                  className="text-[#fbbf24] text-xs font-bold mb-2 uppercase"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h3 className="text-[#fbbf24] text-xs font-bold mb-2 uppercase font-pixel">
                   Event Mission
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-xs">
@@ -266,7 +246,7 @@ export default function MinecraftPanel({
                         className="px-2 py-0.5 text-[9px] font-bold text-white rounded-none"
                         style={{ backgroundColor: track.color }}
                       >
-                        {typeof track.id === 'number' ? `SDG ${track.id}` : track.id}
+                        {track.sdgNumber || (typeof track.id === 'number' ? `SDG ${track.id}` : track.id)}
                       </span>
                       <h4 className="text-white font-bold text-xs">{track.name}</h4>
                     </div>
@@ -283,20 +263,14 @@ export default function MinecraftPanel({
           {activeTab === 'rules' && (
             <div className="space-y-3">
               <div className="bg-[#1e1e1e] p-3 border border-[#444]">
-                <h4
-                  className="text-[#fbbf24] text-xs font-bold mb-1.5"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h4 className="text-[#fbbf24] text-xs font-bold mb-1.5 font-pixel">
                   Eligibility
                 </h4>
-                <p className="text-gray-300 text-xs">{EVENT_DATA.details.eligibility}</p>
+                <p className="text-gray-300 text-sm">{EVENT_DATA.details.eligibility}</p>
               </div>
 
               <div className="bg-[#1e1e1e] p-3 border border-[#444] space-y-2">
-                <h4
-                  className="text-[#10b981] text-xs font-bold mb-2 uppercase"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h4 className="text-[#10b981] text-xs font-bold mb-2 uppercase font-pixel">
                   Hackathon Guidelines
                 </h4>
                 <ul className="space-y-2 text-xs text-gray-300 list-disc list-inside">
@@ -409,18 +383,15 @@ export default function MinecraftPanel({
                 🔮
               </div>
               <div>
-                <h3
-                  className="text-white font-bold text-sm tracking-wide"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
-                >
+                <h3 className="text-white font-bold text-sm tracking-wide font-pixel">
                   Nether Registration Portal
                 </h3>
-                <p className="text-[#c026d3] text-xs font-semibold mt-1.5">
+                <p className="text-[#c026d3] text-sm font-semibold mt-1.5 font-terminal">
                   National Agentic AI Challenge 2026
                 </p>
               </div>
 
-              <div className="bg-[#1e1e1e] p-3.5 border border-[#444] text-left space-y-2 text-xs">
+              <div className="bg-[#1e1e1e] p-3.5 border border-[#444] text-left space-y-2 text-sm font-terminal">
                 <p className="text-gray-200">
                   <strong className="text-[#fbbf24]">Status:</strong> {EVENT_DATA.registration.note}
                 </p>
@@ -437,16 +408,14 @@ export default function MinecraftPanel({
                   href={EVENT_DATA.registration.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-block px-6 py-3 bg-[#10b981] hover:bg-[#059669] text-white text-xs font-bold border-2 border-[#047857] shadow-lg transition uppercase tracking-wider"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
+                  className="inline-block px-6 py-3 bg-[#10b981] hover:bg-[#059669] text-white text-xs font-bold border-2 border-[#047857] shadow-lg transition uppercase tracking-wider font-pixel"
                 >
                   ⚡ Register Team Now
                 </a>
               ) : (
                 <button
                   disabled
-                  className="px-6 py-3 bg-[#444] text-gray-300 text-xs font-bold border-2 border-[#222] cursor-not-allowed opacity-80"
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
+                  className="px-6 py-3 bg-[#444] text-gray-300 text-xs font-bold border-2 border-[#222] cursor-not-allowed opacity-80 font-pixel"
                 >
                   Registration Opening Soon
                 </button>
@@ -456,13 +425,13 @@ export default function MinecraftPanel({
 
           {/* ================= FAQS VARIANT ================= */}
           {activeTab === 'faqs' && (
-            <div className="space-y-3">
+            <div className="space-y-3 font-terminal">
               {EVENT_DATA.faqs.map((faq, i) => (
                 <div key={i} className="bg-[#1e1e1e] p-3 border border-[#444]">
-                  <h4 className="text-[#fbbf24] font-bold text-xs mb-1">
+                  <h4 className="text-[#fbbf24] font-bold text-sm mb-1 font-pixel">
                     Q: {faq.question}
                   </h4>
-                  <p className="text-gray-300 text-[11px] leading-relaxed">
+                  <p className="text-gray-300 text-sm leading-relaxed">
                     {faq.answer}
                   </p>
                 </div>
@@ -486,12 +455,11 @@ export default function MinecraftPanel({
               <button
                 key={tab.id}
                 onClick={() => onSelectTab?.(tab.id as PanelTab)}
-                className={`px-2.5 py-1 text-[9px] font-bold border-2 transition cursor-pointer ${
+                className={`px-2.5 py-1 text-[9px] font-bold border-2 transition cursor-pointer font-pixel ${
                   activeTab === tab.id
                     ? 'bg-[#555] text-[#fbbf24] border-t-black border-l-black border-b-white border-r-white'
                     : 'bg-[#8b8b8b] hover:bg-[#9e9e9e] text-black border-t-white border-l-white border-b-black border-r-black'
                 }`}
-                style={{ fontFamily: '"Press Start 2P", monospace' }}
               >
                 {tab.label}
               </button>
@@ -501,8 +469,7 @@ export default function MinecraftPanel({
           {/* Close / Return to World Action */}
           <button
             onClick={onClose}
-            className="px-4 py-1.5 bg-[#8b8b8b] hover:bg-[#a0a0a0] active:bg-[#666] text-[#222] font-bold text-[9px] border-2 border-t-white border-l-white border-b-black border-r-black cursor-pointer transition flex items-center gap-1.5"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+            className="px-4 py-1.5 bg-[#8b8b8b] hover:bg-[#a0a0a0] active:bg-[#666] text-[#222] font-bold text-[9px] border-2 border-t-white border-l-white border-b-black border-r-black cursor-pointer transition flex items-center gap-1.5 font-pixel"
           >
             <span>↩ Return to World</span>
           </button>

@@ -26,7 +26,7 @@ export default function RulesSection() {
           >
             RULES OF ENGAGEMENT
           </h2>
-          <p className="font-sans text-xs sm:text-sm text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-terminal text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
             Verified team parameters, evaluation streams, and submission standards from the official AGENTCRAFT briefing.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
                   Teams of {details.teamSize} Players Only
                 </h4>
-                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium">
                   {details.teamSize} + {details.mentorAllowed}. Interdisciplinary combinations across engineering branches welcome.
                 </p>
               </div>
@@ -69,7 +69,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
                   2-Stage Challenge Structure
                 </h4>
-                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium">
                   Round 1 online screening presentation & demo; Round 2 in-person prototype presentation on campus at {details.venue}.
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
                   Open-Source Libraries & APIs Allowed
                 </h4>
-                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium">
                   Python, LangGraph, AutoGen, CrewAI, LlamaIndex, or custom agent runtime loops are permitted. Pre-built proprietary projects are disqualified.
                 </p>
               </div>
@@ -103,7 +103,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs sm:text-sm text-white mb-1 uppercase font-bold">
                   Registration Parameters
                 </h4>
-                <p className="font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-medium">
+                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed font-medium">
                   Single nominal fee of <strong className="text-emerald-400 font-pixel text-xs">{details.registrationFee}</strong> per team covering screening and offline finale access.
                 </p>
               </div>
@@ -126,7 +126,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs text-white uppercase mb-2">
                   FY (Separate Evaluation)
                 </h4>
-                <p className="font-sans text-xs text-emerald-200/90 leading-relaxed">
+                <p className="font-terminal text-sm sm:text-base text-emerald-200/90 leading-relaxed">
                   First Year innovators compete in their own dedicated bracket, evaluated on
                   conceptual understanding, creativity, and foundational agentic logic.
                 </p>
@@ -140,7 +140,7 @@ export default function RulesSection() {
                 <h4 className="font-pixel text-xs sm:text-sm text-white uppercase mb-2">
                   SY, TY, B.Tech Stream
                 </h4>
-                <p className="font-sans text-xs sm:text-sm text-sky-200/90 leading-relaxed font-medium">
+                <p className="font-terminal text-sm sm:text-base text-sky-200/90 leading-relaxed font-medium">
                   Senior innovators are evaluated on architectural rigor, multi-agent tool loops,
                   autonomous error recovery, and benchmark performance on SDG domains.
                 </p>

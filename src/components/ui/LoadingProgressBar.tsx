@@ -53,9 +53,8 @@ export default function LoadingProgressBar({ progress }: LoadingProgressBarProps
       {/* Current Loading Status Message */}
       <div className="h-6 flex items-center justify-center mb-2">
         <p
-          className="text-[#fbbf24] text-center tracking-wider text-[10px] md:text-xs flex items-center gap-2"
+          className="text-[#fbbf24] text-center tracking-wider text-[10px] md:text-xs flex items-center gap-2 font-pixel"
           style={{
-            fontFamily: '"Press Start 2P", monospace',
             textShadow: '2px 2px 0 #78350f',
           }}
         >
@@ -93,9 +92,8 @@ export default function LoadingProgressBar({ progress }: LoadingProgressBarProps
         {/* Central XP Level Badge / Number (Minecraft Experience Level Style) */}
         <div className="absolute left-1/2 -top-1 -translate-x-1/2 z-20 flex items-center justify-center pointer-events-none">
           <span
-            className="text-[#84cc16] font-bold text-sm md:text-base tracking-wider"
+            className="text-[#84cc16] font-bold text-sm md:text-base tracking-wider font-pixel"
             style={{
-              fontFamily: '"Press Start 2P", monospace',
               textShadow:
                 '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 0 #064e3b',
             }}
@@ -107,10 +105,7 @@ export default function LoadingProgressBar({ progress }: LoadingProgressBarProps
 
       {/* Rotating Tip Area */}
       <div className="mt-4 px-4 py-2 bg-[#0b0e14]/70 border border-[#334155]/60 rounded-sm max-w-md w-full text-center">
-        <p
-          className="text-gray-300 text-[9px] md:text-[10px] leading-relaxed transition-all duration-300"
-          style={{ fontFamily: 'monospace' }}
-        >
+        <p className="text-gray-300 text-xs md:text-sm leading-relaxed transition-all duration-300 font-terminal">
           <span className="text-[#10b981] font-bold">💡 </span>
           {GAMEPLAY_TIPS[tipIndex]}
         </p>

@@ -65,7 +65,7 @@ export default function DashboardLayout({
   };
 
   return (
-    <div className="min-h-screen bg-[#0d0a07] text-neutral-100 flex flex-col font-sans selection:bg-amber-500 selection:text-black relative">
+    <div className="min-h-screen bg-[#0d0a07] text-neutral-100 flex flex-col font-terminal selection:bg-amber-500 selection:text-black relative">
       {/* Ambient Pixel Embers in Background */}
       <DashboardEmbers />
 
@@ -226,7 +226,7 @@ export default function DashboardLayout({
                   <h3 className="font-pixel text-xs text-white leading-tight font-bold truncate">
                     {team?.team_name || teamData.teamName}
                   </h3>
-                  <span className="font-mono text-[10px] text-amber-300 font-bold block mt-0.5">
+                  <span className="font-pixel text-[9px] text-amber-300 font-bold block mt-1">
                     {team?.team_id || teamData.teamId || 'AC-001'}
                   </span>
                 </div>
@@ -307,13 +307,13 @@ export default function DashboardLayout({
               <span>CLICK TO GAIN XP (+1)</span>
             </button>
 
-            <div className="text-[10px] text-neutral-400 leading-snug">
+            <div className="font-terminal text-sm text-neutral-300 leading-snug">
               <span className="font-pixel text-[8px] text-amber-400 uppercase block font-bold mb-0.5">
                 ORGANIZER HELPDESK
               </span>
               Ashish Lenka: +91 81170 31180
               <br />
-              <span className="text-sky-400 font-mono text-[9px]">
+              <span className="text-sky-400 font-terminal text-sm">
                 astra.cseaiml@mitaoe.ac.in
               </span>
             </div>

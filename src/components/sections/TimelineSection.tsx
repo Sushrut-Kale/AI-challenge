@@ -123,7 +123,7 @@ export default function TimelineSection() {
                       <span>STAGE #{milestone.step}</span>
                     </div>
 
-                    <p className="font-sans text-sm sm:text-base text-neutral-100 leading-relaxed font-medium">
+                    <p className="font-terminal text-base sm:text-lg text-neutral-100 leading-relaxed font-medium">
                       {milestone.description}
                     </p>
                   </PixelCard>

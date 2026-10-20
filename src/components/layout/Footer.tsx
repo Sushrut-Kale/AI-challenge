@@ -13,7 +13,7 @@ export default function Footer() {
   const { organizers, contact } = EVENT_DATA;
 
   return (
-    <footer className="relative bg-[#0d0b09] border-t-4 border-[#3d2c1c] text-neutral-300 font-sans pt-16 pb-12 overflow-hidden">
+    <footer className="relative bg-[#0d0b09] border-t-4 border-[#3d2c1c] text-neutral-300 font-terminal pt-16 pb-12 overflow-hidden">
       {/* Decorative Minecraft Grass Strip */}
       <div
         className="absolute top-0 inset-x-0 h-2 border-b border-[#281d14]"
@@ -43,13 +43,13 @@ export default function Footer() {
               </div>
             </div>
 
-            <p className="text-sm text-neutral-300 max-w-md leading-relaxed">
+            <p className="text-base text-neutral-300 max-w-md leading-relaxed font-terminal">
               Organized by <strong>ASTRA Student Association</strong> (Department of CSE-AIML) in association with{' '}
               <strong>AAAI Global Professional Chapter</strong> and <strong>AlgoVedas</strong> at{' '}
               <strong>{organizers.institution.name}</strong>, Alandi, Pune.
             </p>
 
-            <div className="text-xs text-neutral-400 space-y-1 font-sans">
+            <div className="text-sm text-neutral-400 space-y-1 font-terminal">
               <p>📍 {contact.venueAddress}</p>
               <p>📞 Contact: {contact.name} ({contact.phone})</p>
             </div>

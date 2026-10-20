@@ -1,0 +1,18 @@
+/* ============================================================================
+   AgentCraft Typography System — Press Start 2P & VT323
+   ============================================================================ */
+
+:root {
+  --font-pixel: "Press Start 2P", monospace;
+  --font-terminal: "VT323", monospace;
+}
+
+.font-pixel,
+.pixel-heading,
+.mc-button {
+  font-family: var(--font-pixel), "Press Start 2P", monospace !important;
+}
+
+.font-terminal {
+  font-family: var(--font-terminal), "VT323", monospace !important;
+}

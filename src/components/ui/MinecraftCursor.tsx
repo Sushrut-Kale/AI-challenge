@@ -364,7 +364,7 @@ export default function MinecraftCursor() {
               <g className="animate-bounce">
                 <rect x="8" y="-18" width="8" height="7" fill="#fbbf24" rx="1" />
                 <polygon points="8,-11 11,-11 8,-9" fill="#fbbf24" />
-                <text x="10" y="-13" fill="#1a1206" fontSize="5" fontWeight="bold" fontFamily="monospace">
+                <text x="10" y="-13" fill="#1a1206" fontSize="5" fontWeight="bold" fontFamily="var(--font-pixel), monospace">
                   !
                 </text>
               </g>

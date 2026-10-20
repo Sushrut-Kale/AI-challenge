@@ -23,9 +23,8 @@ export default function WebGLFallback() {
 
         {/* Title */}
         <h2
-          className="text-white font-bold mb-3 tracking-wide"
+          className="text-white font-bold mb-3 tracking-wide font-pixel"
           style={{
-            fontFamily: '"Press Start 2P", monospace',
             fontSize: 'clamp(12px, 2.5vw, 16px)',
             textShadow: '2px 2px 0 #991b1b',
           }}
@@ -34,16 +33,16 @@ export default function WebGLFallback() {
         </h2>
 
         {/* Description */}
-        <p className="text-gray-300 mb-5 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'monospace' }}>
+        <p className="text-gray-300 mb-5 text-sm md:text-base leading-relaxed font-terminal">
           Your browser or graphics card does not currently support WebGL hardware acceleration, which is required to render the 3D Minecraft Overworld.
         </p>
 
         {/* Tips Box */}
-        <div className="bg-[#0b0e14]/80 border border-[#334155] p-3 text-left mb-6">
-          <p className="text-[#fbbf24] text-[10px] font-bold mb-1" style={{ fontFamily: '"Press Start 2P", monospace' }}>
+        <div className="bg-[#0b0e14]/80 border border-[#334155] p-3 text-left mb-6 font-terminal">
+          <p className="text-[#fbbf24] text-xs font-bold mb-1 font-pixel">
             Suggested Fixes:
           </p>
-          <ul className="text-gray-400 text-xs space-y-1 list-disc list-inside font-mono">
+          <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
             <li>Ensure &quot;Hardware Acceleration&quot; is enabled in browser settings.</li>
             <li>Update your graphics drivers to the latest version.</li>
             <li>Try accessing via modern Chrome, Edge, or Firefox.</li>
@@ -54,8 +53,7 @@ export default function WebGLFallback() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={handleRetry}
-            className="px-5 py-3 bg-[#10b981] hover:bg-[#059669] text-white text-xs font-bold transition border-2 border-[#047857] shadow-md cursor-pointer"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+            className="px-5 py-3 bg-[#10b981] hover:bg-[#059669] text-white text-xs font-bold transition border-2 border-[#047857] shadow-md cursor-pointer font-pixel"
           >
             ↻ Retry Launch
           </button>
@@ -64,7 +62,7 @@ export default function WebGLFallback() {
         {/* Event Badge */}
         <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-center gap-2">
           <span className="text-xs text-[#fbbf24]">⚔</span>
-          <span className="text-[9px] text-gray-400 font-mono">
+          <span className="text-xs text-gray-400 font-terminal">
             National Agentic AI Challenge · MIT AOE
           </span>
         </div>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Press_Start_2P, Inter } from 'next/font/google';
+import { Press_Start_2P, VT323 } from 'next/font/google';
 import './globals.css';
 import MinecraftCursor from '@/components/ui/MinecraftCursor';
 import MinecraftHotbar from '@/components/ui/MinecraftHotbar';
@@ -17,9 +17,10 @@ const pixelFont = Press_Start_2P({
   display: 'swap',
 });
 
-const sansFont = Inter({
+const terminalFont = VT323({
+  weight: '400',
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-terminal',
   display: 'swap',
 });
 
@@ -63,8 +64,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${pixelFont.variable} ${sansFont.variable}`}>
-      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:pb-24">
+    <html lang="en" className={`${pixelFont.variable} ${terminalFont.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap"
+        />
+      </head>
+      <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-terminal text-lg leading-relaxed pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:pb-24">
         <ThemeProvider>
           <AuthProvider>
             <CursorProvider>

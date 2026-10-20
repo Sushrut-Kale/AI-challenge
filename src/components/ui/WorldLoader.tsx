@@ -51,19 +51,15 @@ export default function WorldLoader({ progress = 0 }: WorldLoaderProps) {
 
       {/* Title */}
       <h1
-        className="text-center text-white font-bold mb-2 tracking-wider"
+        className="text-center text-white font-bold mb-2 tracking-wider font-pixel"
         style={{
-          fontFamily: '"Press Start 2P", monospace',
           fontSize: 'clamp(10px, 2vw, 16px)',
           textShadow: '3px 3px 0 #FF8C42',
         }}
       >
         AI Challenge World
       </h1>
-      <p
-        className="text-[#87CEEB] mb-8 text-xs text-center"
-        style={{ fontFamily: '"Press Start 2P", monospace', fontSize: '8px' }}
-      >
+      <p className="text-[#87CEEB] mb-8 text-sm text-center font-terminal">
         National Agentic AI Challenge · MIT Academy of Engineering
       </p>
 
@@ -76,7 +72,7 @@ export default function WorldLoader({ progress = 0 }: WorldLoaderProps) {
       </div>
 
       {/* Loading tip */}
-      <p className="text-gray-400 text-xs text-center h-5" style={{ fontFamily: 'monospace' }}>
+      <p className="text-gray-300 text-sm text-center h-5 font-terminal">
         {tips[tip]}{dots}
       </p>
     </div>

@@ -121,10 +121,7 @@ export default function MinecraftLoadingScreen({
         <div className="flex items-center justify-center gap-3 mb-3">
           <span className="text-[#fbbf24] text-lg">⚔</span>
           <span className="w-12 h-1 bg-gradient-to-r from-transparent via-[#fbbf24] to-transparent" />
-          <span
-            className="text-[#10b981] text-[10px] md:text-xs font-mono font-bold tracking-widest uppercase bg-[#0b0e14]/80 px-3 py-1 border border-[#10b981]/40"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
-          >
+          <span className="text-[#10b981] text-[10px] md:text-xs font-pixel font-bold tracking-widest uppercase bg-[#0b0e14]/80 px-3 py-1 border border-[#10b981]/40">
             Phase 2A · System Online
           </span>
           <span className="w-12 h-1 bg-gradient-to-r from-transparent via-[#fbbf24] to-transparent" />
@@ -133,9 +130,8 @@ export default function MinecraftLoadingScreen({
 
         {/* Main Event Title */}
         <h1
-          className="text-white font-bold tracking-wider mb-2"
+          className="text-white font-bold tracking-wider mb-2 font-pixel"
           style={{
-            fontFamily: '"Press Start 2P", monospace',
             fontSize: 'clamp(14px, 2.6vw, 24px)',
             textShadow: '3px 3px 0 #ea580c, 6px 6px 0 #7c2d12',
           }}
@@ -145,19 +141,15 @@ export default function MinecraftLoadingScreen({
 
         {/* Subtitle */}
         <p
-          className="text-[#fbbf24] font-medium tracking-wide"
+          className="text-[#fbbf24] font-medium tracking-wide font-pixel"
           style={{
-            fontFamily: '"Press Start 2P", monospace',
             fontSize: 'clamp(8px, 1.2vw, 11px)',
             textShadow: '1px 1px 0 #78350f',
           }}
         >
           FOR SUSTAINABLE DEVELOPMENT GOALS
         </p>
-        <p
-          className="text-[#a5b4fc] text-[9px] mt-1.5 opacity-90"
-          style={{ fontFamily: '"Press Start 2P", monospace' }}
-        >
+        <p className="text-[#a5b4fc] text-[9px] mt-1.5 opacity-90 font-pixel">
           MIT Academy of Engineering
         </p>
       </header>
@@ -213,10 +205,7 @@ export default function MinecraftLoadingScreen({
             <div className="w-full h-3 bg-[#55822b] border-2 border-[#72984a]" />
             {/* Dirt Body */}
             <div className="w-full h-7 bg-[#7c5332] border-x-2 border-b-2 border-[#5a391d] flex items-center justify-center">
-              <span
-                className="text-[7px] text-[#fbbf24]/80 tracking-widest font-mono"
-                style={{ fontFamily: '"Press Start 2P", monospace' }}
-              >
+              <span className="text-[7px] text-[#fbbf24]/80 tracking-widest font-pixel">
                 AGENT ALPHA
               </span>
             </div>

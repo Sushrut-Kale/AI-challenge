@@ -96,15 +96,14 @@ export default function WebsiteHUD({
           </div>
           <div className="flex flex-col">
             <span
-              className="text-white font-bold tracking-wider text-[10px] md:text-xs"
+              className="text-white font-bold tracking-wider text-[10px] md:text-xs font-pixel"
               style={{
-                fontFamily: '"Press Start 2P", monospace',
                 textShadow: '1px 1px 0 #ea580c',
               }}
             >
               {EVENT_DATA.name}
             </span>
-            <span className="text-[#fbbf24] text-[8px] font-mono">
+            <span className="text-[#fbbf24] text-[10px] font-terminal">
               {EVENT_DATA.organizer.shortName} · {EVENT_DATA.subtitle}
             </span>
           </div>
@@ -119,8 +118,7 @@ export default function WebsiteHUD({
                 playRetroSound('click');
                 setNavMenuOpen((prev) => !prev);
               }}
-              className="px-3 py-2 bg-[#1e293b] hover:bg-[#334155] text-[#fbbf24] border border-[#fbbf24]/60 text-[9px] font-bold shadow-xl transition cursor-pointer flex items-center gap-1.5"
-              style={{ fontFamily: '"Press Start 2P", monospace' }}
+              className="px-3 py-2 bg-[#1e293b] hover:bg-[#334155] text-[#fbbf24] border border-[#fbbf24]/60 text-[9px] font-bold shadow-xl transition cursor-pointer flex items-center gap-1.5 font-pixel"
             >
               <span>🗺 World Atlas</span>
               <span className="text-[7px]">{navMenuOpen ? '▲' : '▼'}</span>
@@ -184,8 +182,7 @@ export default function WebsiteHUD({
               );
               onOpenPanel('registration');
             }}
-            className="px-3.5 py-2 bg-gradient-to-r from-[#9333ea] to-[#c026d3] hover:from-[#a855f7] hover:to-[#d946ef] text-white border-2 border-white/60 text-[9px] font-bold rounded-none shadow-[0_0_12px_rgba(192,38,211,0.5)] transition cursor-pointer flex items-center gap-1.5"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+            className="px-3.5 py-2 bg-gradient-to-r from-[#9333ea] to-[#c026d3] hover:from-[#a855f7] hover:to-[#d946ef] text-white border-2 border-white/60 text-[9px] font-bold rounded-none shadow-[0_0_12px_rgba(192,38,211,0.5)] transition cursor-pointer flex items-center gap-1.5 font-pixel"
           >
             <span>🔮 Register</span>
           </button>
@@ -197,12 +194,11 @@ export default function WebsiteHUD({
               setSoundEnabled(next);
               if (next) playRetroSound('chime');
             }}
-            className={`px-2.5 py-2 rounded text-[9px] border transition cursor-pointer flex items-center gap-1 shadow-lg ${
+            className={`px-2.5 py-2 rounded text-[9px] border transition cursor-pointer flex items-center gap-1 shadow-lg font-pixel ${
               soundEnabled
                 ? 'bg-[#10b981] border-[#059669] text-black font-bold shadow-[0_0_8px_#10b981]'
                 : 'glass-panel border-white/20 text-gray-300 hover:text-white'
             }`}
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
             title="Toggle Audio Effects (Key: M)"
           >
             <span>{soundEnabled ? '🔊 ON' : '🔇 OFF'}</span>
@@ -211,8 +207,7 @@ export default function WebsiteHUD({
           {/* HUD Visibility Toggle Button */}
           <button
             onClick={() => setHudVisible((prev) => !prev)}
-            className="glass-panel px-2.5 py-2 rounded text-[9px] text-gray-200 hover:text-white border border-white/20 transition cursor-pointer shadow-lg"
-            style={{ fontFamily: '"Press Start 2P", monospace' }}
+            className="glass-panel px-2.5 py-2 rounded text-[9px] text-gray-200 hover:text-white border border-white/20 transition cursor-pointer shadow-lg font-pixel"
             title="Toggle HUD (Key: H)"
           >
             <span>{hudVisible ? '👁' : '👁 Show'}</span>
@@ -238,12 +233,11 @@ export default function WebsiteHUD({
                     playRetroSound('click');
                     onSelectCameraPreset(b.id as any);
                   }}
-                  className={`px-3 py-2 rounded text-[9px] transition cursor-pointer font-mono ${
+                  className={`px-3 py-2 rounded text-[9px] transition cursor-pointer font-pixel ${
                     activePreset === b.id
                       ? 'bg-[#ea580c] text-white font-bold shadow-lg shadow-orange-500/30'
                       : 'text-gray-300 hover:text-white hover:bg-white/10'
                   }`}
-                  style={{ fontFamily: '"Press Start 2P", monospace' }}
                 >
                   {b.label}
                 </button>
@@ -257,8 +251,7 @@ export default function WebsiteHUD({
                   playRetroSound('click');
                   onResetCamera();
                 }}
-                className="px-2.5 py-2 rounded text-[9px] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition cursor-pointer font-mono border border-[#fbbf24]/40"
-                style={{ fontFamily: '"Press Start 2P", monospace' }}
+                className="px-2.5 py-2 rounded text-[9px] text-[#fbbf24] hover:bg-[#fbbf24]/10 transition cursor-pointer font-pixel border border-[#fbbf24]/40"
                 title="Reset Camera to Overview (Key: R)"
               >
                 ↺ Reset
@@ -270,12 +263,11 @@ export default function WebsiteHUD({
                   playRetroSound('click');
                   onToggleOrbit();
                 }}
-                className={`px-3 py-2 rounded text-[9px] transition cursor-pointer font-mono ${
+                className={`px-3 py-2 rounded text-[9px] transition cursor-pointer font-pixel ${
                   isOrbiting
                     ? 'bg-[#4338ca] text-white shadow-lg'
                     : 'bg-white/10 text-gray-300 hover:text-white'
                 }`}
-                style={{ fontFamily: '"Press Start 2P", monospace' }}
                 title="Toggle Auto Orbit (Spacebar)"
               >
                 {isOrbiting ? '⏸ Orbit' : '▶ Orbit'}
@@ -285,10 +277,7 @@ export default function WebsiteHUD({
 
           {/* Bottom Left: Controls Legend */}
           <div className="absolute bottom-4 left-4">
-            <div
-              className="glass-panel rounded-lg px-4 py-2.5 text-[11px] text-gray-300 border border-white/10 shadow-xl"
-              style={{ fontFamily: 'monospace' }}
-            >
+            <div className="glass-panel rounded-lg px-4 py-2.5 text-xs text-gray-300 border border-white/10 shadow-xl font-terminal">
               <p className="flex items-center gap-2">
                 <span>🖱 Drag orbit</span>
                 <span>·</span>

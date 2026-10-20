@@ -59,6 +59,7 @@ export default function MinecraftButton({
 }: MinecraftButtonProps) {
   const baseClasses = `
     mc-btn-bevel
+    mc-button
     mc-shine
     inline-flex items-center justify-center gap-2
     font-pixel font-bold uppercase select-none

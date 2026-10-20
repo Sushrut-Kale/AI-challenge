@@ -136,7 +136,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           >
             {isResetMode ? 'RESET ACCESS' : 'TEAM PORTAL'}
           </h2>
-          <p className="mt-1 font-sans text-xs text-neutral-400">
+          <p className="mt-1 font-terminal text-sm sm:text-base text-neutral-400">
             {isResetMode
               ? 'Enter your registered email or Team ID to receive a reset link'
               : 'Sign in with your Team ID (e.g. AC-001) or Admin'}
@@ -145,14 +145,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
         {/* Error / Success Banners */}
         {errorMessage && (
-          <div className="mb-4 p-3 bg-red-950/80 border-2 border-red-700/80 text-red-200 font-sans text-xs leading-relaxed flex items-start gap-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)]">
+          <div className="mb-4 p-3 bg-red-950/80 border-2 border-red-700/80 text-red-200 font-terminal text-sm sm:text-base leading-relaxed flex items-start gap-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)]">
             <span className="font-pixel text-[10px] text-red-400 shrink-0">!</span>
             <span>{errorMessage}</span>
           </div>
         )}
 
         {successMessage && (
-          <div className="mb-4 p-3 bg-emerald-950/80 border-2 border-emerald-600 text-emerald-200 font-sans text-xs leading-relaxed flex items-start gap-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)]">
+          <div className="mb-4 p-3 bg-emerald-950/80 border-2 border-emerald-600 text-emerald-200 font-terminal text-sm sm:text-base leading-relaxed flex items-start gap-2 shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)]">
             <span className="font-pixel text-[10px] text-emerald-400 shrink-0">✓</span>
             <span>{successMessage}</span>
           </div>
@@ -170,7 +170,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               placeholder="AC-001 or admin"
-              className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner"
+              className="w-full px-3.5 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner"
             />
           </div>
 
@@ -198,7 +198,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner"
+                className="w-full px-3.5 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner"
               />
             </div>
           )}

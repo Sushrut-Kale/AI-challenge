@@ -80,7 +80,7 @@ export default function HeroSection() {
         </h2>
 
         {/* Official Tagline from Poster */}
-        <p className="font-sans text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl leading-relaxed mb-8 font-medium">
+        <p className="font-terminal text-lg sm:text-xl md:text-2xl text-neutral-200 max-w-2xl leading-relaxed mb-8">
           {EVENT_DATA.tagline}
         </p>
 
@@ -94,7 +94,7 @@ export default function HeroSection() {
             <div className="font-pixel text-xs sm:text-sm text-amber-300 mt-1.5 flex items-center font-bold">
               MINE TO REVEAL
             </div>
-            <span className="text-[10px] text-neutral-400 font-sans block mt-0.5">
+            <span className="text-xs text-neutral-400 font-terminal block mt-0.5">
               + Internships *
             </span>
           </div>
@@ -112,7 +112,7 @@ export default function HeroSection() {
                 className="text-emerald-300"
               />
             </div>
-            <span className="text-[10px] text-neutral-400 font-sans block mt-0.5">
+            <span className="text-xs text-neutral-400 font-terminal block mt-0.5">
               Affordable pass
             </span>
           </div>
@@ -125,7 +125,7 @@ export default function HeroSection() {
             <span className="font-pixel text-xs sm:text-base text-white block mt-1.5">
               {details.teamSize}
             </span>
-            <span className="text-[10px] text-neutral-400 font-sans block mt-0.5">
+            <span className="text-xs text-neutral-400 font-terminal block mt-0.5">
               + 1 Mentor (Optional)
             </span>
           </div>
@@ -138,7 +138,7 @@ export default function HeroSection() {
             <span className="font-pixel text-xs sm:text-base text-amber-400 block mt-1.5">
               2 ROUNDS
             </span>
-            <span className="text-[10px] text-neutral-400 font-sans block mt-0.5">
+            <span className="text-xs text-neutral-400 font-terminal block mt-0.5">
               Online PPT + Final
             </span>
           </div>

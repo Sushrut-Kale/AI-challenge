@@ -27,6 +27,22 @@ export type SponsorData = SponsorItem[] & {
   statusNote: string;
 };
 
+export interface SdgTrackItem {
+  id: number | string;
+  name: string;
+  trackName: string;
+  sdgNumber: string;
+  sdgTitle: string;
+  color: string;
+  badgeBg: string;
+  badgeTextColor?: string;
+  borderColor?: string;
+  dividerGradient: string;
+  icon: string;
+  iconAlt: string;
+  description: string;
+}
+
 export interface EventData {
   name: string;
   shortName: string;
@@ -74,12 +90,7 @@ export interface EventData {
   };
   challenge: {
     overview: string;
-    sdgTracks: Array<{
-      id: number | string;
-      name: string;
-      color: string;
-      description: string;
-    }>;
+    sdgTracks: SdgTrackItem[];
   };
   rounds: Array<{
     roundNumber: number;
@@ -265,34 +276,116 @@ export const EVENT_DATA: EventData = {
       'AGENTCRAFT invites student teams to build autonomous multi-agent AI systems that address real-world Sustainable Development Goals (SDGs). Move beyond simple chatbots into true agentic architectures capable of reasoning, planning, tool usage, and cooperative execution.',
     sdgTracks: [
       {
+        id: 4,
+        name: 'VidyaMitra — Quality Education',
+        trackName: 'VidyaMitra',
+        sdgNumber: 'SDG 04',
+        sdgTitle: 'Quality Education',
+        color: '#c5192d',
+        badgeBg: '#8b1e2a',
+        badgeTextColor: '#ffe4e6',
+        borderColor: '#5c0f18',
+        dividerGradient: 'from-red-600 via-rose-400 to-red-600',
+        icon: '/assets/items/book_quill.png',
+        iconAlt: 'Book and Quill',
+        description:
+          'Adaptive learning, knowledge-gap detection, personalized learning paths, and evaluating learning improvement.',
+      },
+      {
+        id: 2,
+        name: 'KrishiMitra — Zero Hunger',
+        trackName: 'KrishiMitra',
+        sdgNumber: 'SDG 02',
+        sdgTitle: 'Zero Hunger',
+        color: '#dca225',
+        badgeBg: '#8b6819',
+        badgeTextColor: '#fef3c7',
+        borderColor: '#523c08',
+        dividerGradient: 'from-yellow-600 via-amber-400 to-yellow-600',
+        icon: '/assets/items/grass_block.png',
+        iconAlt: 'Grass Block',
+        description:
+          'Precision agriculture, smart irrigation, crop health, soil and weather monitoring, and water-resource optimization.',
+      },
+      {
+        id: 3,
+        name: 'AarogyaSetu AI — Good Health and Well-being',
+        trackName: 'AarogyaSetu AI',
+        sdgNumber: 'SDG 03',
+        sdgTitle: 'Good Health and Well-being',
+        color: '#4c9f38',
+        badgeBg: '#246b1c',
+        badgeTextColor: '#dcfce7',
+        borderColor: '#14400e',
+        dividerGradient: 'from-emerald-600 via-green-400 to-emerald-600',
+        icon: '/assets/items/golden_apple.png',
+        iconAlt: 'Golden Apple',
+        description:
+          'Preventive health information, evidence-based guidance, source citations, and safe navigation toward appropriate healthcare.',
+      },
+      {
+        id: 12,
+        name: 'GreenGuardian — Responsible Consumption and Production',
+        trackName: 'GreenGuardian',
+        sdgNumber: 'SDG 12',
+        sdgTitle: 'Responsible Consumption and Production',
+        color: '#bf8b2e',
+        badgeBg: '#785616',
+        badgeTextColor: '#fef9c3',
+        borderColor: '#4a340a',
+        dividerGradient: 'from-amber-700 via-yellow-500 to-amber-700',
+        icon: '/assets/items/chest.png',
+        iconAlt: 'Chest',
+        description:
+          'Waste classification, recycling and recovery pathways, collection optimization, and circular resource management.',
+      },
+      {
+        id: '11 & 13',
+        name: 'RakshaGrid — Disaster Intelligence and Response',
+        trackName: 'RakshaGrid',
+        sdgNumber: 'SDGS 11 & 13',
+        sdgTitle: 'Sustainable Cities & Climate Action',
+        color: '#0284c7',
+        badgeBg: '#155e75',
+        badgeTextColor: '#cffafe',
+        borderColor: '#0e3a47',
+        dividerGradient: 'from-cyan-600 via-teal-400 to-cyan-600',
+        icon: '/assets/items/ender_eye.png',
+        iconAlt: 'Eye of Ender',
+        description:
+          'Disaster response, evacuation planning, rescue coordination, emergency resource allocation, and adaptive planning in simulated disaster scenarios.',
+      },
+      {
         id: 7,
-        name: 'Affordable & Clean Energy (SDG 7)',
+        name: 'GridMind — Affordable and Clean Energy',
+        trackName: 'GridMind',
+        sdgNumber: 'SDG 07',
+        sdgTitle: 'Affordable and Clean Energy',
         color: '#f59e0b',
-        description: 'Multi-agent grid balancing, renewable energy forecasting, and micro-grid efficiency optimization.',
+        badgeBg: '#8b5219',
+        badgeTextColor: '#ffe6a3',
+        borderColor: '#522d08',
+        dividerGradient: 'from-amber-600 via-amber-400 to-amber-600',
+        icon: '/assets/items/redstone.png',
+        iconAlt: 'Redstone Dust',
+        description:
+          'Renewable-energy forecasting, microgrid optimization, battery scheduling, and energy-resource management in a simulated environment.',
       },
       {
         id: 9,
-        name: 'Industry, Innovation & Infrastructure (SDG 9)',
+        name: 'CyberSentinel — Autonomous Cyber Defense',
+        trackName: 'CyberSentinel',
+        sdgNumber: 'SDG 09',
+        sdgTitle: 'Industry, Innovation and Infrastructure',
         color: '#ea580c',
-        description: 'Autonomous supply chain agents, predictive maintenance, and sustainable manufacturing pipelines.',
-      },
-      {
-        id: 11,
-        name: 'Sustainable Cities & Communities (SDG 11)',
-        color: '#10b981',
-        description: 'Decentralized traffic management, municipal waste routing, and urban climate resilience agents.',
-      },
-      {
-        id: 13,
-        name: 'Climate Action (SDG 13)',
-        color: '#06b6d4',
-        description: 'Carbon emission monitoring, environmental sensor network coordination, and climate telemetry.',
-      },
-      {
-        id: 'OPEN',
-        name: 'Open Innovation Track',
-        color: '#a855f7',
-        description: 'Pioneer novel autonomous agentic ecosystems for healthcare, education, cybersecurity, decentralized finance, or emerging frontiers.',
+        badgeBg: '#7c2d12',
+        badgeTextColor: '#ffedd5',
+        borderColor: '#4a1707',
+        dividerGradient: 'from-orange-600 via-orange-400 to-orange-600',
+        icon: '/assets/items/iron_pickaxe.png',
+        iconAlt: 'Iron Pickaxe',
+        description:
+          'Defensive cybersecurity, suspicious-event detection, incident investigation, evidence-based response, and authorized containment in isolated environments.',
       },
     ],
   },

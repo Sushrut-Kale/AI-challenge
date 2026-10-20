@@ -89,13 +89,12 @@ export default function InteractiveObject({
           onPointerEnter={handlePointerOver}
           onPointerLeave={handlePointerOut}
           aria-label={`Open ${name}`}
-          className={`cursor-pointer px-2.5 py-1 rounded-none border-2 flex items-center gap-1.5 shadow-xl transition-all duration-200 outline-none focus:ring-2 focus:ring-[#10b981] ${
+          className={`cursor-pointer px-2.5 py-1 rounded-none border-2 flex items-center gap-1.5 shadow-xl transition-all duration-200 outline-none focus:ring-2 focus:ring-[#10b981] font-pixel ${
             hovered
               ? 'bg-[#10b981] border-white text-black scale-110 shadow-[0_0_12px_#10b981]'
               : 'bg-[#1e232a]/90 border-[#fbbf24]/80 text-[#fbbf24] hover:bg-[#10b981] hover:text-black hover:border-white'
           }`}
           style={{
-            fontFamily: '"Press Start 2P", monospace',
             fontSize: '10px',
             whiteSpace: 'nowrap',
             imageRendering: 'pixelated',

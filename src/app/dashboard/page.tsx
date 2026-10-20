@@ -341,7 +341,7 @@ export default function DashboardPage() {
           <h1 className="font-pixel text-base sm:text-2xl text-amber-300 font-bold uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             TEAM COMMAND CENTER
           </h1>
-          <p className="font-sans text-xs text-neutral-400 mt-1">
+          <p className="font-terminal text-sm sm:text-base text-neutral-400 mt-1">
             Dossier & Project Submission Workspace
           </p>
         </div>
@@ -393,7 +393,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="mt-4 space-y-2.5 font-sans text-xs">
+            <div className="mt-4 space-y-2.5 font-terminal text-sm sm:text-base">
               <div>
                 <span className="font-pixel text-[8px] text-amber-400 block uppercase">LEADER:</span>
                 <span className="text-neutral-200 font-medium">
@@ -499,7 +499,7 @@ export default function DashboardPage() {
                 <h2 className="font-pixel text-sm sm:text-base text-amber-300 font-bold uppercase tracking-wider">
                   PROJECT SUBMISSION DOSSIER
                 </h2>
-                <p className="font-sans text-xs text-neutral-400 mt-1">
+                <p className="font-terminal text-sm sm:text-base text-neutral-400 mt-1">
                   {isSubmitted
                     ? 'Your submission is locked for evaluation by the jury panel.'
                     : 'Fill in your project architecture, code repository, video demonstration, and slide deck.'}
@@ -518,14 +518,14 @@ export default function DashboardPage() {
 
             {/* Notification Alerts */}
             {errorMessage && (
-              <div className="mb-4 p-3.5 bg-red-950/80 border-2 border-red-600 text-red-200 font-sans text-xs flex items-center gap-2">
+              <div className="mb-4 p-3.5 bg-red-950/80 border-2 border-red-600 text-red-200 font-terminal text-sm sm:text-base flex items-center gap-2">
                 <span>⚠</span>
                 <span>{errorMessage}</span>
               </div>
             )}
 
             {saveMessage && (
-              <div className="mb-4 p-3.5 bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-sans text-xs flex items-center gap-2">
+              <div className="mb-4 p-3.5 bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-terminal text-sm sm:text-base flex items-center gap-2">
                 <span>✓</span>
                 <span>{saveMessage}</span>
               </div>
@@ -550,7 +550,7 @@ export default function DashboardPage() {
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder="e.g. EcoAgent — Autonomous Precision Agriculture Drone Fleet"
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
                 />
               </div>
 
@@ -563,7 +563,7 @@ export default function DashboardPage() {
                   disabled={isReadOnly}
                   value={track}
                   onChange={(e) => setTrack(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
                 >
                   {TRACK_OPTIONS.map((opt) => (
                     <option key={opt} value={opt} className="bg-[#1a140f] text-neutral-200">
@@ -590,7 +590,7 @@ export default function DashboardPage() {
                   value={synopsis}
                   onChange={(e) => setSynopsis(e.target.value)}
                   placeholder="Explain your Agentic AI design, autonomous tool use, reasoning loops, models used, and the SDG impact achieved..."
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70 leading-relaxed"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70 leading-relaxed"
                 />
               </div>
 
@@ -606,7 +606,7 @@ export default function DashboardPage() {
                   value={repoUrl}
                   onChange={(e) => setRepoUrl(e.target.value)}
                   placeholder="https://github.com/your-team/agentcraft-project"
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
                 />
               </div>
 
@@ -622,7 +622,7 @@ export default function DashboardPage() {
                   value={demoUrl}
                   onChange={(e) => setDemoUrl(e.target.value)}
                   placeholder="https://youtu.be/... or https://www.loom.com/share/..."
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
                 />
               </div>
 
@@ -637,7 +637,7 @@ export default function DashboardPage() {
                   value={hostedUrl}
                   onChange={(e) => setHostedUrl(e.target.value)}
                   placeholder="https://your-agent-app.vercel.app"
-                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-terminal text-base outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
                 />
               </div>
 
@@ -727,7 +727,7 @@ export default function DashboardPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="font-sans text-xs text-neutral-500 italic">No files uploaded yet.</p>
+                  <p className="font-terminal text-sm text-neutral-500 italic">No files uploaded yet.</p>
                 )}
               </div>
 
@@ -757,7 +757,7 @@ export default function DashboardPage() {
                     <span>🔒</span>
                     <span>DOSSIER PERMANENTLY LOCKED & RECORDED</span>
                   </p>
-                  <p className="font-sans text-xs text-neutral-300 mt-1.5 leading-relaxed">
+                  <p className="font-terminal text-sm sm:text-base text-neutral-300 mt-1.5 leading-relaxed">
                     Your project is officially recorded for Round 1 Evaluation. Edits, uploads, and unlocking are permanently disabled.
                   </p>
                 </div>
@@ -774,7 +774,7 @@ export default function DashboardPage() {
             <h3 className="font-pixel text-sm text-amber-300 font-bold uppercase mb-2">
               LOCK FINAL SUBMISSION?
             </h3>
-            <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
+            <p className="font-terminal text-sm sm:text-base text-neutral-300 leading-relaxed mb-4">
               Are you sure you want to finalize? This action is <strong className="text-amber-400">permanent and irreversible</strong>. Once locked, your dossier will be frozen for evaluation and <strong className="text-amber-400">can never be unlocked or edited</strong>.
             </p>
             <div className="flex gap-3">
@@ -806,7 +806,7 @@ export default function DashboardPage() {
               UPDATE ACCESS PASSWORD
             </h3>
             {passwordChangeStatus && (
-              <p className="text-xs text-amber-200 font-sans mb-3">{passwordChangeStatus}</p>
+              <p className="text-sm text-amber-200 font-terminal mb-3">{passwordChangeStatus}</p>
             )}
             <form onSubmit={handlePasswordChange} className="space-y-4">
               <div>
@@ -819,7 +819,7 @@ export default function DashboardPage() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-3 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-xs outline-none focus:border-amber-400"
+                  className="w-full px-3 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-terminal text-base outline-none focus:border-amber-400"
                 />
               </div>
               <div className="flex gap-2">
