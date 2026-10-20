@@ -78,22 +78,22 @@ export default function EventCountdown({
   return (
     <div className={`flex flex-col items-center ${className}`}>
       {label && (
-        <span className="font-pixel text-[8px] sm:text-[9px] text-emerald-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 bg-emerald-400 animate-pulse" />
-          {label}
-        </span>
+        <div className="font-pixel text-[7px] xs:text-[8px] sm:text-[9px] text-emerald-400 uppercase tracking-widest mb-2 sm:mb-3 flex items-center justify-center gap-1.5 text-center px-1">
+          <span className="w-1.5 h-1.5 bg-emerald-400 animate-pulse shrink-0" />
+          <span className="text-center">{label}</span>
+        </div>
       )}
 
-      <div className="grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="grid grid-cols-4 gap-1.5 xs:gap-2 sm:gap-3">
         {units.map((u) => (
           <div
             key={u.label}
-            className="flex flex-col items-center p-2 sm:p-2.5 border-2 border-[#382618] bg-[#1a130c] shadow-[inset_1px_1px_0_rgba(255,255,255,0.1),0_4px_0_#0f0b07] min-w-[56px] sm:min-w-[70px]"
+            className="flex flex-col items-center p-1.5 xs:p-2 sm:p-2.5 border-2 border-[#382618] bg-[#1a130c] shadow-[inset_1px_1px_0_rgba(255,255,255,0.1),0_3px_0_#0f0b07] sm:shadow-[inset_1px_1px_0_rgba(255,255,255,0.1),0_4px_0_#0f0b07] min-w-[46px] xs:min-w-[56px] sm:min-w-[70px]"
           >
-            <span className="font-pixel text-base sm:text-2xl text-amber-300 tabular-nums">
+            <span className="font-pixel text-sm xs:text-base sm:text-2xl text-amber-300 tabular-nums">
               {String(u.value).padStart(2, '0')}
             </span>
-            <span className="font-pixel text-[7px] sm:text-[8px] text-neutral-400 uppercase mt-1 tracking-wider">
+            <span className="font-pixel text-[6.5px] xs:text-[7px] sm:text-[8px] text-neutral-400 uppercase mt-1 tracking-wider">
               {u.label}
             </span>
           </div>
