@@ -330,15 +330,6 @@ export default function DashboardPage() {
     }
   };
 
-  if (authLoading) {
-    return (
-      <main className="min-h-screen pt-28 pb-16 px-4 flex items-center justify-center">
-        <div className="font-pixel text-xs text-amber-400 animate-pulse">
-          INITIALIZING ARENA PORTAL...
-        </div>
-      </main>
-    );
-  }
 
   const isSubmitted = submission?.status === 'submitted';
   const isReadOnly = isSubmitted || isExpired;

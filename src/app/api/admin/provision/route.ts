@@ -5,7 +5,7 @@
 // ============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser, getServiceClient, logAuditEvent } from '@/lib/supabase-server';
+import { getCurrentUser, getServiceClient, isAdminUser, logAuditEvent } from '@/lib/supabase-server';
 import crypto from 'crypto';
 
 function generateSecurePassword(): string {
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     const user = await getCurrentUser();
 
-    if (!user || user.app_metadata?.role !== 'admin') {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 

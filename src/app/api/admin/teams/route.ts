@@ -5,7 +5,7 @@
 // ============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser, getServiceClient, logAuditEvent } from '@/lib/supabase-server';
+import { getCurrentUser, getServiceClient, isAdminUser, logAuditEvent } from '@/lib/supabase-server';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
     }
 
     const user = await getCurrentUser();
-    if (!user || user.app_metadata?.role !== 'admin') {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 
@@ -162,7 +162,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     const user = await getCurrentUser();
-    if (!user || user.app_metadata?.role !== 'admin') {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 

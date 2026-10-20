@@ -4,7 +4,7 @@
 // ============================================================================
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser, getServiceClient } from '@/lib/supabase-server';
+import { getCurrentUser, getServiceClient, isAdminUser } from '@/lib/supabase-server';
 import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
@@ -97,7 +97,7 @@ export async function GET(request: NextRequest) {
     }
 
     const user = await getCurrentUser();
-    if (!user || user.app_metadata?.role !== 'admin') {
+    if (!user || !isAdminUser(user)) {
       return NextResponse.json({ error: 'Unauthorized. Admin access required.' }, { status: 403 });
     }
 
