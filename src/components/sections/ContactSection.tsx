@@ -215,7 +215,7 @@ export default function ContactSection() {
 
           {/* Instagram */}
           <a
-            href="https://www.instagram.com/mitacademyofengineering/"
+            href="https://www.instagram.com/astra_mitaoe/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-between p-3.5 sm:p-4 bg-[#1a0c16] hover:bg-[#26101f] border-2 border-[#ec4899] transition-all group shadow-[inset_1px_1px_0_rgba(255,255,255,0.12),0_4px_12px_rgba(0,0,0,0.6)] hover:-translate-y-1 active:translate-y-0.5 cursor-pointer"
@@ -233,7 +233,7 @@ export default function ContactSection() {
                   Instagram
                 </span>
                 <span className="font-terminal text-sm sm:text-base text-neutral-300 block truncate">
-                  @mitacademyofengineering
+                  @astra_mitaoe
                 </span>
               </div>
             </div>

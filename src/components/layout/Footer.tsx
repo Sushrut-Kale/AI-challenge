@@ -176,7 +176,7 @@ export default function Footer() {
 
               {/* Instagram */}
               <a
-                href="https://www.instagram.com/mitacademyofengineering/"
+                href="https://www.instagram.com/astra_mitaoe/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-between p-2.5 bg-[#260f1d] hover:bg-[#38162b] border-2 border-[#be185d] transition-all group shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),0_2px_0_#500724] hover:-translate-y-0.5"
@@ -194,7 +194,7 @@ export default function Footer() {
                       Instagram
                     </span>
                     <span className="font-terminal text-xs text-neutral-400 block">
-                      @mitacademyofengineering
+                      @astra_mitaoe
                     </span>
                   </div>
                 </div>
