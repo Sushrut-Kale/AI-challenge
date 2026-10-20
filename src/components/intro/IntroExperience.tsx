@@ -119,13 +119,13 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
           aria-hidden="true"
         />
 
-        {/* Top-Right Discreet Skip Control */}
+        {/* Top-Right Discreet Skip Control — positioned below header on mobile to prevent overlapping logo banner, unchanged on PC */}
         {scrollProgress < 0.75 && (
-          <div className="fixed top-4 right-16 sm:right-18 z-[70] pointer-events-auto animate-in fade-in duration-300">
+          <div className="fixed top-[70px] right-3 sm:right-4 md:top-4 md:right-18 z-[70] pointer-events-auto animate-in fade-in duration-300">
             <button
               type="button"
               onClick={handleSkipToContent}
-              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-4 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[40px] inline-flex items-center justify-center cursor-pointer select-none"
+              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-2.5 py-1.5 md:px-4 md:py-2 font-pixel text-[7.5px] xs:text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] md:shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[30px] md:min-h-[40px] inline-flex items-center justify-center cursor-pointer select-none whitespace-nowrap"
               aria-label="Skip to main website content"
               data-interactive="true"
             >
