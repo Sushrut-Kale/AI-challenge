@@ -149,6 +149,19 @@ export default function ContactSection() {
 
             <div>
               <span className="font-pixel text-[9px] text-neutral-400 block uppercase mb-1">
+                Official Email
+              </span>
+              <a
+                href={`mailto:${contact.email}`}
+                className="font-mono text-xs sm:text-sm text-sky-400 hover:text-sky-300 hover:underline block font-bold break-all"
+                data-interactive="true"
+              >
+                {contact.email}
+              </a>
+            </div>
+
+            <div>
+              <span className="font-pixel text-[9px] text-neutral-400 block uppercase mb-1">
                 Organizing Chapter
               </span>
               <p className="text-xs text-neutral-200 font-medium">

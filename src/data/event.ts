@@ -357,7 +357,7 @@ export const EVENT_DATA: EventData = {
     name: 'Ashish Lenka',
     role: 'Student Coordinator / Contact Person',
     phone: '+91 81170 31180',
-    email: 'agentcraft@mitaoe.ac.in',
+    email: 'astra.cseaiml@mitaoe.ac.in',
     venueAddress: 'MIT Academy of Engineering, Dehu Phata, Alandi, Pune - 412105, Maharashtra, India',
     helpline: 'Ashish Lenka (+91 81170 31180)',
   },
