@@ -123,6 +123,18 @@ export default function Footer() {
                     <span>→</span> Reach Coordinators
                   </a>
                 </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/astra_mitaoe/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-pink-400 transition-colors text-pink-300 inline-flex items-center gap-1.5"
+                    data-interactive="true"
+                    title="Follow @astra_mitaoe on Instagram"
+                  >
+                    <span>📸</span> Instagram (@astra_mitaoe) ↗
+                  </a>
+                </li>
               </ul>
             </div>
 
