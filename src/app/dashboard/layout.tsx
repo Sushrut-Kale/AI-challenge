@@ -11,12 +11,12 @@ import DashboardEmbers from '@/components/dashboard/DashboardEmbers';
 import { useAuth } from '@/context/AuthContext';
 
 const DASHBOARD_NAV = [
-  { label: 'Overview', href: '/dashboard', icon: '/assets/items/compass.png', tag: 'HOME' },
-  { label: 'My Team', href: '/dashboard/team', icon: '/assets/items/totem.png', tag: 'ROSTER' },
-  { label: 'Submissions', href: '/dashboard/submissions', icon: '/assets/items/chest.png', tag: 'DELIVER' },
-  { label: 'Rounds & Results', href: '/dashboard/rounds', icon: '/assets/items/diamond.png', tag: 'ARENA' },
-  { label: 'Announcements', href: '/dashboard/announcements', icon: '/assets/items/torch.png', tag: 'BULLETIN' },
-  { label: 'Profile & Help', href: '/dashboard/profile', icon: '/assets/items/book_quill.png', tag: 'CONFIG' },
+  { label: 'Overview', href: '/dashboard', icon: '/assets/items/compass.png' },
+  { label: 'My Team', href: '/dashboard/team', icon: '/assets/items/totem.png' },
+  { label: 'Submissions', href: '/dashboard/submissions', icon: '/assets/items/chest.png' },
+  { label: 'Rounds & Results', href: '/dashboard/rounds', icon: '/assets/items/diamond.png' },
+  { label: 'Announcements', href: '/dashboard/announcements', icon: '/assets/items/torch.png' },
+  { label: 'Profile & Help', href: '/dashboard/profile', icon: '/assets/items/book_quill.png' },
 ];
 
 export default function DashboardLayout({
@@ -259,36 +259,29 @@ export default function DashboardLayout({
                       playMinecraftClick();
                       setSidebarOpen(false);
                     }}
-                    className={`flex items-center justify-between px-3 py-2.5 border-2 transition-all group ${
+                    className={`flex items-center gap-3 px-3 py-2.5 border-2 transition-all group ${
                       isActive
                         ? 'border-amber-400 bg-[#3b200b] text-amber-300 shadow-[inset_2px_2px_0_#7a471b,0_4px_0_#140902] font-bold translate-x-1'
                         : 'border-[#38210d] bg-[#1c0f05] text-neutral-300 hover:border-amber-500/60 hover:bg-[#2a1608] hover:text-white shadow-[0_3px_0_#100702] active:translate-y-0.5'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-5 h-5 relative shrink-0">
-                        <Image
-                          src={item.icon}
-                          alt={item.label}
-                          fill
-                          className="object-contain"
-                          style={{ imageRendering: 'pixelated' }}
-                        />
-                      </div>
-                      <span className="uppercase tracking-wider text-[10px] sm:text-[11px]">
-                        {item.label}
-                      </span>
+                    <div className="w-5 h-5 relative shrink-0">
+                      <Image
+                        src={item.icon}
+                        alt={item.label}
+                        fill
+                        className="object-contain"
+                        style={{ imageRendering: 'pixelated' }}
+                      />
                     </div>
-
-                    <span
-                      className={`text-[8px] px-1 py-0.5 rounded uppercase font-bold ${
-                        isActive
-                          ? 'bg-amber-400 text-black'
-                          : 'bg-black/50 text-neutral-500 group-hover:text-amber-300'
-                      }`}
-                    >
-                      {item.tag}
+                    <span className="uppercase tracking-wider text-[10px] sm:text-[11px] truncate flex-1">
+                      {item.label}
                     </span>
+                    {isActive && (
+                      <span className="text-amber-400 font-pixel text-[8px] shrink-0">
+                        ▶
+                      </span>
+                    )}
                   </Link>
                 );
               })}
