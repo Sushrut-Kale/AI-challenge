@@ -308,9 +308,15 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
         {/* Supabase Participant Login Modal */}
         <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
 
-        {/* Bottom Subtitle Tag */}
-        <div className="absolute bottom-5 inset-x-0 z-10 flex justify-center pointer-events-none px-4">
-          <div className="border border-amber-500/40 bg-black/80 px-3 py-1 backdrop-blur-sm">
+        {/* Bottom Subtitle Tag — visible during initial scrollytelling frames (<0.65), safely positioned above the wooden seam */}
+        <div
+          className="absolute bottom-8 sm:bottom-10 inset-x-0 z-30 flex justify-center pointer-events-none px-4 transition-all duration-300"
+          style={{
+            opacity: scrollProgress < 0.65 ? 1 : 0,
+            visibility: scrollProgress < 0.65 ? 'visible' : 'hidden',
+          }}
+        >
+          <div className="border border-amber-500/40 bg-black/85 px-3 py-1.5 backdrop-blur-sm shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
             <span className="font-pixel text-[8px] sm:text-[9px] text-amber-300 tracking-widest uppercase">
               NATIONAL AGENTIC AI CHALLENGE • MIT AOE
             </span>
