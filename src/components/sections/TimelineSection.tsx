@@ -21,7 +21,7 @@ export default function TimelineSection() {
     {
       step: '02',
       title: 'ROUND 1: FIRST SCREENING',
-      date: '31st October 2026',
+      date: '2nd November 2026',
       badge: 'ONLINE ROUND',
       variant: 'stone' as const,
       description:

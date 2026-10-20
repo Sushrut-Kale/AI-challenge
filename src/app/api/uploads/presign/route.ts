@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Check deadline
-      const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-10-31T23:59:59+05:30';
+      const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-11-02T23:59:59+05:30';
       const deadline = new Date(deadlineStr);
       if (Date.now() > deadline.getTime()) {
         return NextResponse.json(

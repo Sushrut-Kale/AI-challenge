@@ -17,7 +17,7 @@ export async function GET() {
     const cookieStore = await cookies();
     const demoRole = cookieStore.get('agentcraft_demo_session')?.value;
 
-    const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-10-31T23:59:59+05:30';
+    const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-11-02T23:59:59+05:30';
 
     if (demoRole === 'team' || demoRole === 'admin') {
       const currentSub = getDemoSubmission();
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Strict server-side deadline enforcement
-    const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-10-31T23:59:59+05:30';
+    const deadlineStr = process.env.SUBMISSION_DEADLINE || '2026-11-02T23:59:59+05:30';
     const deadline = new Date(deadlineStr);
     const isPastDeadline = Date.now() > deadline.getTime();
 

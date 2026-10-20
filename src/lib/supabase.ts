@@ -46,7 +46,7 @@ export async function getTeamData(teamId: string = 'AGENT-2026-042'): Promise<Te
       unstopId: data.unstop_id || INITIAL_TEAM_DATA.unstopId,
       status: 'VERIFIED',
       currentRound: 'Round 1: Online Screening',
-      deadline: '31st October 2026, 11:59 PM IST',
+      deadline: '2nd November 2026, 11:59 PM IST',
       college: data.college || INITIAL_TEAM_DATA.college,
       members: data.members || INITIAL_TEAM_DATA.members,
     };

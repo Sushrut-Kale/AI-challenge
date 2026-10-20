@@ -45,13 +45,13 @@ export default function RoundsPage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-sans">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-terminal text-sm">
             <div className="p-3 border border-[#3b220e] bg-[#120a04]">
               <span className="font-pixel text-[8px] text-neutral-400 uppercase block font-bold mb-1">
                 DEADLINE
               </span>
               <span className="font-pixel text-xs text-red-400 font-bold">
-                31st October 2026, 11:59 PM IST
+                2nd November 2026, 11:59 PM IST
               </span>
             </div>
 
@@ -133,11 +133,11 @@ export default function RoundsPage() {
         <h3 className="font-pixel text-xs text-amber-400 uppercase font-bold tracking-wider">
           ROUND 1 SCREENING REVIEW DESK
         </h3>
-        <p className="text-xs text-neutral-300 font-sans leading-relaxed">
+        <p className="text-sm text-neutral-300 font-terminal leading-relaxed">
           Screening evaluation results and the list of shortlisted teams advancing to the MIT AOE Offline Grand Finale will be announced on 5th November 2026.
         </p>
-        <div className="p-3 border border-[#2d1808] bg-[#0d0602] font-mono text-[11px] text-neutral-400">
-          Status: Review pending panel assignment after 31st Oct submission closure.
+        <div className="p-3 border border-[#2d1808] bg-[#0d0602] font-terminal text-sm text-neutral-400">
+          Status: Review pending panel assignment after 2nd Nov submission closure.
         </div>
       </div>
     </div>

@@ -393,7 +393,7 @@ export const EVENT_DATA: EventData = {
     {
       roundNumber: 1,
       name: 'Round 1: Online Screening',
-      date: '31st October 2026',
+      date: '2nd November 2026',
       format: 'Online PPT + Solution + AI Agent Demo',
       description:
         'Teams submit their conceptual multi-agent architecture, SDG problem statement, and an interactive prototype demonstration.',
@@ -420,7 +420,7 @@ export const EVENT_DATA: EventData = {
     {
       phase: 'Phase 2',
       title: 'Round 1: First Screening',
-      date: '31st October 2026',
+      date: '2nd November 2026',
       description: 'Online submission of PPT, architecture solution, and working AI agent prototype demo.',
       status: 'upcoming',
     },
@@ -512,7 +512,7 @@ export const EVENT_DATA: EventData = {
     {
       question: 'What are the competition rounds and dates?',
       answer:
-        'The challenge has two rounds: Round 1 (Online Screening on 31st October 2026) involves submitting an online PPT, solution architecture, and AI agent demo. Shortlisted finalists advance to Round 2 (Offline Grand Finale on 17th November 2026) for in-person presentations at MIT Academy of Engineering, Alandi, Pune.',
+        'The challenge has two rounds: Round 1 (Online Screening on 2nd November 2026) involves submitting an online PPT, solution architecture, and AI agent demo. Shortlisted finalists advance to Round 2 (Offline Grand Finale on 17th November 2026) for in-person presentations at MIT Academy of Engineering, Alandi, Pune.',
     },
     {
       question: 'What are the championship rewards and perks?',

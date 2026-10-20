@@ -44,7 +44,7 @@ export const INITIAL_TEAM_DATA = {
   track: 'SDG Track',
   status: 'VERIFIED',
   currentRound: 'Round 1: Online Screening',
-  deadline: '31st October 2026, 11:59 PM IST',
+  deadline: '2nd November 2026, 11:59 PM IST',
   college: 'Registered Institution',
   members: [
     {
@@ -130,7 +130,7 @@ export const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
     id: 'ann-2',
     title: 'Online Screening Round 1 Deadline Confirmation',
     content:
-      'The deadline to submit project links (GitHub, PPT, Documentation, and 5-6 min Demo Video) is 31st October 2026, 11:59 PM IST. Late submissions will not be evaluated.',
+      'The deadline to submit project links (GitHub, PPT, Documentation, and 5-6 min Demo Video) is 2nd November 2026, 11:59 PM IST. Late submissions will not be evaluated.',
     date: '19th Oct 2026',
     tag: 'CRITICAL',
   },

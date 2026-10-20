@@ -47,7 +47,7 @@ export default function DashboardPage() {
   const { user, team, isAdmin, isLoading: authLoading, logout } = useAuth();
 
   const [submission, setSubmission] = useState<SubmissionData | null>(null);
-  const [deadlineStr, setDeadlineStr] = useState<string>('2026-10-31T23:59:59+05:30');
+  const [deadlineStr, setDeadlineStr] = useState<string>('2026-11-02T23:59:59+05:30');
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
     days: 0,
     hours: 0,
