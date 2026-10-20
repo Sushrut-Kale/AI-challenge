@@ -56,7 +56,10 @@ export async function GET() {
       return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
-    const isAdmin = user.app_metadata?.role === 'admin';
+    const isAdmin =
+      user.app_metadata?.role === 'admin' ||
+      user.user_metadata?.role === 'admin' ||
+      user.email?.toLowerCase() === 'admin@agentcraft.ai';
 
     if (isAdmin) {
       return NextResponse.json({

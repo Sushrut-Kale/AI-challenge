@@ -74,14 +74,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       if (!res.ok) {
         setErrorMessage(data.error || 'Authentication failed. Please verify credentials.');
       } else {
-        setSuccessMessage('ACCESS GRANTED — Loading your portal...');
+        const destination = data.redirect || (data.isAdmin ? '/admin' : '/dashboard');
+        const roleTitle = data.isAdmin ? 'Admin Desk' : 'Team Command Centre';
+        setSuccessMessage(`ACCESS GRANTED — Loading ${roleTitle}...`);
         playMinecraftPop(1.5);
+
         await refreshTeam();
 
         setTimeout(() => {
           onClose();
-          router.push(data.redirect || '/dashboard');
-        }, 600);
+          window.location.href = destination;
+        }, 500);
       }
     } catch (err: unknown) {
       setIsLoading(false);

@@ -81,11 +81,19 @@ export async function getCurrentUser() {
   return user;
 }
 
+export function isAdminUser(user: { app_metadata?: Record<string, unknown>; user_metadata?: Record<string, unknown>; email?: string | null }): boolean {
+  return (
+    user.app_metadata?.role === 'admin' ||
+    user.user_metadata?.role === 'admin' ||
+    user.email?.toLowerCase() === 'admin@agentcraft.ai'
+  );
+}
+
 export async function getCurrentUserTeam() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const isAdmin = user.app_metadata?.role === 'admin';
+  const isAdmin = isAdminUser(user);
   if (isAdmin) return { user, team: null, isAdmin: true as const };
 
   const supabase = getServiceClient();
@@ -96,10 +104,6 @@ export async function getCurrentUserTeam() {
     .single();
 
   return { user, team, isAdmin: false as const };
-}
-
-export function isAdminUser(user: { app_metadata?: Record<string, unknown> }): boolean {
-  return user.app_metadata?.role === 'admin';
 }
 
 // ----- Audit Logging -----

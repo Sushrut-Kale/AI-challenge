@@ -100,9 +100,9 @@ export default function DashboardPage() {
   // Redirect admins to /admin
   useEffect(() => {
     if (!authLoading && isAdmin) {
-      router.push('/admin');
+      window.location.href = '/admin';
     }
-  }, [authLoading, isAdmin, router]);
+  }, [authLoading, isAdmin]);
 
   // Load submission data
   const loadSubmission = useCallback(async () => {

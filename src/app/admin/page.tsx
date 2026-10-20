@@ -91,9 +91,9 @@ export default function AdminPage() {
   // Security check: redirect non-admins
   useEffect(() => {
     if (!authLoading && !isAdmin) {
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     }
-  }, [authLoading, isAdmin, router]);
+  }, [authLoading, isAdmin]);
 
   // Fetch teams
   const fetchTeams = useCallback(async () => {

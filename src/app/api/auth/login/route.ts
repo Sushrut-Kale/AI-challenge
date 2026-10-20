@@ -187,7 +187,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const isAdmin = signInData.user.app_metadata?.role === 'admin';
+    const isAdmin =
+      signInData.user.app_metadata?.role === 'admin' ||
+      signInData.user.user_metadata?.role === 'admin' ||
+      signInData.user.email?.toLowerCase() === 'admin@agentcraft.ai';
     const redirectPath = isAdmin ? '/admin' : '/dashboard';
 
     await logAuditEvent(

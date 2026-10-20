@@ -73,7 +73,10 @@ export async function middleware(request: NextRequest) {
 
   // Admin route protection
   if (pathname.startsWith('/admin')) {
-    const isAdmin = user.app_metadata?.role === 'admin';
+    const isAdmin =
+      user.app_metadata?.role === 'admin' ||
+      user.user_metadata?.role === 'admin' ||
+      user.email?.toLowerCase() === 'admin@agentcraft.ai';
     if (!isAdmin) {
       return NextResponse.redirect(new URL('/dashboard', request.url));
     }
