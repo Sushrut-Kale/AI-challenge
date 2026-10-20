@@ -207,7 +207,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             </div>
           )}
 
-          <div className="pt-2 space-y-2">
+          <div className="pt-2">
             <button
               type="submit"
               disabled={isLoading}
@@ -220,17 +220,6 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 ? 'SEND RESET LINK ➔'
                 : 'LOGIN TO ARENA ➔'}
             </button>
-
-            <div className="pt-1 font-pixel text-[8px]">
-              <a
-                href="/dashboard"
-                onClick={() => onClose()}
-                className="block w-full py-2.5 min-h-[40px] flex items-center justify-center border border-amber-600/70 bg-[#2b1708] text-amber-300 hover:bg-[#3d200b] text-center uppercase cursor-pointer"
-                data-interactive="true"
-              >
-                📊 Direct Team Dashboard Demo
-              </a>
-            </div>
           </div>
 
           {isResetMode && (
