@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import MinecraftButton from '@/components/ui/MinecraftButton';
+import Link from 'next/link';
 import LoginModal from '@/components/auth/LoginModal';
-import { EVENT_DATA } from '@/data/event';
-import { AudioNavbarButton, AudioDrawerControl } from '@/components/ui/MinecraftAudioManager';
+import { useAuth } from '@/context/AuthContext';
+import { AudioNavbarButton, AudioDrawerControl, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 import CursorToggleButton from '@/components/ui/CursorToggleButton';
 
 const NAV_LINKS = [
@@ -28,6 +28,8 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
+  const { isAuthenticated, isAdmin, team, logout } = useAuth();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
@@ -35,6 +37,11 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = async () => {
+    playMinecraftClick();
+    await logout();
+  };
 
   // During intro, render ONLY the compact brand lockup (Official Logo + Event Name)
   if (isIntro) {
@@ -114,8 +121,8 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
           }}
         >
           {/* Brand Logo */}
-          <a
-            href="#hero"
+          <Link
+            href="/"
             className="flex items-center transition-transform hover:scale-105 active:scale-95 outline-none"
             aria-label="AGENTCRAFT Home"
             data-interactive="true"
@@ -128,7 +135,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               priority
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links (High-Contrast Minecraft HUD) */}
           <nav className="hidden lg:flex items-center gap-1 xl:gap-2 px-2.5 py-1 bg-black/65 border border-[#3b2716]/90 rounded-md backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
@@ -148,37 +155,62 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
             ))}
           </nav>
 
-          {/* Right Action: Register CTA & Supabase Login */}
+          {/* Right Action: Register CTA & Team Portal / Dashboard */}
           <div className="flex items-center gap-2">
-            {/* Official Registration on Unstop */}
-            <a
-              href="https://unstop.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-3.5 sm:px-4 py-2 min-h-[40px] font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              data-interactive="true"
-              title="Register on Unstop"
-            >
-              <span>REGISTER ↗</span>
-            </a>
+            {isAuthenticated ? (
+              <>
+                {/* Authenticated Team/Admin Badge & Action */}
+                <Link
+                  href={isAdmin ? '/admin' : '/dashboard'}
+                  className="border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] px-2.5 sm:px-3.5 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 cursor-pointer"
+                  data-interactive="true"
+                >
+                  <span>{isAdmin ? '🛡 ADMIN' : `⚔ ${team?.team_id || 'PORTAL'}`}</span>
+                </Link>
 
-            {/* Supabase Participant Team Login */}
-            <button
-              type="button"
-              onClick={() => setIsLoginOpen(true)}
-              className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-3 sm:px-3.5 py-2 min-h-[40px] font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1 cursor-pointer"
-              data-interactive="true"
-              title="Team Portal Login"
-            >
-              <span>🔑 LOGIN</span>
-            </button>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] px-2 sm:px-2.5 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer"
+                  data-interactive="true"
+                  title="Logout"
+                >
+                  <span>EXIT</span>
+                </button>
+              </>
+            ) : (
+              <>
+                {/* Official Registration on Unstop */}
+                <a
+                  href="https://unstop.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-3 sm:px-4 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 cursor-pointer"
+                  data-interactive="true"
+                  title="Register on Unstop"
+                >
+                  <span>REGISTER ↗</span>
+                </a>
+
+                {/* Participant Team Login */}
+                <button
+                  type="button"
+                  onClick={() => setIsLoginOpen(true)}
+                  className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2.5 sm:px-3 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer"
+                  data-interactive="true"
+                  title="Team Portal Login"
+                >
+                  <span>🔑 LOGIN</span>
+                </button>
+              </>
+            )}
 
             {/* Desktop Top-Right Minecraft Audio Control */}
             <div className="hidden sm:flex items-center">
               <AudioNavbarButton />
             </div>
 
-            {/* Top-Right Custom Cursor Toggle (Very small, icon-only) */}
+            {/* Top-Right Custom Cursor Toggle */}
             <div className="flex items-center">
               <CursorToggleButton />
             </div>
@@ -239,27 +271,53 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               ))}
             </div>
             <div className="mt-3 pt-3 border-t border-black/40 flex flex-col gap-2">
-              <a
-                href="https://unstop.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="mc-shine block w-full text-center border-2 border-[#7a4f05] bg-[#fbbf24] py-3 min-h-[44px] font-pixel text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] cursor-pointer"
-                data-interactive="true"
-              >
-                REGISTER ON UNSTOP ↗
-              </a>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsLoginOpen(true);
-                }}
-                className="block w-full text-center border-2 border-[#3b0764] bg-[#2e0854] py-3 min-h-[44px] font-pixel text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5)] cursor-pointer"
-                data-interactive="true"
-              >
-                🔑 TEAM LOGIN
-              </button>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    href={isAdmin ? '/admin' : '/dashboard'}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center border-2 border-[#065f46] bg-[#047857] py-2.5 font-pixel text-[10px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4)] cursor-pointer"
+                    data-interactive="true"
+                  >
+                    {isAdmin ? '🛡 OPEN ADMIN PANEL' : `⚔ DASHBOARD (${team?.team_id || 'PORTAL'})`}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="block w-full text-center border-2 border-[#7f1d1d] bg-[#991b1b] py-2.5 font-pixel text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5)] cursor-pointer"
+                    data-interactive="true"
+                  >
+                    LOGOUT
+                  </button>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="https://unstop.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="mc-shine block w-full text-center border-2 border-[#7a4f05] bg-[#fbbf24] py-2.5 font-pixel text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] cursor-pointer"
+                    data-interactive="true"
+                  >
+                    REGISTER ON UNSTOP ↗
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setIsLoginOpen(true);
+                    }}
+                    className="block w-full text-center border-2 border-[#3b0764] bg-[#2e0854] py-2.5 font-pixel text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5)] cursor-pointer"
+                    data-interactive="true"
+                  >
+                    🔑 TEAM LOGIN
+                  </button>
+                </>
+              )}
 
               {/* Mobile Drawer Minecraft Audio Settings */}
               <AudioDrawerControl />

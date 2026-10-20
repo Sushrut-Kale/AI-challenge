@@ -6,6 +6,7 @@ import MinecraftHotbar from '@/components/ui/MinecraftHotbar';
 import MinecraftAmbientParticles from '@/components/ui/MinecraftAmbientParticles';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { CursorProvider } from '@/context/CursorContext';
+import { AuthProvider } from '@/context/AuthContext';
 import WorldBackground from '@/components/world/WorldBackground';
 import { AudioProvider } from '@/components/ui/MinecraftAudioManager';
 
@@ -65,15 +66,17 @@ export default function RootLayout({
     <html lang="en" className={`${pixelFont.variable} ${sansFont.variable}`}>
       <body className="min-h-screen bg-[#0d0b09] text-neutral-100 selection:bg-emerald-500 selection:text-black font-sans pb-[calc(6rem+env(safe-area-inset-bottom,0px))] sm:pb-24">
         <ThemeProvider>
-          <CursorProvider>
-            <AudioProvider>
-              <MinecraftCursor />
-              <MinecraftAmbientParticles />
-              <WorldBackground />
-              {children}
-              <MinecraftHotbar />
-            </AudioProvider>
-          </CursorProvider>
+          <AuthProvider>
+            <CursorProvider>
+              <AudioProvider>
+                <MinecraftCursor />
+                <MinecraftAmbientParticles />
+                <WorldBackground />
+                {children}
+                <MinecraftHotbar />
+              </AudioProvider>
+            </CursorProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

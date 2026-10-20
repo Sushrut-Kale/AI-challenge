@@ -1,550 +1,863 @@
+// ============================================================================
+// AGENTCRAFT — Team Participant Portal & Project Submission Dashboard
+// /dashboard
+// ============================================================================
+
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-  playMinecraftClick,
-  playMinecraftPop,
-} from '@/components/ui/MinecraftAudioManager';
-import {
-  INITIAL_TEAM_DATA,
-  INITIAL_SUBMISSION_DATA,
-  OFFICIAL_RESOURCES,
-  INITIAL_ANNOUNCEMENTS,
-  TeamData,
-  SubmissionData,
-} from '@/data/dashboardMock';
-import { getTeamData, getSubmissionData } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
+import Navbar from '@/components/layout/Navbar';
+import { useAuth } from '@/context/AuthContext';
+import { playMinecraftClick, playMinecraftPop } from '@/components/ui/MinecraftAudioManager';
 
-const TACTICAL_TIPS = [
-  'Pro Tip 1: Ensure all Google Drive & YouTube links are set to "Anyone with the link can view" to avoid evaluation penalties!',
-  'Pro Tip 2: Ensure your demo video is at least 5-6 minutes showing autonomous agent task completion, tool invocation, and terminal execution.',
-  'Pro Tip 3: Need urgent coordination? Ashish Lenka (+91 81170 31180) and astra.cseaiml@mitaoe.ac.in are available 24/7.',
-  'Pro Tip 4: Top 40 shortlisted teams qualify for the Offline Grand Finale at MIT AOE Pune on 17 Nov 2026 for ₹1,00,000+ prizes!',
+interface SubmissionData {
+  id?: string;
+  project_name?: string;
+  track?: string;
+  synopsis?: string;
+  repo_url?: string;
+  demo_url?: string;
+  hosted_url?: string;
+  status: 'draft' | 'submitted';
+  submitted_at?: string;
+  files?: Array<{
+    id: string;
+    file_name: string;
+    file_type: string;
+    file_path: string;
+    file_size_bytes: number;
+    mime_type: string;
+  }>;
+}
+
+const TRACK_OPTIONS = [
+  'SDG 3: Good Health & Well-Being',
+  'SDG 4: Quality Education',
+  'SDG 7: Affordable & Clean Energy',
+  'SDG 9: Industry, Innovation & Infrastructure',
+  'SDG 11: Sustainable Cities & Communities',
+  'SDG 13: Climate Action',
+  'Open Agentic AI Innovation',
 ];
 
-export default function DashboardOverviewPage() {
-  const [tipIndex, setTipIndex] = useState(0);
-  const [copiedToken, setCopiedToken] = useState(false);
-  const [activeQuest, setActiveQuest] = useState<number | null>(4);
-  const [teamData, setTeamData] = useState<TeamData>(INITIAL_TEAM_DATA);
-  const [submissionData, setSubmissionData] = useState<SubmissionData>(INITIAL_SUBMISSION_DATA);
+export default function DashboardPage() {
+  const router = useRouter();
+  const { user, team, isAdmin, isLoading: authLoading, logout } = useAuth();
 
-  // Live Countdown to Round 1 Deadline: 31 Oct 2026 23:59:59 IST
-  const [timeLeft, setTimeLeft] = useState({
+  const [submission, setSubmission] = useState<SubmissionData | null>(null);
+  const [deadlineStr, setDeadlineStr] = useState<string>('2026-10-31T23:59:59+05:30');
+  const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  const [isExpired, setIsExpired] = useState(false);
 
+  // Form fields
+  const [projectName, setProjectName] = useState('');
+  const [track, setTrack] = useState(TRACK_OPTIONS[0]);
+  const [synopsis, setSynopsis] = useState('');
+  const [repoUrl, setRepoUrl] = useState('');
+  const [demoUrl, setDemoUrl] = useState('');
+  const [hostedUrl, setHostedUrl] = useState('');
+
+  // File upload state
+  const [uploadedFiles, setUploadedFiles] = useState<
+    Array<{
+      id?: string;
+      file_name: string;
+      file_type: string;
+      file_path: string;
+      file_size_bytes: number;
+      mime_type: string;
+    }>
+  >([]);
+  const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  // Submission saving state
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  // Password change modal state
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordChangeStatus, setPasswordChangeStatus] = useState<string | null>(null);
+
+  const [teamInfo, setTeamInfo] = useState<any>(team);
+
+  // Sync teamInfo with auth team
   useEffect(() => {
-    getTeamData().then(setTeamData).catch(() => {});
+    if (team) setTeamInfo(team);
+  }, [team]);
 
-    try {
-      const cached = localStorage.getItem('agentcraft_team_submission');
-      if (cached) {
-        setSubmissionData(JSON.parse(cached));
-      } else {
-        getSubmissionData().then(setSubmissionData).catch(() => {});
-      }
-    } catch {
-      getSubmissionData().then(setSubmissionData).catch(() => {});
+  // Redirect admins to /admin
+  useEffect(() => {
+    if (!authLoading && isAdmin) {
+      router.push('/admin');
     }
-  }, []);
+  }, [authLoading, isAdmin, router]);
+
+  // Load submission data
+  const loadSubmission = useCallback(async () => {
+    try {
+      const res = await fetch('/api/submissions');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.deadline) setDeadlineStr(data.deadline);
+        if (data.isExpired) setIsExpired(true);
+        if (data.team) setTeamInfo(data.team);
+
+        if (data.submission) {
+          const sub = data.submission;
+          setSubmission(sub);
+          setProjectName(sub.project_name || '');
+          if (sub.track) setTrack(sub.track);
+          setSynopsis(sub.synopsis || '');
+          setRepoUrl(sub.repo_url || '');
+          setDemoUrl(sub.demo_url || '');
+          setHostedUrl(sub.hosted_url || '');
+          if (sub.files) {
+            setUploadedFiles(sub.files);
+          }
+        } else if (data.team?.track || team?.track) {
+          setTrack(data.team?.track || team?.track);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load submission data:', err);
+    }
+  }, [team]);
 
   useEffect(() => {
-    const targetDate = new Date('2026-10-31T23:59:59+05:30').getTime();
+    loadSubmission();
+  }, [loadSubmission]);
 
-    const updateTimer = () => {
-      const now = new Date().getTime();
-      const diff = Math.max(0, targetDate - now);
-      setTimeLeft({
-        days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((diff % (1000 * 60)) / 1000),
-      });
+  // Countdown timer calculation
+  useEffect(() => {
+    const updateCountdown = () => {
+      const target = new Date(deadlineStr).getTime();
+      const now = Date.now();
+      const difference = target - now;
+
+      if (difference <= 0) {
+        setIsExpired(true);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        setTimeLeft({ days, hours, minutes, seconds });
+      }
     };
 
-    updateTimer();
-    const timer = setInterval(updateTimer, 1000);
-    return () => clearInterval(timer);
-  }, []);
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, [deadlineStr]);
 
-  const handleCopyTeamId = () => {
-    playMinecraftPop(1.4);
-    navigator.clipboard?.writeText(teamData.teamId);
-    setCopiedToken(true);
-    setTimeout(() => setCopiedToken(false), 2500);
-  };
+  // File Upload Handler via Cloudflare R2 Presigned URL
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fileType: 'pitch_deck' | 'report') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const handleNextTip = () => {
+    if (submission?.status === 'submitted') {
+      alert('Your submission is finalized and cannot be modified.');
+      return;
+    }
+
+    if (isExpired) {
+      alert('The submission deadline has passed.');
+      return;
+    }
+
+    setErrorMessage(null);
+    setSaveMessage(null);
+    setUploading(true);
+    setUploadProgress(10);
     playMinecraftClick();
-    setTipIndex((prev) => (prev + 1) % TACTICAL_TIPS.length);
+
+    try {
+      // 1. Get presigned upload URL
+      const presignRes = await fetch('/api/uploads/presign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fileName: file.name,
+          mimeType: file.type || 'application/pdf',
+          fileSize: file.size,
+          fileType,
+          submissionId: submission?.id,
+        }),
+      });
+
+      const presignData = await presignRes.json();
+      if (!presignRes.ok) {
+        throw new Error(presignData.error || 'Failed to initialize upload.');
+      }
+
+      setUploadProgress(40);
+
+      // 2. Direct upload to R2 (or mock in development)
+      if (!presignData.isMock) {
+        const uploadRes = await fetch(presignData.uploadUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': file.type || 'application/pdf',
+          },
+          body: file,
+        });
+
+        if (!uploadRes.ok) {
+          throw new Error('Failed to upload file to storage.');
+        }
+      }
+
+      setUploadProgress(100);
+      playMinecraftPop(1.4);
+
+      // 3. Add to uploaded files list
+      const newFileObj = {
+        file_name: file.name,
+        file_type: fileType,
+        file_path: presignData.objectKey,
+        file_size_bytes: file.size,
+        mime_type: file.type || 'application/pdf',
+      };
+
+      setUploadedFiles((prev) => [...prev, newFileObj]);
+      setSaveMessage(`Uploaded ${file.name} successfully! Remember to save your draft.`);
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'File upload failed.');
+    } finally {
+      setUploading(false);
+      setUploadProgress(0);
+      e.target.value = '';
+    }
   };
 
-  const deliverables = [
-    {
-      id: 'github',
-      title: 'GITHUB REPOSITORY',
-      url: submissionData.githubUrl,
-      icon: '/assets/items/diamond.png',
-      openText: 'Open Repo ↗',
-      desc: 'Public or jury-accessible codebase with README, agents logic, and SDG mapping.',
-      btnColor: 'border-sky-500/70 bg-[#0f283d]/80 text-sky-300',
-    },
-    {
-      id: 'ppt',
-      title: 'PRESENTATION PPT',
-      url: submissionData.pptUrl,
-      icon: '/assets/items/golden_apple.png',
-      openText: 'Open Slides ↗',
-      desc: 'Official slide deck following the AGENTCRAFT template.',
-      btnColor: 'border-amber-500/70 bg-[#2d1b08] text-amber-300',
-    },
-    {
-      id: 'doc',
-      title: 'TECH REPORT / DOC',
-      url: submissionData.docUrl,
-      icon: '/assets/items/book_quill.png',
-      openText: 'Open Document ↗',
-      desc: 'Architecture diagram, SDG impact metric, and multi-agent interaction flow.',
-      btnColor: 'border-purple-500/70 bg-[#240e38] text-purple-300',
-    },
-    {
-      id: 'video',
-      title: 'DEMO VIDEO (5-6 MIN)',
-      url: submissionData.demoVideoUrl,
-      icon: '/assets/items/ender_eye.png',
-      openText: 'Watch Video ↗',
-      desc: 'Screen recording (min 5-6 minutes) demonstrating working agent autonomous execution & UI.',
-      btnColor: 'border-emerald-500/70 bg-[#0d2a1d] text-emerald-300',
-    },
-  ];
+  // Download uploaded file handler
+  const handleDownloadFile = async (fileId?: string, filePath?: string, fileName?: string) => {
+    if (!fileId) {
+      alert('This file will be available for download once you save your draft.');
+      return;
+    }
 
-  const readyCount = deliverables.filter((d) => Boolean(d.url?.trim())).length;
+    try {
+      const res = await fetch(`/api/uploads/download?fileId=${fileId}`);
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.error || 'Failed to generate download URL');
+        return;
+      }
+      window.open(data.downloadUrl, '_blank');
+    } catch {
+      alert('Download error occurred.');
+    }
+  };
 
-  const questStages = [
-    { id: 1, title: 'REGISTRATION', desc: 'Team Registered on Unstop', status: 'COMPLETED', xp: '+100 XP', icon: '📜' },
-    { id: 2, title: 'VERIFICATION', desc: 'Roster & College Verified', status: 'COMPLETED', xp: '+150 XP', icon: '🛡️' },
-    { id: 3, title: 'BLUEPRINT', desc: 'Official PPT & Docs Crafted', status: 'COMPLETED', xp: '+200 XP', icon: '⛏️' },
-    { id: 4, title: 'DELIVERABLES', desc: 'Link Submission V1 Dispatched', status: submissionData.status === 'submitted' ? 'SUBMITTED' : 'IN PROGRESS', xp: '+300 XP', icon: '📦' },
-    { id: 5, title: 'SCREENING', desc: 'Online Jury Evaluation', status: 'OCT 31', xp: 'PENDING', icon: '⚖️' },
-    { id: 6, title: 'GRAND FINALE', desc: 'Offline Arena at MIT AOE Pune', status: 'NOV 17', xp: '₹1L POOL', icon: '🏛️' },
-  ];
+  // Save Draft or Final Submit
+  const handleSave = async (isFinal: boolean) => {
+    setIsSaving(true);
+    setErrorMessage(null);
+    setSaveMessage(null);
+    playMinecraftClick();
+
+    try {
+      const res = await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project_name: projectName,
+          track,
+          synopsis,
+          repo_url: repoUrl,
+          demo_url: demoUrl,
+          hosted_url: hostedUrl,
+          files: uploadedFiles,
+          is_final: isFinal,
+        }),
+      });
+
+      const data = await res.json();
+      setIsSaving(false);
+
+      if (!res.ok) {
+        setErrorMessage(data.error || 'Failed to save submission.');
+      } else {
+        playMinecraftPop(1.6);
+        setSaveMessage(data.message || (isFinal ? 'Submission locked and finalized!' : 'Draft saved.'));
+        setShowConfirmModal(false);
+        await loadSubmission();
+      }
+    } catch (err: unknown) {
+      setIsSaving(false);
+      setErrorMessage(err instanceof Error ? err.message : 'Network error while saving.');
+    }
+  };
+
+  // Password change handler
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (newPassword.length < 8) {
+      setPasswordChangeStatus('Password must be at least 8 characters long.');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ new_password: newPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPasswordChangeStatus(data.error || 'Failed to update password.');
+      } else {
+        setPasswordChangeStatus('✓ Password updated successfully!');
+        playMinecraftPop(1.5);
+        setTimeout(() => setShowPasswordModal(false), 1200);
+      }
+    } catch {
+      setPasswordChangeStatus('Failed to update password.');
+    }
+  };
+
+  if (authLoading) {
+    return (
+      <main className="min-h-screen pt-28 pb-16 px-4 flex items-center justify-center">
+        <div className="font-pixel text-xs text-amber-400 animate-pulse">
+          INITIALIZING ARENA PORTAL...
+        </div>
+      </main>
+    );
+  }
+
+  const isSubmitted = submission?.status === 'submitted';
+  const isReadOnly = isSubmitted || isExpired;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-200 relative z-10 pb-12">
-      {/* 1. Live Countdown Ticker Banner */}
-      <div className="p-4 border-3 border-[#5a3818] bg-gradient-to-r from-[#211206] via-[#2d1808] to-[#1c0e04] shadow-[inset_1px_1px_0_#7a4d22,0_8px_24px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 border-2 border-red-500/80 bg-red-950/60 flex items-center justify-center text-xl shrink-0 animate-pulse shadow-[0_0_12px_rgba(239,68,68,0.5)]">
-            ⏳
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-pixel text-[9px] text-red-400 font-bold uppercase tracking-wider">
-                DEADLINE COUNTDOWN
-              </span>
-              <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-            </div>
-            <h2 className="font-pixel text-xs sm:text-sm text-neutral-100 font-bold mt-0.5">
-              ROUND 1 ONLINE SCREENING SUBMISSIONS
-            </h2>
-            <p className="text-[11px] text-neutral-400 font-sans">
-              Strict cut-off: 31st October 2026, 11:59 PM IST
-            </p>
-          </div>
-        </div>
-
-        {/* 4 Digital Pixel Countdown Boxes */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {[
-            { label: 'DAYS', val: timeLeft.days },
-            { label: 'HOURS', val: timeLeft.hours },
-            { label: 'MINS', val: timeLeft.minutes },
-            { label: 'SECS', val: timeLeft.seconds },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="p-2 sm:p-2.5 min-w-[54px] sm:min-w-[62px] border-2 border-[#472c15] bg-[#120a03] text-center shadow-[inset_1px_1px_0_#6b411d,0_3px_0_#0a0502]"
-            >
-              <span className="font-pixel text-sm sm:text-lg text-amber-300 font-bold block tabular-nums">
-                {String(item.val).padStart(2, '0')}
-              </span>
-              <span className="font-pixel text-[7px] text-neutral-400 uppercase tracking-wider block mt-0.5">
-                {item.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 2. Top Banner Card with Enchanted Foil Effect */}
-      <div className="relative p-6 sm:p-8 border-4 border-[#523318] bg-[#1a0f07] shadow-[inset_2px_2px_0_#754822,0_16px_36px_rgba(0,0,0,0.85)] overflow-hidden">
-        {/* Minecraft grid block motif */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-25"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, #381f0b 1px, transparent 1px), linear-gradient(to bottom, #381f0b 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
-          }}
-        />
-
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="px-2.5 py-1 bg-amber-950 border border-amber-500/70 font-pixel text-[9px] text-amber-300 font-bold uppercase tracking-wider">
-                TEAM PORTAL ACTIVE
-              </span>
-              <span className="px-2.5 py-1 bg-emerald-950 border border-emerald-500 font-pixel text-[9px] text-emerald-300 font-bold uppercase tracking-wider mc-enchanted-foil">
-                ✓ REGISTRATION VERIFIED
-              </span>
-              <span className="px-2 py-1 bg-purple-950 border border-purple-500 font-pixel text-[9px] text-purple-300 font-bold uppercase">
-                SDG TRACK ASSIGNED
-              </span>
-            </div>
-
-            <h1 className="font-pixel text-xl sm:text-2xl md:text-3xl text-white tracking-wide font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              WELCOME, {teamData.teamName.toUpperCase()}
-            </h1>
-
-            <p className="text-sm text-neutral-300 font-sans max-w-2xl leading-relaxed">
-              Assigned Track:{' '}
-              <span className="text-amber-300 font-bold">
-                {teamData.track}
-              </span>
-              . Review your deliverables status for the Round 1 Screening evaluation.
-            </p>
-          </div>
-
-          {/* Interactive Official Team ID Box with Copy */}
-          <div className="shrink-0 p-4 border-3 border-[#543519] bg-[#120a04] text-center shadow-[inset_2px_2px_0_#2b1809,0_4px_0_#0a0502]">
-            <span className="font-pixel text-[9px] text-neutral-400 uppercase block font-bold">
-              OFFICIAL TEAM ID
-            </span>
-            <span className="font-pixel text-lg sm:text-xl text-amber-400 font-bold block mt-1 tracking-wider">
-              {teamData.teamId}
-            </span>
-            <span className="text-[10px] text-neutral-400 font-mono mt-0.5 block">
-              Ref: {teamData.unstopId}
-            </span>
-            <button
-              type="button"
-              onClick={handleCopyTeamId}
-              className="mt-2.5 w-full px-3 py-1 border border-amber-600/70 bg-[#2b1708] hover:bg-[#3d200b] font-pixel text-[8px] text-amber-300 uppercase font-bold transition-colors cursor-pointer"
-            >
-              {copiedToken ? '✓ COPIED!' : '📋 COPY ID'}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. Deliverables Showcase with 3D Beveled Item Frames */}
-      <div className="p-6 border-3 border-[#4d2d14] bg-[#160e06] shadow-[inset_2px_2px_0_#663d1c,0_10px_30px_rgba(0,0,0,0.8)] space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#2d1b0d]">
-          <div>
-            <div className="flex items-center gap-2">
-              <h2 className="font-pixel text-sm sm:text-base text-amber-300 uppercase font-bold tracking-wider">
-                PROJECT DELIVERABLES INVENTORY
-              </h2>
-              <span className={`px-2 py-0.5 border font-pixel text-[8px] font-bold ${
-                readyCount === 4
-                  ? 'bg-emerald-950 border-emerald-500 text-emerald-300'
-                  : 'bg-amber-950 border-amber-500 text-amber-300'
-              }`}>
-                {readyCount} / 4 READY
-              </span>
-            </div>
-            <p className="text-xs text-neutral-300 font-sans mt-0.5">
-              Round 1 deliverables are evaluated by the technical jury based on valid shareable URLs.
-            </p>
-          </div>
-
+    <>
+      <Navbar isIntro={false} />
+      <main className="relative z-20 min-h-screen pt-28 sm:pt-36 pb-24 px-3 sm:px-6 max-w-6xl mx-auto">
+      {/* Top Banner Navigation */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
           <Link
-            href="/dashboard/submissions"
-            onClick={() => playMinecraftClick()}
-            className="px-4 py-2.5 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-[10px] text-black font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_#fff,0_4px_0_#382403] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 text-center shrink-0"
+            href="/"
+            className="font-pixel text-[9px] sm:text-[10px] text-amber-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1.5"
           >
-            EDIT / SUBMIT DELIVERABLES ↗
+            ← BACK TO MAIN ARENA
           </Link>
+          <h1 className="font-pixel text-base sm:text-2xl text-amber-300 font-bold uppercase tracking-wider mt-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            TEAM COMMAND CENTER
+          </h1>
         </div>
 
-        {/* 4 Authentic Minecraft Item Frame Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {deliverables.map((item) => {
-            const hasUrl = Boolean(item.url && item.url.trim().length > 0);
-            return (
-              <div
-                key={item.id}
-                className="p-4 border-2 border-[#452912] bg-[#110a04] shadow-[inset_1px_1px_0_#693e1a] flex flex-col justify-between group hover:border-amber-400/70 transition-colors"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-12 h-12 border-3 border-[#583d29] bg-[#2a1d12] shadow-[inset_2px_2px_0_#7a5438,inset_-2px_-2px_0_#1b120a] flex items-center justify-center p-1.5 shrink-0 group-hover:scale-105 transition-transform">
-                      <Image
-                        src={item.icon}
-                        alt={item.title}
-                        width={32}
-                        height={32}
-                        className="w-7 h-7 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                      />
-                    </div>
-                    <span
-                      className={`font-pixel text-[8px] px-2 py-0.5 border font-bold uppercase ${
-                        hasUrl
-                          ? 'bg-emerald-950 text-emerald-300 border-emerald-500'
-                          : 'bg-neutral-900 text-neutral-400 border-neutral-700'
-                      }`}
-                    >
-                      {hasUrl ? 'ACTIVE ✓' : 'PENDING'}
-                    </span>
-                  </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              playMinecraftClick();
+              setShowPasswordModal(true);
+            }}
+            className="border-2 border-[#54381e] bg-[#2b1f16] hover:bg-[#3d2e20] text-amber-200 px-3 py-1.5 font-pixel text-[9px] uppercase tracking-wider"
+          >
+            🔒 CHANGE PASSWORD
+          </button>
+          <button
+            type="button"
+            onClick={logout}
+            className="border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] text-red-100 px-3 py-1.5 font-pixel text-[9px] uppercase tracking-wider"
+          >
+            EXIT
+          </button>
+        </div>
+      </div>
 
-                  <h3 className="font-pixel text-xs text-amber-300 font-bold mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-[11px] text-neutral-400 font-mono truncate bg-[#0a0502] p-1.5 border border-[#2b1708]">
-                    {hasUrl ? item.url : 'No link submitted yet'}
-                  </p>
-                  <div className="mt-2 text-[10px] text-neutral-400 leading-tight">
-                    {item.desc}
-                  </div>
-                </div>
-
-                {hasUrl ? (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => playMinecraftPop(1.2)}
-                    className={`mt-3.5 w-full py-1.5 border font-pixel text-[9px] text-center uppercase font-bold tracking-wider block transition-colors ${item.btnColor}`}
-                  >
-                    {item.openText}
-                  </a>
-                ) : (
-                  <Link
-                    href="/dashboard/submissions"
-                    onClick={() => playMinecraftClick()}
-                    className="mt-3.5 w-full py-1.5 border border-amber-600/60 bg-[#251508] hover:bg-[#341d0b] font-pixel text-[9px] text-amber-300 text-center uppercase font-bold tracking-wider block transition-colors"
-                  >
-                    + Submit Link ↗
-                  </Link>
-                )}
+      {/* Grid: Left Column (Team Info & Countdown) / Right Column (Submission Form) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column: Team Identity & Submission Status */}
+        <div className="space-y-6">
+          {/* Team Identity Card */}
+          <div className="p-5 bg-[#1a140f] border-4 border-[#3d2e20] shadow-[inset_2px_2px_0_#5a3d24,inset_-2px_-2px_0_#0d0a08,0_12px_32px_rgba(0,0,0,0.8)]">
+            <div className="flex items-center gap-3 pb-3 border-b border-[#3b2716]">
+              <div className="relative w-10 h-10 shrink-0">
+                <Image
+                  src="/assets/items/diamond.png"
+                  alt="Diamond"
+                  fill
+                  className="object-contain"
+                  style={{ imageRendering: 'pixelated' }}
+                />
               </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 4. Interactive AGENTCRAFT Quest Progression Map */}
-      <div className="p-6 border-3 border-[#4a2e16] bg-[#170e06] shadow-[inset_2px_2px_0_#683f1d,0_8px_24px_rgba(0,0,0,0.7)] space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#2b1809]">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🗺️</span>
-            <h2 className="font-pixel text-sm sm:text-base text-amber-300 uppercase font-bold tracking-wider">
-              AGENTCRAFT CAMPAIGN QUESTLINE
-            </h2>
-          </div>
-          <span className="font-pixel text-[9px] text-neutral-400">
-            CURRENT PROGRESS: {readyCount === 4 ? 'STAGE 4 OF 6' : 'STAGE 3 OF 6'}
-          </span>
-        </div>
-
-        {/* 6 Stage Quest Roadmap */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5">
-          {questStages.map((st) => {
-            const isSelected = activeQuest === st.id;
-            return (
-              <button
-                key={st.id}
-                type="button"
-                onClick={() => {
-                  playMinecraftClick();
-                  setActiveQuest(st.id);
-                }}
-                className={`p-3 border-2 text-left flex flex-col justify-between transition-all cursor-pointer ${
-                  isSelected
-                    ? 'border-amber-400 bg-[#341c09] shadow-[inset_1px_1px_0_#784419,0_4px_0_#140802] -translate-y-1'
-                    : 'border-[#38200d] bg-[#140b04] hover:bg-[#201106] hover:border-amber-600/60 shadow-[0_2px_0_#0a0502]'
-                }`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-base">{st.icon}</span>
-                    <span
-                      className={`font-pixel text-[7px] px-1.5 py-0.5 rounded font-bold uppercase ${
-                        st.status === 'COMPLETED'
-                          ? 'bg-emerald-950 text-emerald-300 border border-emerald-600'
-                          : st.status === 'SUBMITTED'
-                          ? 'bg-amber-950 text-amber-300 border border-amber-600'
-                          : 'bg-neutral-900 text-neutral-400 border border-neutral-700'
-                      }`}
-                    >
-                      {st.status}
-                    </span>
-                  </div>
-                  <h4 className="font-pixel text-[10px] text-white font-bold leading-tight">
-                    {st.title}
-                  </h4>
-                  <p className="text-[10px] text-neutral-400 font-sans mt-0.5 leading-snug line-clamp-2">
-                    {st.desc}
-                  </p>
-                </div>
-
-                <div className="mt-3 pt-1.5 border-t border-[#291708] flex items-center justify-between">
-                  <span className="font-pixel text-[8px] text-amber-400 font-bold">
-                    {st.xp}
-                  </span>
-                  <span className="text-[9px] text-neutral-500">
-                    {isSelected ? '▼' : '›'}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 5. Mascot Tactical Advisor Widget */}
-      <div className="p-4 sm:p-5 border-3 border-[#4d2d14] bg-[#191007] shadow-[inset_2px_2px_0_#693e1a,0_8px_20px_rgba(0,0,0,0.8)] flex flex-col md:flex-row items-center gap-4">
-        {/* Mascot Avatar */}
-        <div className="relative w-16 h-16 shrink-0 border-2 border-amber-500/70 bg-[#251508] p-1 shadow-inner group">
-          <Image
-            src="/assets/agentcraft_mascot.png"
-            alt="Agentcraft Assistant"
-            fill
-            className="object-contain p-1 group-hover:scale-105 transition-transform"
-          />
-        </div>
-
-        {/* Speech Bubble */}
-        <div className="flex-1 bg-[#120a04] p-3 sm:p-4 border-2 border-[#3d240e] shadow-inner relative">
-          <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="font-pixel text-[9px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-              <span>🤖</span>
-              <span>AGENTCRAFT TACTICAL ADVISOR</span>
-            </span>
-            <span className="font-pixel text-[8px] text-neutral-400">
-              TIP {tipIndex + 1} OF {TACTICAL_TIPS.length}
-            </span>
-          </div>
-
-          <p className="text-xs sm:text-sm text-neutral-200 font-sans leading-relaxed">
-            {TACTICAL_TIPS[tipIndex]}
-          </p>
-        </div>
-
-        {/* Cycle Tip Button */}
-        <button
-          type="button"
-          onClick={handleNextTip}
-          className="shrink-0 px-3.5 py-2.5 border-2 border-amber-600 bg-[#2b1708] hover:bg-[#3d200b] font-pixel text-[9px] text-amber-300 uppercase font-bold tracking-wider shadow-[0_2px_0_#140802] transition-colors cursor-pointer"
-        >
-          NEXT TIP ➜
-        </button>
-      </div>
-
-      {/* 6. Official Submission Resources & Templates */}
-      <div className="space-y-3">
-        <h2 className="font-pixel text-sm sm:text-base text-amber-300 uppercase font-bold tracking-wider">
-          OFFICIAL SUBMISSION RESOURCES & TEMPLATES
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {OFFICIAL_RESOURCES.map((res) => (
-            <div
-              key={res.title}
-              className="p-4 border-2 border-[#472d15] bg-[#191007] shadow-sm flex flex-col justify-between hover:-translate-y-0.5 transition-transform"
-            >
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-2xl">{res.icon}</span>
-                  <span className="font-pixel text-[8px] px-2 py-0.5 bg-amber-950 text-amber-300 border border-amber-600 font-bold uppercase">
-                    {res.badge}
-                  </span>
-                </div>
-                <h3 className="font-pixel text-xs text-white font-bold mb-1">
-                  {res.title}
-                </h3>
-                <p className="text-xs text-neutral-300 leading-relaxed font-sans">
-                  {res.description}
-                </p>
+                <span className="font-pixel text-[9px] text-emerald-400 font-bold block">
+                  {(teamInfo || team)?.team_id || 'AC-2026-0001'}
+                </span>
+                <h2 className="font-pixel text-xs sm:text-sm text-neutral-100 font-bold">
+                  {(teamInfo || team)?.team_name || 'AgentCraft Team'}
+                </h2>
               </div>
-
-              <a
-                href={res.url}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => playMinecraftPop(1.1)}
-                className="mt-4 inline-flex items-center gap-1.5 text-xs font-pixel text-amber-400 hover:text-amber-200 underline font-bold"
-              >
-                <span>Access Template</span>
-                <span>↗</span>
-              </a>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* 7. Recent Announcements Feed */}
-      <div className="p-5 border-2 border-[#3d240f] bg-[#140b04]">
-        <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#291708]">
-          <h2 className="font-pixel text-sm text-neutral-200 uppercase font-bold tracking-wider flex items-center gap-2">
-            <span>📢</span>
-            <span>RECENT ORGANIZER ANNOUNCEMENTS</span>
-          </h2>
-          <Link
-            href="/dashboard/announcements"
-            onClick={() => playMinecraftClick()}
-            className="text-[10px] font-pixel text-amber-400 hover:underline"
-          >
-            View All ({INITIAL_ANNOUNCEMENTS.length}) →
-          </Link>
-        </div>
-
-        <div className="space-y-2.5">
-          {INITIAL_ANNOUNCEMENTS.slice(0, 2).map((item) => (
-            <div
-              key={item.id}
-              className="p-3 border border-[#2b1707] bg-[#190d05] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
-            >
+            <div className="mt-4 space-y-2.5 font-sans text-xs">
               <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <span
-                    className={`font-pixel text-[8px] px-1.5 py-0.5 rounded ${
-                      item.tag === 'CRITICAL'
-                        ? 'bg-red-950 text-red-300 border border-red-600'
-                        : 'bg-amber-950 text-amber-300 border border-amber-600'
-                    }`}
-                  >
-                    {item.tag}
-                  </span>
-                  <span className="font-pixel text-neutral-400 text-[9px]">{item.date}</span>
-                </div>
-                <h4 className="font-pixel text-xs text-neutral-100 font-bold">{item.title}</h4>
-                <p className="text-xs text-neutral-300 font-sans mt-0.5 leading-snug">
-                  {item.content}
-                </p>
+                <span className="font-pixel text-[8px] text-amber-400 block uppercase">LEADER:</span>
+                <span className="text-neutral-200 font-medium">
+                  {(teamInfo || team)?.leader_name || 'Team Leader'} ({(teamInfo || team)?.leader_email || 'leader@agentcraft.ai'})
+                </span>
               </div>
 
-              {item.link && (
-                <a
-                  href={item.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  onClick={() => playMinecraftClick()}
-                  className="shrink-0 px-3 py-1.5 border border-amber-500/70 bg-[#2b1708] font-pixel text-[9px] text-amber-300 hover:bg-[#3d200b] uppercase font-bold whitespace-nowrap text-center"
-                >
-                  {item.linkText || 'Details ↗'}
-                </a>
+              {((teamInfo || team)?.college) && (
+                <div>
+                  <span className="font-pixel text-[8px] text-amber-400 block uppercase">COLLEGE / INSTITUTE:</span>
+                  <span className="text-neutral-300">{(teamInfo || team).college}</span>
+                </div>
+              )}
+
+              <div>
+                <span className="font-pixel text-[8px] text-amber-400 block uppercase">TRACK:</span>
+                <span className="text-amber-200 font-semibold">{(teamInfo || team)?.track || track}</span>
+              </div>
+
+              {(teamInfo || team)?.members && (teamInfo || team).members.length > 0 && (
+                <div className="pt-2 border-t border-[#2e2116]">
+                  <span className="font-pixel text-[8px] text-amber-400 block uppercase mb-1">
+                    TEAM ROSTER ({(teamInfo || team).members.length}):
+                  </span>
+                  <ul className="space-y-1">
+                    {(teamInfo || team).members.map((m: any, idx: number) => (
+                      <li key={m.id || idx} className="text-neutral-300 text-[11px] flex items-center justify-between">
+                        <span>• {m.name}</span>
+                        <span className="text-neutral-500 font-pixel text-[7px] uppercase">{m.role || 'Member'}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
-          ))}
+          </div>
+
+          {/* Submission Status & Deadline Timer Card */}
+          <div className="p-5 bg-[#1a140f] border-4 border-[#3d2e20] shadow-[inset_2px_2px_0_#5a3d24,inset_-2px_-2px_0_#0d0a08,0_12px_32px_rgba(0,0,0,0.8)]">
+            <h3 className="font-pixel text-[11px] text-amber-300 uppercase font-bold tracking-wider mb-3">
+              ROUND 1 DEADLINE
+            </h3>
+
+            {/* Status Badge */}
+            <div className="mb-4">
+              {isSubmitted ? (
+                <div className="p-2.5 bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-pixel text-[9px] uppercase tracking-wider text-center">
+                  ✓ FINAL SUBMISSION LOCKED
+                </div>
+              ) : isExpired ? (
+                <div className="p-2.5 bg-red-950/80 border-2 border-red-600 text-red-200 font-pixel text-[9px] uppercase tracking-wider text-center">
+                  ✕ DEADLINE HAS PASSED
+                </div>
+              ) : (
+                <div className="p-2.5 bg-amber-950/80 border-2 border-amber-500 text-amber-200 font-pixel text-[9px] uppercase tracking-wider text-center">
+                  ⏳ SUBMISSION IN DRAFT
+                </div>
+              )}
+            </div>
+
+            {/* Countdown Grid */}
+            <div className="grid grid-cols-4 gap-2 text-center">
+              <div className="p-2 bg-black/60 border border-[#3b2716]">
+                <span className="font-pixel text-base sm:text-lg text-amber-400 font-bold block">{timeLeft.days}</span>
+                <span className="font-pixel text-[7px] text-neutral-400 uppercase">DAYS</span>
+              </div>
+              <div className="p-2 bg-black/60 border border-[#3b2716]">
+                <span className="font-pixel text-base sm:text-lg text-amber-400 font-bold block">{timeLeft.hours}</span>
+                <span className="font-pixel text-[7px] text-neutral-400 uppercase">HRS</span>
+              </div>
+              <div className="p-2 bg-black/60 border border-[#3b2716]">
+                <span className="font-pixel text-base sm:text-lg text-amber-400 font-bold block">{timeLeft.minutes}</span>
+                <span className="font-pixel text-[7px] text-neutral-400 uppercase">MIN</span>
+              </div>
+              <div className="p-2 bg-black/60 border border-[#3b2716]">
+                <span className="font-pixel text-base sm:text-lg text-amber-400 font-bold block">{timeLeft.seconds}</span>
+                <span className="font-pixel text-[7px] text-neutral-400 uppercase">SEC</span>
+              </div>
+            </div>
+
+            {submission?.submitted_at && (
+              <p className="mt-4 text-center font-pixel text-[8px] text-neutral-400">
+                FINALIZED ON:{' '}
+                <span className="text-emerald-400">
+                  {new Date(submission.submitted_at).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Right Column: Project Submission Form */}
+        <div className="lg:col-span-2">
+          <div className="p-6 sm:p-8 bg-[#1a140f] border-4 border-[#3d2e20] shadow-[inset_2px_2px_0_#5a3d24,inset_-2px_-2px_0_#0d0a08,0_16px_48px_rgba(0,0,0,0.9)]">
+            <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#3b2716]">
+              <div>
+                <h2 className="font-pixel text-sm sm:text-base text-amber-300 font-bold uppercase tracking-wider">
+                  PROJECT SUBMISSION DOSSIER
+                </h2>
+                <p className="font-sans text-xs text-neutral-400 mt-1">
+                  {isSubmitted
+                    ? 'Your submission is locked for evaluation by the jury panel.'
+                    : 'Fill in your project architecture, code repository, video demonstration, and slide deck.'}
+                </p>
+              </div>
+              <div className="relative w-8 h-8 shrink-0">
+                <Image
+                  src="/assets/items/book_quill.png"
+                  alt="Book and Quill"
+                  fill
+                  className="object-contain"
+                  style={{ imageRendering: 'pixelated' }}
+                />
+              </div>
+            </div>
+
+            {/* Notification Alerts */}
+            {errorMessage && (
+              <div className="mb-4 p-3.5 bg-red-950/80 border-2 border-red-600 text-red-200 font-sans text-xs flex items-center gap-2">
+                <span>⚠</span>
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {saveMessage && (
+              <div className="mb-4 p-3.5 bg-emerald-950/80 border-2 border-emerald-500 text-emerald-200 font-sans text-xs flex items-center gap-2">
+                <span>✓</span>
+                <span>{saveMessage}</span>
+              </div>
+            )}
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setShowConfirmModal(true);
+              }}
+              className="space-y-5"
+            >
+              {/* Project Title */}
+              <div>
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
+                  PROJECT TITLE *
+                </label>
+                <input
+                  type="text"
+                  required
+                  disabled={isReadOnly}
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                  placeholder="e.g. EcoAgent — Autonomous Precision Agriculture Drone Fleet"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                />
+              </div>
+
+              {/* Problem Statement Track */}
+              <div>
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
+                  PROBLEM TRACK *
+                </label>
+                <select
+                  disabled={isReadOnly}
+                  value={track}
+                  onChange={(e) => setTrack(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                >
+                  {TRACK_OPTIONS.map((opt) => (
+                    <option key={opt} value={opt} className="bg-[#1a140f] text-neutral-200">
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Project Abstract / Synopsis */}
+              <div>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="font-pixel text-[9px] text-amber-400 uppercase tracking-widest">
+                    PROJECT SYNOPSIS & ARCHITECTURE *
+                  </label>
+                  <span className="font-pixel text-[8px] text-neutral-500">
+                    {synopsis.length} / 50 min chars
+                  </span>
+                </div>
+                <textarea
+                  rows={4}
+                  required
+                  disabled={isReadOnly}
+                  value={synopsis}
+                  onChange={(e) => setSynopsis(e.target.value)}
+                  placeholder="Explain your Agentic AI design, autonomous tool use, reasoning loops, models used, and the SDG impact achieved..."
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70 leading-relaxed"
+                />
+              </div>
+
+              {/* GitHub / GitLab Repository URL */}
+              <div>
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
+                  CODE REPOSITORY URL (GITHUB / GITLAB) *
+                </label>
+                <input
+                  type="url"
+                  required
+                  disabled={isReadOnly}
+                  value={repoUrl}
+                  onChange={(e) => setRepoUrl(e.target.value)}
+                  placeholder="https://github.com/your-team/agentcraft-project"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                />
+              </div>
+
+              {/* Video Demo Link */}
+              <div>
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
+                  DEMO VIDEO URL (YOUTUBE / LOOM / DRIVE) *
+                </label>
+                <input
+                  type="url"
+                  required
+                  disabled={isReadOnly}
+                  value={demoUrl}
+                  onChange={(e) => setDemoUrl(e.target.value)}
+                  placeholder="https://youtu.be/... or https://www.loom.com/share/..."
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                />
+              </div>
+
+              {/* Live Deployment (Optional) */}
+              <div>
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
+                  LIVE DEPLOYMENT URL (OPTIONAL)
+                </label>
+                <input
+                  type="url"
+                  disabled={isReadOnly}
+                  value={hostedUrl}
+                  onChange={(e) => setHostedUrl(e.target.value)}
+                  placeholder="https://your-agent-app.vercel.app"
+                  className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner disabled:opacity-70"
+                />
+              </div>
+
+              {/* Cloudflare R2 File Uploads */}
+              <div className="pt-2 border-t border-[#3b2716]">
+                <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-2">
+                  ATTACHMENTS: PITCH DECK & ARCHITECTURE REPORT (PDF, PPTX)
+                </label>
+
+                {!isReadOnly && (
+                  <div className="flex flex-wrap gap-3 mb-3">
+                    <label className="cursor-pointer border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] text-emerald-100 px-3.5 py-2 font-pixel text-[9px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+                      <span>📄 UPLOAD PITCH DECK (PDF / PPTX)</span>
+                      <input
+                        type="file"
+                        accept=".pdf,.ppt,.pptx"
+                        className="hidden"
+                        onChange={(e) => handleFileUpload(e, 'pitch_deck')}
+                        disabled={uploading}
+                      />
+                    </label>
+
+                    <label className="cursor-pointer border-2 border-[#54381e] bg-[#2b1f16] hover:bg-[#3d2e20] text-amber-200 px-3.5 py-2 font-pixel text-[9px] font-bold uppercase tracking-wider inline-flex items-center gap-1.5">
+                      <span>📑 UPLOAD REPORT / DOCS</span>
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        className="hidden"
+                        onChange={(e) => handleFileUpload(e, 'report')}
+                        disabled={uploading}
+                      />
+                    </label>
+                  </div>
+                )}
+
+                {/* Upload Progress Bar */}
+                {uploading && (
+                  <div className="mb-3 p-3 bg-black/60 border border-emerald-600">
+                    <div className="flex justify-between font-pixel text-[8px] text-emerald-400 mb-1">
+                      <span>TRANSMITTING FILE TO R2 VAULT...</span>
+                      <span>{uploadProgress}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-[#1a140f] border border-[#3b2716]">
+                      <div
+                        className="h-full bg-emerald-500 transition-all duration-300"
+                        style={{ width: `${uploadProgress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Uploaded Files Table */}
+                {uploadedFiles.length > 0 ? (
+                  <div className="border border-[#3b2716] bg-black/40 divide-y divide-[#2e2116]">
+                    {uploadedFiles.map((f, i) => (
+                      <div key={f.id || i} className="p-3 flex items-center justify-between gap-3 text-xs">
+                        <div className="flex items-center gap-2 overflow-hidden">
+                          <span className="font-pixel text-[8px] text-amber-400 uppercase shrink-0">
+                            [{f.file_type.replace('_', ' ')}]
+                          </span>
+                          <span className="text-neutral-200 truncate">{f.file_name}</span>
+                          <span className="text-neutral-500 text-[10px] shrink-0">
+                            ({Math.round((f.file_size_bytes || 0) / 1024)} KB)
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => handleDownloadFile(f.id, f.file_path, f.file_name)}
+                            className="font-pixel text-[8px] text-emerald-400 hover:underline px-2 py-1"
+                          >
+                            DOWNLOAD ⇩
+                          </button>
+                          {!isReadOnly && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setUploadedFiles(uploadedFiles.filter((_, idx) => idx !== i));
+                              }}
+                              className="font-pixel text-[8px] text-red-400 hover:underline px-1 py-1"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="font-sans text-xs text-neutral-500 italic">No files uploaded yet.</p>
+                )}
+              </div>
+
+              {/* Form Action Buttons */}
+              {!isReadOnly ? (
+                <div className="pt-4 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    disabled={isSaving}
+                    onClick={() => handleSave(false)}
+                    className="flex-1 py-3 bg-[#2b1f16] hover:bg-[#3d2e20] border-2 border-[#54381e] font-pixel text-xs text-amber-300 font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.1),inset_-2px_-2px_0_rgba(0,0,0,0.4)] disabled:opacity-50"
+                  >
+                    {isSaving ? 'SAVING...' : '💾 SAVE DRAFT'}
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="flex-1 py-3 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#78350f] font-pixel text-xs text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#451a03] hover:-translate-y-0.5 active:translate-y-0.5 transition-transform disabled:opacity-50"
+                  >
+                    🚀 FINAL SUBMISSION
+                  </button>
+                </div>
+              ) : (
+                <div className="pt-4 p-4 bg-black/60 border border-[#3b2716] text-center">
+                  <p className="font-pixel text-xs text-emerald-400 font-bold uppercase">
+                    DOSSIER LOCKED & RECORDED
+                  </p>
+                  <p className="font-sans text-xs text-neutral-400 mt-1">
+                    Your project is in the screening queue. Announcements will follow on the schedule.
+                  </p>
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Confirmation Modal for Final Submission */}
+      {showConfirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="w-full max-w-md p-6 bg-[#1a140f] border-4 border-amber-600 shadow-[0_24px_64px_rgba(0,0,0,0.95)]">
+            <h3 className="font-pixel text-sm text-amber-300 font-bold uppercase mb-2">
+              LOCK FINAL SUBMISSION?
+            </h3>
+            <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
+              Are you sure you want to finalize? Once locked,{' '}
+              <strong className="text-amber-400">no further edits or file uploads will be permitted</strong>. Ensure all
+              repo links, demo videos, and slide decks are accurate.
+            </p>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setShowConfirmModal(false)}
+                className="flex-1 py-2.5 bg-[#2b1f16] border-2 border-[#54381e] text-neutral-300 font-pixel text-xs uppercase"
+              >
+                CANCEL
+              </button>
+              <button
+                type="button"
+                disabled={isSaving}
+                onClick={() => handleSave(true)}
+                className="flex-1 py-2.5 bg-[#059669] hover:bg-[#047857] border-2 border-[#064e3b] text-emerald-100 font-pixel text-xs uppercase font-bold"
+              >
+                {isSaving ? 'LOCKING...' : 'YES, LOCK & SUBMIT'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Password Change Modal */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div className="w-full max-w-sm p-6 bg-[#1a140f] border-4 border-[#3d2e20] shadow-[0_24px_64px_rgba(0,0,0,0.95)]">
+            <h3 className="font-pixel text-xs sm:text-sm text-amber-300 font-bold uppercase mb-2">
+              UPDATE ACCESS PASSWORD
+            </h3>
+            {passwordChangeStatus && (
+              <p className="text-xs text-amber-200 font-sans mb-3">{passwordChangeStatus}</p>
+            )}
+            <form onSubmit={handlePasswordChange} className="space-y-4">
+              <div>
+                <label className="block font-pixel text-[8px] text-amber-400 uppercase mb-1">
+                  NEW PASSWORD (MIN 8 CHARACTERS)
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-3 py-2 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 font-sans text-xs outline-none focus:border-amber-400"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowPasswordModal(false)}
+                  className="flex-1 py-2 bg-[#2b1f16] border border-[#54381e] text-neutral-300 font-pixel text-[9px] uppercase"
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-2 bg-[#fbbf24] border border-[#78350f] text-[#1a1206] font-pixel text-[9px] uppercase font-bold"
+                >
+                  SAVE PASSWORD
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </main>
+    </>
   );
 }

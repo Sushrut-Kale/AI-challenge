@@ -23,27 +23,12 @@ html {
   -webkit-text-size-adjust: 100%;
   overflow-x: clip;
 }
-
-/* Semantic cursor defaults for interactive elements on touch, fallback or reduced motion */
+/* Semantic cursor defaults for interactive elements */
 a, button, [role="button"], input[type="submit"], input[type="button"], input[type="reset"], label, summary, .cursor-pointer {
   cursor: pointer;
 }
 
-/* Custom Minecraft Hammer Cursor: hide default OS pointer on fine pointer devices only when custom cursor is active */
-@media (pointer: fine) {
-  html.custom-cursor-active,
-  html.custom-cursor-active body,
-  html.custom-cursor-active *:not(input):not(textarea):not(select):not([contenteditable="true"]) {
-    cursor: none !important;
-  }
-
-  /* When hovering text inputs, restore standard text cursor so caret & selection are fully visible */
-  html.custom-cursor-active input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
-  html.custom-cursor-active textarea,
-  html.custom-cursor-active [contenteditable="true"] {
-    cursor: text !important;
-  }
-}
+/* Default pointer behavior enabled: normal OS cursor is visible, character acts as a follower companion */
 
 body {
   width: 100%;
