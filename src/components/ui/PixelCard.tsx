@@ -28,23 +28,38 @@ export default function PixelCard({
   children,
   variant = 'stone',
   className = '',
-  interactive = true,
+  interactive,
   onClick,
   accentBarColor,
   headerIcon,
   title,
   badge,
 }: PixelCardProps) {
+  const isActionable = Boolean(onClick);
+  const isInteractive = interactive !== undefined ? interactive : isActionable;
+
   return (
     <div
       onClick={onClick}
+      role={isActionable ? 'button' : undefined}
+      tabIndex={isActionable ? 0 : undefined}
+      onKeyDown={
+        isActionable
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClick?.();
+              }
+            }
+          : undefined
+      }
       className={`
         mc-card relative p-5 sm:p-6
         ${variantStyles[variant]}
-        ${interactive ? 'cursor-pointer hover:-translate-y-1.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-all duration-200' : ''}
+        ${isInteractive ? 'cursor-pointer hover:-translate-y-1.5 hover:shadow-[0_12px_24px_rgba(0,0,0,0.7)] transition-all duration-200' : ''}
         ${className}
       `.trim()}
-      data-interactive={interactive ? 'true' : undefined}
+      data-interactive={isInteractive ? 'true' : undefined}
     >
       {/* Decorative Pixel Corner Accents */}
       <div className="pointer-events-none absolute top-1 left-1 w-1.5 h-1.5 bg-white/30" />

@@ -185,7 +185,7 @@ export default function IntroScene({ scrollProgress }: IntroSceneProps) {
     <Canvas
       camera={{ position: [0, 4.2, 16], fov: 46 }}
       gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
-      style={{ width: '100%', height: '100%', background: '#0b0908' }}
+      style={{ width: '100%', height: '100%', background: '#0b0908', pointerEvents: 'none' }}
     >
       <LibraryCamera scrollProgress={scrollProgress} />
 

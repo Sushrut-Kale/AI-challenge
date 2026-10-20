@@ -109,7 +109,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
       {/* Sticky Viewport Container */}
       <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#0d0b09] select-none">
         {/* 3D Voxel Library Canvas driven directly by scrollProgress */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none">
           <IntroScene scrollProgress={scrollProgress} />
         </div>
 
@@ -121,11 +121,11 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
 
         {/* Top-Right Discreet Skip Control */}
         {scrollProgress < 0.75 && (
-          <div className="fixed top-4 right-4 z-[70] pointer-events-auto animate-in fade-in duration-300">
+          <div className="fixed top-4 right-16 sm:right-18 z-[70] pointer-events-auto animate-in fade-in duration-300">
             <button
               type="button"
               onClick={handleSkipToContent}
-              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-3.5 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
+              className="border-2 border-[#7a4f05] bg-[#fbbf24] px-4 py-2 font-pixel text-[8px] sm:text-[9px] uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[40px] inline-flex items-center justify-center cursor-pointer select-none"
               aria-label="Skip to main website content"
               data-interactive="true"
             >
@@ -280,7 +280,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
                 href="https://unstop.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-4 sm:px-6 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform"
+                className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-4 sm:px-6 py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[44px] min-w-[130px] inline-flex items-center justify-center cursor-pointer select-none"
                 data-interactive="true"
               >
                 REGISTER ↗
@@ -288,7 +288,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-3.5 sm:px-5 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all"
+                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-4 sm:px-5 py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all min-h-[44px] min-w-[120px] inline-flex items-center justify-center cursor-pointer select-none"
                 data-interactive="true"
               >
                 🔑 LOGIN
@@ -296,7 +296,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
               <button
                 type="button"
                 onClick={handleSkipToContent}
-                className="border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-3.5 sm:px-5 py-2 sm:py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-all"
+                className="border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-4 sm:px-5 py-2.5 font-pixel text-[9px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-all min-h-[44px] min-w-[170px] inline-flex items-center justify-center cursor-pointer select-none"
                 data-interactive="true"
               >
                 EXPLORE CHALLENGE ↓

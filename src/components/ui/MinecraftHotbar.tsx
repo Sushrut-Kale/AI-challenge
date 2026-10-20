@@ -179,15 +179,16 @@ export default function MinecraftHotbar() {
 
   return (
     <aside
-      className="fixed bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-auto select-none transition-all duration-200"
+      className="fixed bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 z-40 flex flex-col items-center pointer-events-none select-none transition-all duration-200"
       aria-label="Minecraft Hotbar Quick Navigation"
     >
       {/* Mobile Collapse / Expand Badge */}
       <button
         type="button"
         onClick={() => setIsCollapsed((prev) => !prev)}
-        className="mb-1 px-2 py-0.5 border border-[#3d2e20] bg-black/80 font-pixel text-[7px] text-amber-300 uppercase tracking-widest hover:text-white transition-colors backdrop-blur-sm"
+        className="pointer-events-auto mb-1 px-2.5 py-1 min-h-[26px] border border-[#3d2e20] bg-black/80 font-pixel text-[7px] text-amber-300 uppercase tracking-widest hover:text-white transition-colors backdrop-blur-sm cursor-pointer"
         aria-label={isCollapsed ? 'Show hotbar' : 'Hide hotbar'}
+        data-interactive="true"
       >
         {isCollapsed ? '▲ SHOW HOTBAR' : '▼ HIDE'}
       </button>
@@ -215,20 +216,23 @@ export default function MinecraftHotbar() {
       )}
 
       {/* Minecraft Experience Bar (XP Bar) */}
-      <div className="w-[280px] xs:w-[310px] sm:w-[420px] mb-1 flex flex-col items-center">
+      <div className="w-[280px] xs:w-[310px] sm:w-[420px] mb-1 flex flex-col items-center pointer-events-none">
         {/* Level Number with classic lime green font and 3D pixel shadow */}
-        <div
+        <button
+          type="button"
           onClick={triggerLevelUpCelebration}
-          className={`font-pixel text-xs sm:text-sm text-[#80ff20] font-bold cursor-pointer transition-transform hover:scale-110 active:scale-95 select-none ${
+          className={`pointer-events-auto font-pixel text-xs sm:text-sm text-[#80ff20] font-bold cursor-pointer transition-transform hover:scale-110 active:scale-95 select-none min-h-[30px] min-w-[32px] flex items-center justify-center p-0.5 ${
             isLevelUp ? 'animate-bounce text-amber-300 scale-125' : ''
           }`}
           style={{
             textShadow: '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
           }}
+          data-interactive="true"
           title="Click to trigger Hammer Strike celebration!"
+          aria-label="Level 26 - Click to trigger Hammer Strike celebration"
         >
           26
-        </div>
+        </button>
 
         {/* Green Pixelated XP Bar with authentic segment ticks */}
         <div className="w-full h-2 sm:h-2.5 bg-[#0a0d0a] border-2 border-[#1c241c] shadow-[inset_1px_1px_0_#000,0_2px_8px_rgba(0,0,0,0.8)] relative overflow-hidden flex items-center">
@@ -250,7 +254,7 @@ export default function MinecraftHotbar() {
       {/* 9-Slot Hotbar HUD Container with dark bedrock/deepslate styling */}
       {!isCollapsed && (
         <div
-          className="flex items-center p-1 sm:p-1.5 bg-[#161311]/95 border-2 border-[#3d2e20] shadow-[inset_1px_1px_0_#543b22,inset_-1px_-1px_0_#0a0806,0_12px_32px_rgba(0,0,0,0.95)] backdrop-blur-md rounded-none gap-0.5 sm:gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-150"
+          className="pointer-events-auto flex items-center p-1 sm:p-1.5 bg-[#161311]/95 border-2 border-[#3d2e20] shadow-[inset_1px_1px_0_#543b22,inset_-1px_-1px_0_#0a0806,0_12px_32px_rgba(0,0,0,0.95)] backdrop-blur-md rounded-none gap-0.5 sm:gap-1.5 animate-in fade-in slide-in-from-bottom-2 duration-150"
           style={{ imageRendering: 'pixelated' }}
         >
         {HOTBAR_SLOTS.map((slot) => {
@@ -264,8 +268,8 @@ export default function MinecraftHotbar() {
               onMouseEnter={() => setHoveredSlot(slot)}
               onMouseLeave={() => setHoveredSlot(null)}
               className={`
-                relative w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center
-                border-2 transition-all duration-100 outline-none
+                relative w-8.5 h-8.5 sm:w-11 sm:h-11 min-w-[34px] min-h-[34px] sm:min-w-[44px] sm:min-h-[44px] flex items-center justify-center
+                border-2 transition-all duration-100 outline-none cursor-pointer
                 ${
                   isSelected
                     ? 'border-amber-300 bg-[#35291d] scale-110 z-30 shadow-[0_0_16px_rgba(251,191,36,0.6),inset_1px_1px_0_#ffffff]'

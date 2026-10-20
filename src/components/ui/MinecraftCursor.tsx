@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import useReducedMotion from '@/hooks/useReducedMotion';
+import { useCursor } from '@/context/CursorContext';
 
 interface Particle {
   x: number;
@@ -17,18 +18,37 @@ export default function MinecraftCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const { isCursorEnabled, setCursorEnabled } = useCursor();
   const [isEnabled, setIsEnabled] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const [isTextInput, setIsTextInput] = useState(false);
 
   useEffect(() => {
-    // Only enable on desktop mouse/fine pointer devices
+    // Only enable on desktop mouse/fine pointer devices when cursor is turned ON
     if (typeof window === 'undefined') return;
-    const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch) return;
+
+    if (!isCursorEnabled) {
+      document.documentElement.classList.remove('custom-cursor-active');
+      setIsEnabled(false);
+      return;
+    }
+
+    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+    if (!hasFinePointer) {
+      document.documentElement.classList.remove('custom-cursor-active');
+      setIsEnabled(false);
+      return;
+    }
 
     setIsEnabled(true);
+    document.documentElement.classList.add('custom-cursor-active');
+
+    // Hotspot is exactly at the hammer striking face
+    // SVG viewBox="-10 -18 38 38" at 48x48px means striking edge (-6, -1) is at CSS pixels (5px, 21.5px)
+    const HOTSPOT_X = 5;
+    const HOTSPOT_Y = 21.5;
 
     const mouse = { x: -100, y: -100 };
     let lastParticleTime = 0;
@@ -48,28 +68,44 @@ export default function MinecraftCursor() {
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    const checkElementUnderPointer = (target: HTMLElement | null) => {
+      if (!target) {
+        setIsHovering(false);
+        setIsTextInput(false);
+        return;
+      }
+
+      const closestInteractive = target.closest(
+        'a[href], button, [role="button"], input, select, textarea, label, summary, [tabindex]:not([tabindex="-1"]), .mc-card[data-interactive="true"], .mc-interactive, [data-interactive="true"], .cursor-pointer, [data-slot]'
+      ) as HTMLElement | null;
+
+      let isInteractive = false;
+      if (closestInteractive) {
+        const isDisabled = Boolean(
+          closestInteractive.closest(':disabled, [aria-disabled="true"], .pointer-events-none, .cursor-not-allowed')
+        );
+        isInteractive = !isDisabled;
+      }
+      setIsHovering(isInteractive);
+
+      const isText = Boolean(
+        target.closest(
+          'input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]), textarea, [contenteditable="true"]'
+        )
+      );
+      setIsTextInput(isText);
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
+      setIsVisible(true);
 
       if (cursorRef.current) {
-        // Hotspot is exactly at the hammer striking face (0, 0)
-        cursorRef.current.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`;
+        cursorRef.current.style.transform = `translate3d(${mouse.x - HOTSPOT_X}px, ${mouse.y - HOTSPOT_Y}px, 0)`;
       }
 
-      // Check hovered interactive target
-      const target = e.target as HTMLElement | null;
-      if (target) {
-        const isInteractive = Boolean(
-          target.closest('a, button, [role="button"], input[type="submit"], input[type="button"], .mc-card, .mc-interactive, [data-interactive]')
-        );
-        setIsHovering(isInteractive);
-
-        const isText = Boolean(
-          target.closest('input[type="text"], input[type="email"], textarea, [contenteditable="true"]')
-        );
-        setIsTextInput(isText);
-      }
+      checkElementUnderPointer(e.target as HTMLElement | null);
 
       // Trailing subtle sparks when moving
       const now = performance.now();
@@ -87,7 +123,15 @@ export default function MinecraftCursor() {
       }
     };
 
+    // Re-check hover state during scroll so hover feedback updates smoothly without mouse moving
+    const handleScroll = () => {
+      if (mouse.x < 0 || mouse.y < 0) return;
+      const target = document.elementFromPoint(mouse.x, mouse.y) as HTMLElement | null;
+      checkElementUnderPointer(target);
+    };
+
     const handleMouseDown = (e: MouseEvent) => {
+      if (e.button !== 0) return; // Only trigger for primary left click
       setIsClicking(true);
 
       // Spawn burst of smithing hammer impact sparks precisely at click coordinate!
@@ -110,9 +154,34 @@ export default function MinecraftCursor() {
 
     const handleMouseUp = () => setIsClicking(false);
 
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+      setIsHovering(false);
+      setIsClicking(false);
+    };
+
+    const handleMouseEnter = () => {
+      setIsVisible(true);
+    };
+
+    const handleBlur = () => {
+      setIsClicking(false);
+      setIsHovering(false);
+    };
+
+    const handleTouchStart = () => {
+      // Touch detected: disable custom cursor to preserve normal touch interaction
+      setCursorEnabled(false);
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('blur', handleBlur);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true, once: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseenter', handleMouseEnter);
 
     // Particle render loop
     const render = () => {
@@ -143,15 +212,21 @@ export default function MinecraftCursor() {
     animId = requestAnimationFrame(render);
 
     return () => {
+      document.documentElement.classList.remove('custom-cursor-active');
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('blur', handleBlur);
+      window.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
       if (animId) cancelAnimationFrame(animId);
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, isCursorEnabled, setCursorEnabled]);
 
-  if (!isEnabled) return null;
+  if (!isEnabled || !isCursorEnabled) return null;
 
   return (
     <>
@@ -170,7 +245,7 @@ export default function MinecraftCursor() {
         ref={cursorRef}
         aria-hidden="true"
         className={`pointer-events-none fixed top-0 left-0 z-[9999] transition-opacity duration-150 ${
-          isTextInput ? 'opacity-0' : 'opacity-100'
+          isTextInput || !isVisible ? 'opacity-0' : 'opacity-100'
         }`}
         style={{
           willChange: 'transform',
@@ -180,6 +255,7 @@ export default function MinecraftCursor() {
           className="relative select-none"
           style={{
             transform: isHovering ? 'scale(1.05)' : 'scale(1)',
+            transformOrigin: '5px 21.5px', // Anchor hover scale directly at hammer striking hotspot
             filter: isHovering
               ? 'drop-shadow(0 0 6px rgba(251,191,36,0.95)) drop-shadow(0 0 10px rgba(34,211,238,0.7))'
               : 'drop-shadow(0 2px 5px rgba(0,0,0,0.85))',
@@ -278,7 +354,7 @@ export default function MinecraftCursor() {
 
             {/* IMPACT SPARK AT CLICK POINT (0, 0) */}
             {isClicking && (
-              <g className="animate-ping">
+              <g className="animate-ping" transform="translate(-5, -1)">
                 <rect x="-3" y="-3" width="6" height="6" fill="#fbbf24" />
                 <rect x="-1" y="-1" width="2" height="2" fill="#ffffff" />
                 <rect x="-5" y="-1" width="10" height="2" fill="#38bdf8" />

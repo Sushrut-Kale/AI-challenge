@@ -31,15 +31,15 @@ const variantStyles: Record<ButtonVariant, string> = {
 const sizeStyles: Record<ButtonSize, { text: string; padding: string }> = {
   sm: {
     text: 'text-[9px] tracking-wider',
-    padding: 'px-3 py-1.5',
+    padding: 'px-3.5 py-2 min-h-[36px]',
   },
   md: {
     text: 'text-[11px] tracking-wider',
-    padding: 'px-5 py-2.5',
+    padding: 'px-5 py-2.5 min-h-[42px]',
   },
   lg: {
     text: 'text-[13px] tracking-widest',
-    padding: 'px-7 py-3.5',
+    padding: 'px-7 py-3.5 min-h-[48px]',
   },
 };
 

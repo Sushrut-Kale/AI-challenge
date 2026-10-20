@@ -544,7 +544,7 @@ export function AudioNavbarButton() {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`border-2 px-2.5 sm:px-3 py-2 font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.25),0_3px_0_#1a1309] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 ${
+        className={`border-2 px-2.5 sm:px-3 py-2 min-h-[40px] font-pixel text-[9px] sm:text-[10px] font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.25),0_3px_0_#1a1309] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1.5 cursor-pointer ${
           isAudioActive
             ? 'border-[#2d5a27] bg-[#1d4319] hover:bg-[#255720] text-emerald-300'
             : 'border-[#4a3928] bg-[#211810] hover:bg-[#322315] text-neutral-400'
@@ -622,8 +622,9 @@ export function AudioNavbarButton() {
                 step="0.05"
                 value={volume}
                 onChange={(e) => setVolume(parseFloat(e.target.value))}
-                className="w-full accent-amber-500 h-1.5 bg-[#261a0f] rounded cursor-pointer"
+                className="w-full accent-amber-500 h-2 bg-[#261a0f] rounded cursor-pointer py-1"
                 aria-label="Volume slider"
+                data-interactive="true"
               />
             </div>
 
@@ -631,7 +632,7 @@ export function AudioNavbarButton() {
             <button
               type="button"
               onClick={toggleAll}
-              className="w-full py-1.5 border border-[#4a3520] bg-[#1e140b] hover:bg-[#2b1d0f] font-pixel text-[8px] uppercase tracking-wider text-amber-200 transition-colors text-center"
+              className="w-full py-2 min-h-[36px] border border-[#4a3520] bg-[#1e140b] hover:bg-[#2b1d0f] font-pixel text-[8px] uppercase tracking-wider text-amber-200 transition-colors text-center cursor-pointer"
               data-interactive="true"
             >
               {isAudioActive ? '🔇 MUTE ALL SOUNDS' : '🔊 UNMUTE ALL SOUNDS'}

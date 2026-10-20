@@ -75,6 +75,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="login-modal-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          playMinecraftClick();
+          onClose();
+        }
+      }}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
     >
       {/* Minecraft GUI Window Container */}
@@ -87,7 +93,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           }}
           type="button"
           aria-label="Close Login Modal"
-          className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-[#2b1f16] border-2 border-[#54381e] text-neutral-400 hover:text-amber-400 hover:border-amber-400 transition-colors font-pixel text-xs"
+          className="absolute top-3 right-3 w-10 h-10 min-w-[40px] min-h-[40px] flex items-center justify-center bg-[#2b1f16] border-2 border-[#54381e] text-neutral-400 hover:text-amber-400 hover:border-amber-400 transition-colors font-pixel text-xs cursor-pointer select-none"
           data-interactive="true"
         >
           ✕
@@ -164,7 +170,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#78350f] font-pixel text-xs text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#451a03] hover:-translate-y-0.5 active:translate-y-0.5 transition-transform disabled:opacity-50"
+              className="w-full py-3 min-h-[44px] bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#78350f] font-pixel text-xs text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#451a03] hover:-translate-y-0.5 active:translate-y-0.5 transition-transform disabled:opacity-50 cursor-pointer select-none"
               data-interactive="true"
             >
               {isLoading ? 'AUTHENTICATING...' : 'ENTER TEAM DASHBOARD ➔'}
@@ -174,7 +180,8 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
               <a
                 href="/dashboard"
                 onClick={() => onClose()}
-                className="block w-full py-2 border border-amber-600/70 bg-[#2b1708] text-amber-300 hover:bg-[#3d200b] text-center uppercase"
+                className="block w-full py-2.5 min-h-[40px] flex items-center justify-center border border-amber-600/70 bg-[#2b1708] text-amber-300 hover:bg-[#3d200b] text-center uppercase cursor-pointer"
+                data-interactive="true"
               >
                 📊 Direct Team Dashboard Demo
               </a>
