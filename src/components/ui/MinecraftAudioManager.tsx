@@ -774,8 +774,65 @@ export function AudioDrawerControl() {
 }
 
 /**
+ * Mobile Navbar Sound Toggle Button
+ * Replaces the desktop-only cursor toggle button in the top navbar on mobile viewports (< md).
+ */
+export function MobileNavbarSoundButton({ className = '' }: { className?: string }) {
+  const { bgmEnabled, toggleBgm } = useAudio();
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    playMinecraftClick();
+    toggleBgm();
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      aria-label={bgmEnabled ? 'Music: ON (Click to Mute)' : 'Music: OFF (Click to Play)'}
+      aria-pressed={bgmEnabled}
+      title={bgmEnabled ? 'Sound: ON (Click to Mute)' : 'Sound: MUTED (Click to Play)'}
+      data-interactive="true"
+      className={`
+        relative w-7 h-7 min-w-[28px] min-h-[28px]
+        flex items-center justify-center p-0.5 border
+        transition-all duration-150 cursor-pointer select-none outline-none
+        hover:scale-105 active:scale-95
+        ${
+          bgmEnabled
+            ? 'border-[#22c55e] bg-[#072412] text-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.5)]'
+            : 'border-[#3f3f46] bg-[#18181b] text-neutral-400 hover:border-neutral-400'
+        }
+        ${className}
+      `.trim()}
+    >
+      {bgmEnabled ? (
+        <svg
+          className="w-3.5 h-3.5 animate-pulse drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+        </svg>
+      ) : (
+        <svg
+          className="w-3.5 h-3.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
+/**
  * Bottom-Right Floating Sound Button
- * Minimalist Minecraft sound logo button - single click directly toggles background music on/off
+ * Displayed exclusively on desktop/PC view (md:flex) to avoid overlapping the Minecraft Hotbar on mobile devices.
  */
 export function FloatingSoundButton() {
   const { bgmEnabled, toggleBgm } = useAudio();
@@ -784,7 +841,7 @@ export function FloatingSoundButton() {
     <button
       type="button"
       onClick={toggleBgm}
-      className={`fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-none flex items-center justify-center transition-all hover:-translate-y-0.5 active:translate-y-0.5 cursor-pointer backdrop-blur-sm select-none ${
+      className={`hidden md:flex fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-none items-center justify-center transition-all hover:-translate-y-0.5 active:translate-y-0.5 cursor-pointer backdrop-blur-sm select-none ${
         bgmEnabled
           ? 'border-2 border-[#10b981] bg-[#0c2617]/90 hover:bg-[#133822] shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_4px_14px_rgba(16,185,129,0.45)] text-emerald-300'
           : 'border-2 border-[#4a3928] bg-[#1a140e]/90 hover:bg-[#281e15] shadow-[inset_2px_2px_0_rgba(255,255,255,0.1),inset_-2px_-2px_0_rgba(0,0,0,0.6),0_4px_10px_rgba(0,0,0,0.7)] text-neutral-400 hover:text-neutral-200'
@@ -800,7 +857,7 @@ export function FloatingSoundButton() {
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
         </svg>
       ) : (
         <svg
@@ -809,7 +866,7 @@ export function FloatingSoundButton() {
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73 4.27 3zM12 7h4V3h-6v4.18l2 2V7z" />
+          <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
         </svg>
       )}
     </button>
