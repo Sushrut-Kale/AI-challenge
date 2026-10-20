@@ -115,7 +115,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
 
         {/* Dirt-textured Main Navbar Header */}
         <div
-          className={`flex items-center justify-between gap-1.5 sm:gap-2 rounded-b-[14px] border-2 border-[#1f2e14] px-2.5 py-2 sm:px-4 xl:px-5 shadow-[0_10px_28px_rgba(0,0,0,0.6)] transition-all duration-200 ${
+          className={`flex items-center justify-between gap-1 sm:gap-2 rounded-b-[14px] border-2 border-[#1f2e14] px-1.5 xs:px-2.5 sm:px-4 xl:px-5 py-1.5 sm:py-2 shadow-[0_10px_28px_rgba(0,0,0,0.6)] transition-all duration-200 ${
             isScrolled ? 'brightness-95' : 'brightness-100'
           }`}
           style={{
@@ -132,13 +132,13 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
             aria-label="AGENTCRAFT Home"
             data-interactive="true"
           >
-            <div className="relative h-7 sm:h-8 w-[125px] sm:w-[160px] xl:w-[190px] flex items-center shrink-0">
+            <div className="relative h-6 sm:h-8 w-[95px] xs:w-[120px] sm:w-[160px] xl:w-[190px] flex items-center shrink-0">
               <Image
                 src="/assets/agentcraft_navbar_logo.png"
                 alt="AGENTCRAFT"
                 width={190}
                 height={32}
-                className="h-7 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                className="h-6 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                 priority
               />
             </div>
@@ -192,7 +192,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
                   href="https://unstop.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-2 sm:px-3 xl:px-3.5 py-1.5 sm:py-2 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-1.5 xs:px-2 sm:px-3 xl:px-3.5 py-1 sm:py-2 font-pixel text-[7px] xs:text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer whitespace-nowrap shrink-0"
                   data-interactive="true"
                   title="Register on Unstop"
                 >
@@ -203,7 +203,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
                 <button
                   type="button"
                   onClick={() => setIsLoginOpen(true)}
-                  className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2 sm:px-2.5 xl:px-3 py-1.5 sm:py-2 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-1.5 xs:px-2 sm:px-2.5 xl:px-3 py-1 sm:py-2 font-pixel text-[7px] xs:text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer whitespace-nowrap shrink-0"
                   data-interactive="true"
                   title="Team Portal Login"
                 >
@@ -224,7 +224,7 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-9 w-9 sm:h-10 sm:w-10 min-h-[36px] min-w-[36px] sm:min-h-[40px] sm:min-w-[40px] items-center justify-center border-2 border-[#1f2e14] bg-[#2a1d13] text-amber-200 xl:hidden active:bg-[#3d2c1d] transition-colors cursor-pointer shrink-0"
+              className="flex h-7 w-7 xs:h-8 xs:w-8 sm:h-10 sm:w-10 min-h-[28px] min-w-[28px] xs:min-h-[32px] xs:min-w-[32px] sm:min-h-[40px] sm:min-w-[40px] items-center justify-center border-2 border-[#1f2e14] bg-[#2a1d13] text-amber-200 xl:hidden active:bg-[#3d2c1d] transition-colors cursor-pointer shrink-0"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               data-interactive="true"
