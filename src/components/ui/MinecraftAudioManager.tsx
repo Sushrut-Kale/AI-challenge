@@ -258,6 +258,8 @@ export function playMinecraftBlockBreak() {
 class MinecraftAmbientMusicEngine {
   private isPlaying = false;
   private timer: NodeJS.Timeout | null = null;
+  private masterGain: GainNode | null = null;
+  private activeVoices: { osc: OscillatorNode; gain: GainNode }[] = [];
   private chords = [
     // Fmaj7
     [174.61, 220.0, 261.63, 329.63],
@@ -273,13 +275,34 @@ class MinecraftAmbientMusicEngine {
   private chordIndex = 0;
   private volume = 0.4;
 
+  private getMasterGain(ctx: AudioContext): GainNode {
+    if (!this.masterGain || this.masterGain.context !== ctx) {
+      this.masterGain = ctx.createGain();
+      this.masterGain.connect(ctx.destination);
+    }
+    return this.masterGain;
+  }
+
   setVolume(val: number) {
     this.volume = Math.max(0, Math.min(1, val));
+    if (this.masterGain && this.isPlaying) {
+      const ctx = getAudioContext();
+      if (ctx) {
+        this.masterGain.gain.setValueAtTime(this.volume, ctx.currentTime);
+      }
+    }
   }
 
   start() {
     if (this.isPlaying) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
     this.isPlaying = true;
+    const master = this.getMasterGain(ctx);
+    master.gain.cancelScheduledValues(ctx.currentTime);
+    master.gain.setValueAtTime(this.volume, ctx.currentTime);
+
     this.playNextChord();
   }
 
@@ -289,6 +312,24 @@ class MinecraftAmbientMusicEngine {
       clearTimeout(this.timer);
       this.timer = null;
     }
+
+    const ctx = getAudioContext();
+    if (ctx && this.masterGain) {
+      const now = ctx.currentTime;
+      // Immediately ramp master gain down to 0 in 20ms to prevent click artifacts while cutting music instantly
+      this.masterGain.gain.cancelScheduledValues(now);
+      this.masterGain.gain.setValueAtTime(this.masterGain.gain.value, now);
+      this.masterGain.gain.linearRampToValueAtTime(0.0001, now + 0.02);
+    }
+
+    // Stop and disconnect all active voice oscillators immediately so no trailing chords linger
+    for (const voice of this.activeVoices) {
+      try {
+        voice.osc.stop();
+        voice.osc.disconnect();
+      } catch {}
+    }
+    this.activeVoices = [];
   }
 
   private playNextChord() {
@@ -300,9 +341,12 @@ class MinecraftAmbientMusicEngine {
     this.chordIndex = (this.chordIndex + 1) % this.chords.length;
 
     const now = ctx.currentTime;
+    const master = this.getMasterGain(ctx);
 
     // Warm ambient pad note
     chord.forEach((freq, noteIdx) => {
+      if (!this.isPlaying) return;
+
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       const filter = ctx.createBiquadFilter();
@@ -316,7 +360,7 @@ class MinecraftAmbientMusicEngine {
       // Slow gentle attack and long, nostalgic release
       const startTime = now + noteIdx * 0.12;
       const duration = 5.5;
-      const targetGain = Math.max(0.001, 0.045 * this.volume);
+      const targetGain = 0.045; // Master gain handles volume scaling
 
       gain.gain.setValueAtTime(0.001, startTime);
       gain.gain.linearRampToValueAtTime(targetGain, startTime + 0.8);
@@ -324,15 +368,27 @@ class MinecraftAmbientMusicEngine {
 
       osc.connect(filter);
       filter.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(master);
 
       osc.start(startTime);
       osc.stop(startTime + duration + 0.1);
+
+      this.activeVoices.push({ osc, gain });
+
+      // Clean up voice when it finishes
+      setTimeout(() => {
+        const idx = this.activeVoices.findIndex((v) => v.osc === osc);
+        if (idx !== -1) {
+          this.activeVoices.splice(idx, 1);
+        }
+      }, (duration + 0.5) * 1000);
     });
 
-    // Schedule next chord in 6.0 seconds for that calm, spacious Minecraft feeling
+    // Schedule next chord in 6.2 seconds for that calm, spacious Minecraft feeling
     this.timer = setTimeout(() => {
-      this.playNextChord();
+      if (this.isPlaying) {
+        this.playNextChord();
+      }
     }, 6200);
   }
 }
