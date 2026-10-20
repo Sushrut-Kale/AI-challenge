@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LoginModal from '@/components/auth/LoginModal';
 import { useAuth } from '@/context/AuthContext';
-import { AudioNavbarButton, AudioDrawerControl, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
+import { AudioDrawerControl, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 import CursorToggleButton from '@/components/ui/CursorToggleButton';
 
 const NAV_LINKS = [
@@ -206,11 +206,6 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
                 </button>
               </>
             )}
-
-            {/* Desktop Top-Right Minecraft Audio Control */}
-            <div className="hidden md:flex items-center shrink-0">
-              <AudioNavbarButton />
-            </div>
 
             {/* Top-Right Custom Cursor Toggle */}
             <div className="flex items-center shrink-0">
