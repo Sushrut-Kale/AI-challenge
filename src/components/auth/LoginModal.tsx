@@ -146,7 +146,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
           <p className="mt-1 font-sans text-xs text-neutral-400">
             {isResetMode
               ? 'Enter your registered email or Team ID to receive a reset link'
-              : 'Sign in with your Team ID (e.g. AC-2026-0001) or registered email'}
+              : 'Sign in with your Team ID (e.g. AC-001) or Admin'}
           </p>
         </div>
 
@@ -169,14 +169,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-pixel text-[9px] text-amber-400 uppercase tracking-widest mb-1.5">
-              TEAM ID OR EMAIL
+              TEAM ID OR USERNAME / EMAIL
             </label>
             <input
               type="text"
               required
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder="AC-2026-0001 or lead@domain.com"
+              placeholder="AC-001 or admin"
               className="w-full px-3.5 py-2.5 bg-[#0f0c09] border-2 border-[#3d2e20] text-neutral-100 placeholder-neutral-600 font-sans text-sm outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors shadow-inner"
             />
           </div>

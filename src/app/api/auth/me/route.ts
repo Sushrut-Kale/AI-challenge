@@ -28,7 +28,7 @@ export async function GET() {
         isAdmin: false,
         team: {
           id: 'demo-team-uuid',
-          team_id: 'AC-2026-0001',
+          team_id: 'AC-001',
           team_name: 'Voxel Agents',
           leader_name: 'Alex Chen',
           leader_email: 'team@agentcraft.ai',

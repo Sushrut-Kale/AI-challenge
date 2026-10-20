@@ -28,13 +28,23 @@ export async function POST(request: NextRequest) {
 
     // ----- Built-in Demo Credentials Support -----
     // Allows local testing even without live Supabase database connected
+    const normalizedId = identifier.trim().toUpperCase();
     const isDemoAdmin =
       (identifier.toLowerCase() === 'admin@agentcraft.ai' || identifier.toLowerCase() === 'admin') &&
       (password === 'admin123' || password === 'agentcraft');
 
     const isDemoTeam =
-      (identifier.toUpperCase() === 'AC-2026-0001' || identifier.toLowerCase() === 'team@agentcraft.ai') &&
-      (password === 'demo123' || password === 'agentcraft' || password === 'password');
+      (normalizedId === 'AC-001' ||
+       normalizedId === 'AC-0001' ||
+       normalizedId === 'AC-2026-0001' ||
+       identifier.toLowerCase() === 'team@agentcraft.ai' ||
+       identifier.toLowerCase() === 'team') &&
+      (password === 'pass' ||
+       password === 'team123' ||
+       password === 'demo123' ||
+       password === 'password' ||
+       password === 'agentcraft' ||
+       password === 'AgentCraftTeam2026!');
 
     if (isDemoAdmin) {
       cookieStore.set('agentcraft_demo_session', 'admin', {
@@ -62,7 +72,7 @@ export async function POST(request: NextRequest) {
         success: true,
         redirect: '/dashboard',
         isAdmin: false,
-        teamId: 'AC-2026-0001',
+        teamId: 'AC-001',
       });
     }
 
@@ -75,7 +85,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         {
           error:
-            'Invalid credentials. For local preview, use Demo Team (AC-2026-0001 / demo123) or Admin (admin@agentcraft.ai / admin123).',
+            'Invalid credentials. Use Admin (admin / admin123) or Team (AC-001 / pass).',
         },
         { status: 401 }
       );
@@ -85,14 +95,17 @@ export async function POST(request: NextRequest) {
     let authEmail: string | null = null;
     let teamRecord: { id: string; team_id: string; is_active: boolean; auth_user_id: string | null } | null = null;
 
-    if (/^AC-\d{4}-\d{4}$/i.test(identifier)) {
+    if (/^AC-[A-Z0-9-]+$/i.test(identifier) || /^AC-\d+/i.test(identifier)) {
       // Team ID login
-      const formattedTeamId = identifier.toUpperCase();
+      let formattedTeamId = identifier.toUpperCase();
+      if (formattedTeamId === 'AC-001' || formattedTeamId === 'AC-0001') {
+        formattedTeamId = 'AC-2026-0001';
+      }
       const { data: team, error: teamError } = await serviceClient
         .from('teams')
         .select('id, team_id, leader_email, auth_user_id, is_active')
-        .eq('team_id', formattedTeamId)
-        .single();
+        .or(`team_id.eq.${formattedTeamId},team_id.eq.${identifier.toUpperCase()}`)
+        .maybeSingle();
 
       if (teamError || !team) {
         return NextResponse.json(
