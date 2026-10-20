@@ -131,6 +131,13 @@ export async function POST(request: NextRequest) {
 
     // Demo Mode Handler
     if (demoRole === 'team' || demoRole === 'admin') {
+      if (demoSubmissionState.status === 'submitted') {
+        return NextResponse.json(
+          { error: 'Your submission has already been finalized and locked. Edits, unlocking, and resubmissions are permanently prohibited.' },
+          { status: 403 }
+        );
+      }
+
       const status = is_final ? 'submitted' : 'draft';
       const submittedAt = is_final ? new Date().toISOString() : null;
 
@@ -178,7 +185,7 @@ export async function POST(request: NextRequest) {
 
     if (existingSub && existingSub.status === 'submitted') {
       return NextResponse.json(
-        { error: 'Your submission has already been finalized and locked.' },
+        { error: 'Your submission has already been finalized and locked. Edits, unlocking, and resubmissions are permanently prohibited.' },
         { status: 403 }
       );
     }

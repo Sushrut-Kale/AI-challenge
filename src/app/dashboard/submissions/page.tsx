@@ -28,31 +28,57 @@ export default function SubmissionsPage() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Load saved draft from localStorage or Supabase
+  // Check if permanently locked
+  const isLocked = formData.status === 'submitted';
+
+  // Load saved draft from localStorage, Supabase, or /api/submissions
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('agentcraft_team_submission');
-      if (saved) {
-        setFormData(JSON.parse(saved));
-      } else {
-        getSubmissionData().then((data) => {
-          if (data && (data.projectTitle || data.githubUrl)) {
-            setFormData(data);
-          }
-        }).catch(() => {});
-      }
-    } catch {
-      getSubmissionData().then((data) => {
-        if (data && (data.projectTitle || data.githubUrl)) {
-          setFormData(data);
+    // 1. Sync from server API
+    fetch('/api/submissions')
+      .then((res) => res.json())
+      .then((apiData) => {
+        if (apiData?.submission?.status === 'submitted') {
+          setFormData((prev) => ({
+            ...prev,
+            status: 'submitted',
+            projectTitle: apiData.submission.project_name || prev.projectTitle,
+            abstract: apiData.submission.synopsis || prev.abstract,
+            githubUrl: apiData.submission.repo_url || prev.githubUrl,
+            demoVideoUrl: apiData.submission.demo_url || prev.demoVideoUrl,
+            liveDemoUrl: apiData.submission.hosted_url || prev.liveDemoUrl,
+            receiptId: prev.receiptId || `AGENTCRAFT-SUB-${Math.floor(10000 + Math.random() * 90000)}-R1`,
+          }));
+          return;
         }
-      }).catch(() => {});
-    }
+
+        // 2. Fallback to localStorage or Supabase
+        try {
+          const saved = localStorage.getItem('agentcraft_team_submission');
+          if (saved) {
+            setFormData(JSON.parse(saved));
+          } else {
+            getSubmissionData().then((data) => {
+              if (data && (data.projectTitle || data.githubUrl)) {
+                setFormData(data);
+              }
+            }).catch(() => {});
+          }
+        } catch {
+          getSubmissionData().then((data) => {
+            if (data && (data.projectTitle || data.githubUrl)) {
+              setFormData(data);
+            }
+          }).catch(() => {});
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
+    if (isLocked) return;
+
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
 
@@ -92,6 +118,7 @@ export default function SubmissionsPage() {
   };
 
   const handleSaveDraft = async () => {
+    if (isLocked) return;
     playMinecraftClick();
     const updated = {
       ...formData,
@@ -115,6 +142,7 @@ export default function SubmissionsPage() {
   };
 
   const handleValidateOnly = () => {
+    if (isLocked) return;
     playMinecraftClick();
     const errors = validateInputs();
     setValidationErrors(errors);
@@ -128,6 +156,7 @@ export default function SubmissionsPage() {
   };
 
   const handleOpenReview = () => {
+    if (isLocked) return;
     playMinecraftClick();
     const errors = validateInputs();
     setValidationErrors(errors);
@@ -140,6 +169,7 @@ export default function SubmissionsPage() {
   };
 
   const handleFinalSubmit = async () => {
+    if (isLocked) return;
     setIsSubmitting(true);
     playMinecraftClick();
 
@@ -154,6 +184,24 @@ export default function SubmissionsPage() {
     setFormData(updated);
     try {
       localStorage.setItem('agentcraft_team_submission', JSON.stringify(updated));
+    } catch {
+      // ignore
+    }
+
+    try {
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          project_name: formData.projectTitle,
+          track: INITIAL_TEAM_DATA.track,
+          synopsis: formData.abstract,
+          repo_url: formData.githubUrl,
+          demo_url: formData.demoVideoUrl,
+          hosted_url: formData.liveDemoUrl,
+          is_final: true,
+        }),
+      });
     } catch {
       // ignore
     }
@@ -276,10 +324,11 @@ export default function SubmissionsPage() {
             <input
               type="text"
               name="projectTitle"
+              disabled={isLocked}
               value={formData.projectTitle}
               onChange={handleChange}
               placeholder="e.g. CityPulse: Autonomous Agentic Traffic Optimizer"
-              className="w-full px-3.5 py-2.5 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none"
+              className="w-full px-3.5 py-2.5 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -302,9 +351,10 @@ export default function SubmissionsPage() {
               </label>
               <select
                 name="sdgCategory"
+                disabled={isLocked}
                 value={formData.sdgCategory}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-sans text-xs focus:border-amber-400 outline-none"
+                className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-sans text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {SDG_CATEGORIES.map((sdg) => (
                   <option key={sdg} value={sdg} className="bg-[#120a04]">
@@ -322,10 +372,11 @@ export default function SubmissionsPage() {
             <textarea
               rows={3}
               name="problemStatement"
+              disabled={isLocked}
               value={formData.problemStatement}
               onChange={handleChange}
               placeholder="Describe the real-world challenge and target SDG domain..."
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none leading-relaxed"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none leading-relaxed disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -336,10 +387,11 @@ export default function SubmissionsPage() {
             <textarea
               rows={4}
               name="abstract"
+              disabled={isLocked}
               value={formData.abstract}
               onChange={handleChange}
               placeholder="Outline your multi-agent architecture, decision loops, tool integrations, and outcomes..."
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none leading-relaxed"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 placeholder-neutral-600 font-sans text-sm focus:border-amber-400 outline-none leading-relaxed disabled:opacity-60 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -375,10 +427,11 @@ export default function SubmissionsPage() {
             <input
               type="url"
               name="githubUrl"
+              disabled={isLocked}
               value={formData.githubUrl}
               onChange={handleChange}
               placeholder="https://github.com/organization/project-name"
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
             <p className="text-[10px] text-neutral-400 font-sans">
               Must include full agentic code, `README.md` setup instructions, and architecture diagrams.
@@ -405,10 +458,11 @@ export default function SubmissionsPage() {
             <input
               type="url"
               name="pptUrl"
+              disabled={isLocked}
               value={formData.pptUrl}
               onChange={handleChange}
               placeholder="https://drive.google.com/file/d/.../view?usp=sharing"
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
             <p className="text-[10px] text-amber-300/80 font-sans">
               ⚠ Permission Notice: Set sharing permissions to &quot;Anyone with the link can view&quot; so evaluators can inspect.
@@ -435,10 +489,11 @@ export default function SubmissionsPage() {
             <input
               type="url"
               name="docUrl"
+              disabled={isLocked}
               value={formData.docUrl}
               onChange={handleChange}
               placeholder="https://docs.google.com/document/d/.../view?usp=sharing"
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
             <p className="text-[10px] text-neutral-400 font-sans">
               Google Doc / Notion / PDF link outlining agent heuristics, prompt flows, and evaluation benchmarks.
@@ -465,10 +520,11 @@ export default function SubmissionsPage() {
             <input
               type="url"
               name="demoVideoUrl"
+              disabled={isLocked}
               value={formData.demoVideoUrl}
               onChange={handleChange}
               placeholder="https://youtube.com/watch?v=... or Loom / Drive"
-              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+              className="w-full px-3.5 py-2 bg-[#0a0603] border-2 border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
             />
             <p className="text-[10px] text-neutral-400 font-sans">
               Unlisted YouTube / Loom video (minimum 5-6 minutes) demonstrating agents in action and autonomous tool execution.
@@ -490,10 +546,11 @@ export default function SubmissionsPage() {
               <input
                 type="url"
                 name="liveDemoUrl"
+                disabled={isLocked}
                 value={formData.liveDemoUrl}
                 onChange={handleChange}
                 placeholder="https://your-project.vercel.app"
-                className="w-full px-3.5 py-2 bg-[#0a0603] border border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+                className="w-full px-3.5 py-2 bg-[#0a0603] border border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
               />
             </div>
 
@@ -504,10 +561,11 @@ export default function SubmissionsPage() {
               <input
                 type="url"
                 name="additionalResources"
+                disabled={isLocked}
                 value={formData.additionalResources}
                 onChange={handleChange}
                 placeholder="Architecture diagram, Postman collection, or paper link"
-                className="w-full px-3.5 py-2 bg-[#0a0603] border border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none"
+                className="w-full px-3.5 py-2 bg-[#0a0603] border border-[#3a220e] text-neutral-100 font-mono text-xs focus:border-amber-400 outline-none disabled:opacity-60 disabled:cursor-not-allowed"
               />
             </div>
           </div>
@@ -519,9 +577,10 @@ export default function SubmissionsPage() {
             <input
               type="checkbox"
               name="declarationConfirmed"
+              disabled={isLocked}
               checked={formData.declarationConfirmed}
               onChange={handleChange}
-              className="mt-0.5 w-4 h-4 accent-amber-500 rounded-none cursor-pointer"
+              className="mt-0.5 w-4 h-4 accent-amber-500 rounded-none cursor-pointer disabled:cursor-not-allowed"
             />
             <span className="text-xs text-neutral-200 font-sans leading-relaxed">
               <strong className="text-amber-300 font-pixel text-[10px] uppercase block mb-0.5">
@@ -533,36 +592,50 @@ export default function SubmissionsPage() {
         </div>
 
         {/* Action Bar (Save Draft, Validate, Submit) */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 border-2 border-[#3d240e] bg-[#120a04]">
-          <div className="text-xs text-neutral-400 font-mono">
-            Last saved: {formData.lastUpdated || 'Not saved yet'}
-          </div>
+        <div className="p-4 border-2 border-[#3d240e] bg-[#120a04]">
+          {isLocked ? (
+            <div className="p-4 border-2 border-emerald-600 bg-[#0c1f14] shadow-[inset_1px_1px_0_#064e3b] text-center w-full">
+              <div className="font-pixel text-xs text-emerald-400 font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                <span>🔒</span>
+                <span>DOSSIER PERMANENTLY LOCKED & RECORDED</span>
+              </div>
+              <p className="text-xs text-neutral-300 font-sans mt-1.5 leading-relaxed">
+                Your team submission has been finalized and locked for Round 1 Evaluation. Modifications, resubmissions, and unlocking are permanently prohibited.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="text-xs text-neutral-400 font-mono">
+                Last saved: {formData.lastUpdated || 'Not saved yet'}
+              </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={handleSaveDraft}
-              className="px-4 py-2.5 border-2 border-[#543b22] bg-[#2a1708] hover:bg-[#3d220b] font-pixel text-[10px] text-amber-200 uppercase tracking-wider shadow-sm transition-transform hover:-translate-y-0.5"
-            >
-              💾 SAVE DRAFT
-            </button>
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={handleSaveDraft}
+                  className="px-4 py-2.5 border-2 border-[#543b22] bg-[#2a1708] hover:bg-[#3d220b] font-pixel text-[10px] text-amber-200 uppercase tracking-wider shadow-sm transition-transform hover:-translate-y-0.5"
+                >
+                  💾 SAVE DRAFT
+                </button>
 
-            <button
-              type="button"
-              onClick={handleValidateOnly}
-              className="px-4 py-2.5 border-2 border-sky-700 bg-sky-950 hover:bg-sky-900 font-pixel text-[10px] text-sky-200 uppercase tracking-wider shadow-sm transition-transform hover:-translate-y-0.5"
-            >
-              🔍 VALIDATE LINKS
-            </button>
+                <button
+                  type="button"
+                  onClick={handleValidateOnly}
+                  className="px-4 py-2.5 border-2 border-sky-700 bg-sky-950 hover:bg-sky-900 font-pixel text-[10px] text-sky-200 uppercase tracking-wider shadow-sm transition-transform hover:-translate-y-0.5"
+                >
+                  🔍 VALIDATE LINKS
+                </button>
 
-            <button
-              type="button"
-              onClick={handleOpenReview}
-              className="px-6 py-2.5 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-xs text-black font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_#fff,0_4px_0_#382403] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
-            >
-              REVIEW & SUBMIT PROJECT ➔
-            </button>
-          </div>
+                <button
+                  type="button"
+                  onClick={handleOpenReview}
+                  className="px-6 py-2.5 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-xs text-black font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_#fff,0_4px_0_#382403] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+                >
+                  REVIEW & SUBMIT PROJECT ➔
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </form>
 
@@ -657,8 +730,8 @@ export default function SubmissionsPage() {
                 </div>
               </div>
 
-              <div className="p-3 border border-amber-600/70 bg-[#261506] text-amber-200 text-xs">
-                ⚠ Notice: Once submitted, your submission will be stamped with the official receipt time and locked for Round 1 Evaluation. Revisions require organizer authorization.
+              <div className="p-3 border-2 border-emerald-600/80 bg-[#0c1f14] text-emerald-200 text-xs shadow-[inset_1px_1px_0_#064e3b]">
+                🔒 <strong>PERMANENT LOCK WARNING:</strong> Once confirmed, this submission is permanently recorded for Round 1 Evaluation. It can never be unlocked, edited, or resubmitted.
               </div>
             </div>
 

@@ -752,12 +752,13 @@ export default function DashboardPage() {
                   </button>
                 </div>
               ) : (
-                <div className="pt-4 p-4 bg-black/60 border border-[#3b2716] text-center">
-                  <p className="font-pixel text-xs text-emerald-400 font-bold uppercase">
-                    DOSSIER LOCKED & RECORDED
+                <div className="pt-4 p-5 bg-[#0c1f14] border-2 border-emerald-600 text-center shadow-[inset_1px_1px_0_#064e3b]">
+                  <p className="font-pixel text-xs text-emerald-400 font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                    <span>🔒</span>
+                    <span>DOSSIER PERMANENTLY LOCKED & RECORDED</span>
                   </p>
-                  <p className="font-sans text-xs text-neutral-400 mt-1">
-                    Your project is in the screening queue. Announcements will follow on the schedule.
+                  <p className="font-sans text-xs text-neutral-300 mt-1.5 leading-relaxed">
+                    Your project is officially recorded for Round 1 Evaluation. Edits, uploads, and unlocking are permanently disabled.
                   </p>
                 </div>
               )}
@@ -774,9 +775,7 @@ export default function DashboardPage() {
               LOCK FINAL SUBMISSION?
             </h3>
             <p className="font-sans text-xs text-neutral-300 leading-relaxed mb-4">
-              Are you sure you want to finalize? Once locked,{' '}
-              <strong className="text-amber-400">no further edits or file uploads will be permitted</strong>. Ensure all
-              repo links, demo videos, and slide decks are accurate.
+              Are you sure you want to finalize? This action is <strong className="text-amber-400">permanent and irreversible</strong>. Once locked, your dossier will be frozen for evaluation and <strong className="text-amber-400">can never be unlocked or edited</strong>.
             </p>
             <div className="flex gap-3">
               <button
