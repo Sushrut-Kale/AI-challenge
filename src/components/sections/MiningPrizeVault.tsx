@@ -258,7 +258,7 @@ export default function MiningPrizeVault({ totalPoolAmount }: MiningPrizeVaultPr
         </h3>
 
         {/* Grand ₹30,000 Championship Counter */}
-        <div className="font-pixel text-3xl xs:text-4xl sm:text-6xl md:text-7xl text-amber-300 tracking-wider mb-2 drop-shadow-[0_4px_24px_rgba(251,191,36,0.6)] animate-pulse">
+        <div className="font-pixel text-3xl xs:text-4xl sm:text-6xl md:text-7xl text-amber-300 tracking-wider mb-2 drop-shadow-[0_4px_24px_rgba(251,191,36,0.6)] animate-pulse flex items-center justify-center text-center">
           <AnimatedCounter value={totalPoolAmount} prefix="₹" suffix="/-" />
         </div>
       </div>

@@ -99,12 +99,20 @@ export default function AnimatedCounter({
   return (
     <span
       ref={containerRef}
-      className={`inline-block tabular-nums select-none ${className}`}
+      className={`inline-flex items-center justify-center tabular-nums select-none ${className}`}
       aria-label={ariaLabel || finalFormatted}
     >
-      {prefix}
-      {formattedNumber}
-      {suffix}
+      {prefix && (
+        <span
+          className={`inline-block leading-none shrink-0 ${
+            prefix.includes('₹') ? 'relative -top-[0.11em] mr-[0.06em]' : ''
+          }`}
+        >
+          {prefix}
+        </span>
+      )}
+      <span className="inline-block leading-none shrink-0">{formattedNumber}</span>
+      {suffix && <span className="inline-block leading-none shrink-0">{suffix}</span>}
     </span>
   );
 }
