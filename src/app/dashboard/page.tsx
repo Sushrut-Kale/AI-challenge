@@ -9,7 +9,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/layout/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import { playMinecraftClick, playMinecraftPop } from '@/components/ui/MinecraftAudioManager';
 
@@ -335,21 +334,16 @@ export default function DashboardPage() {
   const isReadOnly = isSubmitted || isExpired;
 
   return (
-    <>
-      <Navbar isIntro={false} />
-      <main className="relative z-20 min-h-screen pt-28 sm:pt-36 pb-24 px-3 sm:px-6 max-w-6xl mx-auto">
+    <div className="space-y-6">
       {/* Top Banner Navigation */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <Link
-            href="/"
-            className="font-pixel text-[9px] sm:text-[10px] text-amber-400 hover:text-amber-300 transition-colors inline-flex items-center gap-1.5"
-          >
-            ← BACK TO MAIN ARENA
-          </Link>
-          <h1 className="font-pixel text-base sm:text-2xl text-amber-300 font-bold uppercase tracking-wider mt-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+          <h1 className="font-pixel text-base sm:text-2xl text-amber-300 font-bold uppercase tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             TEAM COMMAND CENTER
           </h1>
+          <p className="font-sans text-xs text-neutral-400 mt-1">
+            Dossier & Project Submission Workspace
+          </p>
         </div>
 
         <div className="flex items-center gap-2">
@@ -848,7 +842,6 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-    </main>
-    </>
+    </div>
   );
 }

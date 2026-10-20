@@ -169,9 +169,10 @@ export default function MinecraftHotbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectSlot]);
 
-  // Hide hotbar completely on dashboard and login routes
+  // Hide hotbar completely on dashboard, admin and login routes
   if (
     pathname?.startsWith('/dashboard') ||
+    pathname?.startsWith('/admin') ||
     pathname === '/login'
   ) {
     return null;

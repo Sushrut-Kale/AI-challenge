@@ -8,6 +8,7 @@ import { playMinecraftClick, playMinecraftPop } from '@/components/ui/MinecraftA
 import { INITIAL_TEAM_DATA, TeamData } from '@/data/dashboardMock';
 import { getTeamData, getSubmissionData } from '@/lib/supabase';
 import DashboardEmbers from '@/components/dashboard/DashboardEmbers';
+import { useAuth } from '@/context/AuthContext';
 
 const DASHBOARD_NAV = [
   { label: 'Overview', href: '/dashboard', icon: '/assets/items/compass.png', tag: 'HOME' },
@@ -24,6 +25,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { team, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [xpPoints, setXpPoints] = useState(26);
   const [teamData, setTeamData] = useState<TeamData>(INITIAL_TEAM_DATA);
@@ -152,6 +154,25 @@ export default function DashboardLayout({
 
           {/* Right Header Navigation Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Authenticated Team Badge */}
+            <span className="hidden sm:inline-flex items-center px-2.5 py-1 border border-emerald-600/80 bg-emerald-950/80 font-pixel text-[9px] text-emerald-300 font-bold uppercase tracking-wider">
+              ⚔ {team?.team_id || teamData.teamId || 'AC-001'}
+            </span>
+
+            {/* Logout Button */}
+            <button
+              type="button"
+              onClick={async () => {
+                playMinecraftClick();
+                await logout();
+                window.location.replace('/');
+              }}
+              className="px-2.5 sm:px-3 py-1.5 border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] font-pixel text-[9px] text-red-100 uppercase tracking-wider shadow-[inset_1px_1px_0_rgba(255,255,255,0.2),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 font-bold cursor-pointer"
+              title="Logout from Team Portal"
+            >
+              EXIT
+            </button>
+
             {/* Return to Public Website */}
             <Link
               href="/"
@@ -203,10 +224,10 @@ export default function DashboardLayout({
                 </div>
                 <div className="overflow-hidden">
                   <h3 className="font-pixel text-xs text-white leading-tight font-bold truncate">
-                    {teamData.teamName}
+                    {team?.team_name || teamData.teamName}
                   </h3>
                   <span className="font-mono text-[10px] text-amber-300 font-bold block mt-0.5">
-                    {teamData.teamId}
+                    {team?.team_id || teamData.teamId || 'AC-001'}
                   </span>
                 </div>
               </div>
