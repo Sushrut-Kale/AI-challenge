@@ -101,17 +101,27 @@ export const INITIAL_SUBMISSION_DATA: SubmissionData = {
 export const OFFICIAL_RESOURCES = [
   {
     title: 'Official AGENTCRAFT PPT Template (16:9)',
-    description: 'Required presentation template covering problem, agent architecture, tech stack, and SDG impact.',
-    url: 'https://drive.google.com/drive/folders/agentcraft-official-ppt-template',
+    description: 'Required 9-slide presentation template covering problem, agent architecture, tech stack, and SDG impact.',
+    url: '/docs/AgentCraft_Template.pptx',
     badge: 'MANDATORY',
     icon: '📊',
+    fileName: 'AgentCraft_Template.pptx',
   },
   {
-    title: 'Screening Round Submission Guidelines',
-    description: 'Detailed instructions on video duration (min 5-6 mins), GitHub repository documentation, and link deliverables.',
-    url: 'https://drive.google.com/drive/folders/agentcraft-screening-guidelines',
+    title: 'Problem Tracks & Technical Guidelines',
+    description: 'Detailed instructions on all 8 problem tracks, simulation environments, and shared engineering requirements.',
+    url: '/docs/AgentCraft_Problem_Tracks.pdf',
     badge: 'GUIDELINE',
     icon: '📜',
+    fileName: 'AgentCraft_Problem_Tracks.pdf',
+  },
+  {
+    title: 'Official Rulebook (v1.0)',
+    description: 'Authoritative 14-page charter detailing eligibility, Stream A & B, and the 100-point judging rubric.',
+    url: '/docs/AgentCraft_Official_Rulebook.pdf',
+    badge: 'RULEBOOK',
+    icon: '⚖',
+    fileName: 'AgentCraft_Official_Rulebook.pdf',
   },
 ];
 
@@ -123,8 +133,8 @@ export const INITIAL_ANNOUNCEMENTS: AnnouncementItem[] = [
       'All registered teams must use the official AGENTCRAFT PPT template for Round 1 submission. Ensure all slide sections are addressed.',
     date: '20th Oct 2026',
     tag: 'RESOURCES',
-    link: 'https://drive.google.com/drive/folders/agentcraft-official-ppt-template',
-    linkText: 'Download Template ↗',
+    link: '/docs/AgentCraft_Template.pptx',
+    linkText: 'Download PPT Template ⬇',
   },
   {
     id: 'ann-2',

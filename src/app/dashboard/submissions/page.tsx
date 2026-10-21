@@ -338,13 +338,12 @@ export default function SubmissionsPage() {
         </div>
 
         <a
-          href={OFFICIAL_RESOURCES[0].url}
-          target="_blank"
-          rel="noreferrer"
+          href="/docs/AgentCraft_Template.pptx"
+          download="AgentCraft_Template.pptx"
           onClick={() => playMinecraftClick()}
-          className="shrink-0 px-4 py-2 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-[10px] text-black font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_#fff,0_3px_0_#382403] text-center"
+          className="shrink-0 px-4 py-2 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-[10px] text-black font-bold uppercase tracking-wider shadow-[inset_1px_1px_0_#fff,0_3px_0_#382403] text-center cursor-pointer"
         >
-          GET PPT TEMPLATE ↗
+          DOWNLOAD PPT TEMPLATE ⬇
         </a>
       </div>
 

@@ -73,6 +73,21 @@ export default function RoundsPage() {
               </span>
             </div>
           </div>
+
+          {/* Round 1 Deliverable Action */}
+          <div className="mt-4 pt-3 border-t border-[#3b220e] flex flex-wrap items-center justify-between gap-3">
+            <span className="text-xs text-neutral-300 font-sans">
+              Mandatory: Submit project links using the official 9-slide presentation template.
+            </span>
+            <a
+              href="/docs/AgentCraft_Template.pptx"
+              download="AgentCraft_Template.pptx"
+              className="px-3 py-1.5 border border-amber-500 bg-[#2b1708] hover:bg-[#3d200b] font-pixel text-[9px] text-amber-300 uppercase font-bold inline-flex items-center gap-1.5 cursor-pointer"
+            >
+              <span>📊</span>
+              <span>GET PPT TEMPLATE ⬇</span>
+            </a>
+          </div>
         </div>
 
         {/* Round 2 Card */}

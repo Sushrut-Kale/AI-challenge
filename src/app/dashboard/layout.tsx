@@ -290,6 +290,18 @@ export default function DashboardLayout({
 
           {/* Sidebar Footer with Easter Egg & Coordinator Desk */}
           <div className="p-4 border-t-2 border-[#331c0a] bg-[#120903] space-y-2.5">
+            {/* Official Presentation Template Quick Download */}
+            <a
+              href="/docs/AgentCraft_Template.pptx"
+              download="AgentCraft_Template.pptx"
+              onClick={() => playMinecraftClick()}
+              className="w-full py-2 border-2 border-amber-600/70 bg-[#281507] hover:bg-[#3d1f0b] font-pixel text-[8px] sm:text-[9px] text-amber-300 uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+              title="Download Official 9-Slide Presentation Template (PPTX)"
+            >
+              <span>📊</span>
+              <span>PPT TEMPLATE ⬇</span>
+            </a>
+
             {/* Clickable XP Easter Egg */}
             <button
               type="button"
