@@ -99,7 +99,7 @@ export default function Footer() {
               <ul className="space-y-2.5 text-xs font-pixel text-neutral-400">
                 <li>
                   <a
-                    href="https://unstop.com"
+                    href={EVENT_DATA.registration.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-amber-300 transition-colors text-amber-400 font-bold inline-flex items-center gap-1.5"

@@ -10,7 +10,7 @@ import MinecraftButton from '@/components/ui/MinecraftButton';
 import { EVENT_DATA } from '@/data/event';
 
 export default function ContactSection() {
-  const { contact, organizers, details, prizes } = EVENT_DATA;
+  const { contact, organizers, details, prizes, registration } = EVENT_DATA;
 
   return (
     <SectionContainer id="contact" variant="default" showTopSeam>
@@ -44,7 +44,18 @@ export default function ContactSection() {
               SY, TY & Open to All student developers.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
+              <a
+                href={registration.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mc-shine inline-flex items-center gap-2 px-6 py-3.5 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#b45309] font-pixel text-xs sm:text-sm text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#78350f] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+                data-interactive="true"
+              >
+                <span>🏆</span>
+                <span>REGISTER ON UNSTOP ↗</span>
+              </a>
+
               <a
                 href="https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A"
                 target="_blank"
@@ -53,7 +64,7 @@ export default function ContactSection() {
                 data-interactive="true"
               >
                 <span>💬</span>
-                <span>WHATSAPP REGISTRATION DESK ↗</span>
+                <span>WHATSAPP DESK ↗</span>
               </a>
 
               <MinecraftButton

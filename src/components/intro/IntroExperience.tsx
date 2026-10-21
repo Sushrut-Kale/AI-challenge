@@ -277,7 +277,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-1.5 xs:gap-2 sm:gap-3 pt-0.5 sm:pt-1">
               <a
-                href="https://unstop.com"
+                href={EVENT_DATA.registration.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] sm:shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[36px] sm:min-h-[44px] min-w-[110px] xs:min-w-[120px] sm:min-w-[130px] inline-flex items-center justify-center cursor-pointer select-none"

@@ -208,6 +208,9 @@ const sponsorsData = Object.assign(sponsorList, {
   statusNote: 'Official industry sponsors and career pathways presented on the official poster.',
 });
 
+export const UNSTOP_REGISTRATION_URL =
+  'https://unstop.com/o/ty2qnMX?lb=useP3YRL&utm_medium=Share&utm_source=dipteghu57679&utm_campaign=Competitions';
+
 export const EVENT_DATA: EventData = {
   name: 'AGENTCRAFT',
   shortName: 'AGENTCRAFT 2026',
@@ -441,8 +444,8 @@ export const EVENT_DATA: EventData = {
   ],
   registration: {
     isOpen: true,
-    url: '', // Left blank per instruction: do not invent fake registration URL
-    note: 'Registration is ₹400/Team. Contact Ashish Lenka (+91 81170 31180) or visit the official WhatsApp community desk.',
+    url: UNSTOP_REGISTRATION_URL,
+    note: 'Registration is ₹400/Team. Register directly on Unstop or reach out to the organizing desk.',
   },
   prizes: prizesData,
   sponsors: sponsorsData,
