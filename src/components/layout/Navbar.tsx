@@ -7,7 +7,7 @@ import LoginModal from '@/components/auth/LoginModal';
 import { useAuth } from '@/context/AuthContext';
 import { AudioDrawerControl, MobileNavbarSoundButton, playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 import CursorToggleButton from '@/components/ui/CursorToggleButton';
-import { UNSTOP_REGISTRATION_URL } from '@/data/event';
+import { REGISTRATION_FORM_URL, UNSTOP_REGISTRATION_URL } from '@/data/event';
 
 const NAV_LINKS = [
   { label: 'ABOUT', href: '#about' },
@@ -188,14 +188,14 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               </>
             ) : (
               <>
-                {/* Official Registration on Unstop */}
+                {/* Official Registration Form */}
                 <a
-                  href={UNSTOP_REGISTRATION_URL}
+                  href={REGISTRATION_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-1.5 xs:px-2 sm:px-3 xl:px-3.5 py-1 sm:py-2 font-pixel text-[7px] xs:text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer whitespace-nowrap shrink-0"
                   data-interactive="true"
-                  title="Register on Unstop"
+                  title="Register for AGENTCRAFT (Official Form)"
                 >
                   <span className="whitespace-nowrap">REGISTER ↗</span>
                 </a>
@@ -303,11 +303,21 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               ) : (
                 <>
                   <a
-                    href={UNSTOP_REGISTRATION_URL}
+                    href={REGISTRATION_FORM_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setMobileMenuOpen(false)}
                     className="mc-shine block w-full text-center border-2 border-[#7a4f05] bg-[#fbbf24] py-2.5 font-pixel text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] cursor-pointer"
+                    data-interactive="true"
+                  >
+                    REGISTER TEAM NOW ↗
+                  </a>
+                  <a
+                    href={UNSTOP_REGISTRATION_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center border-2 border-[#1e40af] bg-[#2563eb] hover:bg-[#1d4ed8] py-2 font-pixel text-[9px] font-bold uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),0_2px_0_#172554] cursor-pointer mt-1"
                     data-interactive="true"
                   >
                     REGISTER ON UNSTOP ↗

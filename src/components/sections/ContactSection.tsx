@@ -49,18 +49,33 @@ export default function ContactSection() {
                 href={registration.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-shine inline-flex items-center gap-2 px-6 py-3.5 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#b45309] font-pixel text-xs sm:text-sm text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#78350f] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+                className="mc-shine inline-flex items-center gap-2 px-6 py-3.5 bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#b45309] font-pixel text-xs sm:text-sm text-[#1a1206] font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#78350f] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 cursor-pointer"
                 data-interactive="true"
+                title="Fill Official Google Registration Form"
               >
-                <span>🏆</span>
-                <span>REGISTER ON UNSTOP ↗</span>
+                <span>📝</span>
+                <span>REGISTER TEAM NOW (FORM) ↗</span>
               </a>
+
+              {registration.unstopUrl && (
+                <a
+                  href={registration.unstopUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mc-shine inline-flex items-center gap-2 px-5 py-3.5 bg-[#2563eb] hover:bg-[#1d4ed8] border-2 border-[#1e40af] font-pixel text-xs sm:text-sm text-white font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),0_4px_0_#172554] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 cursor-pointer"
+                  data-interactive="true"
+                  title="View & Register on Unstop"
+                >
+                  <span>🏆</span>
+                  <span>UNSTOP PORTAL ↗</span>
+                </a>
+              )}
 
               <a
                 href="https://chat.whatsapp.com/HCoLTsCSoQ2J6N35w1eh1A"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-shine inline-flex items-center gap-2 px-6 py-3.5 bg-[#10b981] hover:bg-[#059669] border-2 border-[#047857] font-pixel text-xs sm:text-sm text-black font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5"
+                className="mc-shine inline-flex items-center gap-2 px-5 py-3.5 bg-[#10b981] hover:bg-[#059669] border-2 border-[#047857] font-pixel text-xs sm:text-sm text-black font-bold uppercase tracking-wider shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),0_4px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 cursor-pointer"
                 data-interactive="true"
               >
                 <span>💬</span>

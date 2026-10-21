@@ -105,9 +105,22 @@ export default function Footer() {
                     className="hover:text-amber-300 transition-colors text-amber-400 font-bold inline-flex items-center gap-1.5"
                     data-interactive="true"
                   >
-                    <span>★</span> Register on Unstop ↗
+                    <span>★</span> Register Team (Form) ↗
                   </a>
                 </li>
+                {EVENT_DATA.registration.unstopUrl && (
+                  <li>
+                    <a
+                      href={EVENT_DATA.registration.unstopUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-sky-300 transition-colors text-sky-400 font-bold inline-flex items-center gap-1.5"
+                      data-interactive="true"
+                    >
+                      <span>★</span> Register on Unstop ↗
+                    </a>
+                  </li>
+                )}
                 <li>
                   <a href="#sponsors" className="hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5" data-interactive="true">
                     <span>→</span> Sponsors & Partners

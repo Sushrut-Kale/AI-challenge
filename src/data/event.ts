@@ -111,6 +111,8 @@ export interface EventData {
   registration: {
     isOpen: boolean;
     url: string;
+    formUrl?: string;
+    unstopUrl?: string;
     note: string;
   };
   prizes: PrizeData;
@@ -207,6 +209,9 @@ const sponsorsData = Object.assign(sponsorList, {
   academicPartner: 'In association with AAAI Global Professional Chapter & AlgoVedas (CSE AIML)',
   statusNote: 'Official industry sponsors and career pathways presented on the official poster.',
 });
+
+export const REGISTRATION_FORM_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLSeVtP4bfeKOlwPIV_j_Y7uUMZcPUagIhHenXpkZ4ZD1fS5FBA/viewform?usp=publish-editor';
 
 export const UNSTOP_REGISTRATION_URL =
   'https://unstop.com/o/ty2qnMX?lb=useP3YRL&utm_medium=Share&utm_source=dipteghu57679&utm_campaign=Competitions';
@@ -444,8 +449,10 @@ export const EVENT_DATA: EventData = {
   ],
   registration: {
     isOpen: true,
-    url: UNSTOP_REGISTRATION_URL,
-    note: 'Registration is ₹400/Team. Register directly on Unstop or reach out to the organizing desk.',
+    url: REGISTRATION_FORM_URL,
+    formUrl: REGISTRATION_FORM_URL,
+    unstopUrl: UNSTOP_REGISTRATION_URL,
+    note: 'Registration is ₹400/Team. Register directly via the official Google Form or through Unstop.',
   },
   prizes: prizesData,
   sponsors: sponsorsData,
