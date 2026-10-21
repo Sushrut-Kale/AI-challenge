@@ -165,26 +165,26 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
           </nav>
 
           {/* Right Action: Register CTA & Team Portal / Dashboard */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {isAuthenticated ? (
               <>
                 {/* Authenticated Team/Admin Badge & Action */}
                 <Link
                   href={isAdmin ? '/admin' : '/dashboard'}
-                  className="border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] px-2 sm:px-3 py-1.5 sm:py-2 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] px-2.5 sm:px-3 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
                   data-interactive="true"
                 >
-                  <span className="whitespace-nowrap">{isAdmin ? '🛡 ADMIN' : `⚔ ${team?.team_id || 'PORTAL'}`}</span>
+                  <span className="whitespace-nowrap leading-none">{isAdmin ? '🛡 ADMIN' : `⚔ ${team?.team_id || 'PORTAL'}`}</span>
                 </Link>
 
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] px-2 sm:px-2.5 py-1.5 sm:py-2 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] px-2.5 sm:px-3 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
                   data-interactive="true"
                   title="Logout"
                 >
-                  <span className="whitespace-nowrap">EXIT</span>
+                  <span className="whitespace-nowrap leading-none">EXIT</span>
                 </button>
               </>
             ) : (
@@ -194,39 +194,40 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
                   href={REGISTRATION_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-1.5 xs:px-2 sm:px-3 xl:px-3.5 py-1 sm:py-2 font-pixel text-[7px] xs:text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="mc-shine h-[34px] sm:h-[36px] box-border border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-2.5 sm:px-3 xl:px-3.5 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer whitespace-nowrap shrink-0 leading-none"
                   data-interactive="true"
                   title="Register for AGENTCRAFT (Official Form)"
                 >
-                  <span className="whitespace-nowrap">REGISTER ↗</span>
+                  <span className="whitespace-nowrap leading-none inline-flex items-center">REGISTER ↗</span>
                 </a>
 
                 {/* Participant Team Login */}
                 <button
                   type="button"
                   onClick={() => setIsLoginOpen(true)}
-                  className="border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-1.5 xs:px-2 sm:px-2.5 xl:px-3 py-1 sm:py-2 font-pixel text-[7px] xs:text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center gap-0.5 sm:gap-1 cursor-pointer whitespace-nowrap shrink-0"
+                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2.5 sm:px-3 xl:px-3.5 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 leading-none"
                   data-interactive="true"
                   title="Team Portal Login"
                 >
-                  <span className="whitespace-nowrap">🔑 LOGIN</span>
+                  <span className="text-[10px] sm:text-xs leading-none shrink-0 inline-flex items-center">🔑</span>
+                  <span className="whitespace-nowrap leading-none inline-flex items-center">LOGIN</span>
                 </button>
               </>
             )}
 
             {/* Top-Right: Custom Cursor Toggle on PC, Sound Button on Mobile */}
             <div className="hidden md:flex items-center shrink-0">
-              <CursorToggleButton />
+              <CursorToggleButton variant="navbar" />
             </div>
             <div className="flex md:hidden items-center shrink-0">
-              <MobileNavbarSoundButton />
+              <MobileNavbarSoundButton variant="navbar" />
             </div>
 
             {/* Mobile/Tablet Menu Button */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-7 w-7 xs:h-8 xs:w-8 sm:h-10 sm:w-10 min-h-[28px] min-w-[28px] xs:min-h-[32px] xs:min-w-[32px] sm:min-h-[40px] sm:min-w-[40px] items-center justify-center border-2 border-[#1f2e14] bg-[#2a1d13] text-amber-200 xl:hidden active:bg-[#3d2c1d] transition-colors cursor-pointer shrink-0"
+              className="h-[34px] w-[34px] sm:h-[36px] sm:w-[36px] box-border border-2 border-[#1f2e14] bg-[#2a1d13] hover:bg-[#3d2c1d] text-amber-200 xl:hidden shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.5),0_3px_0_#140d08] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer shrink-0 leading-none"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
               data-interactive="true"

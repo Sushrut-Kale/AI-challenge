@@ -777,7 +777,13 @@ export function AudioDrawerControl() {
  * Mobile Navbar Sound Toggle Button
  * Replaces the desktop-only cursor toggle button in the top navbar on mobile viewports (< md).
  */
-export function MobileNavbarSoundButton({ className = '' }: { className?: string }) {
+export function MobileNavbarSoundButton({
+  className = '',
+  variant = 'navbar',
+}: {
+  className?: string;
+  variant?: 'default' | 'navbar';
+}) {
   const { bgmEnabled, toggleBgm } = useAudio();
 
   const handleClick = (e: React.MouseEvent) => {
@@ -785,6 +791,8 @@ export function MobileNavbarSoundButton({ className = '' }: { className?: string
     playMinecraftClick();
     toggleBgm();
   };
+
+  const isNavbar = variant === 'navbar';
 
   return (
     <button
@@ -794,18 +802,19 @@ export function MobileNavbarSoundButton({ className = '' }: { className?: string
       aria-pressed={bgmEnabled}
       title={bgmEnabled ? 'Sound: ON (Click to Mute)' : 'Sound: MUTED (Click to Play)'}
       data-interactive="true"
-      className={`
-        relative w-7 h-7 min-w-[28px] min-h-[28px]
-        flex items-center justify-center p-0.5 border
-        transition-all duration-150 cursor-pointer select-none outline-none
-        hover:scale-105 active:scale-95
-        ${
-          bgmEnabled
-            ? 'border-[#22c55e] bg-[#072412] text-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.5)]'
-            : 'border-[#3f3f46] bg-[#18181b] text-neutral-400 hover:border-neutral-400'
-        }
-        ${className}
-      `.trim()}
+      className={
+        isNavbar
+          ? `relative h-[34px] w-[34px] sm:h-[36px] sm:w-[36px] box-border border-2 flex items-center justify-center transition-transform duration-150 cursor-pointer select-none outline-none hover:-translate-y-0.5 active:translate-y-0.5 shrink-0 leading-none ${
+              bgmEnabled
+                ? 'border-[#22c55e] bg-[#072412] text-[#22c55e] shadow-[inset_1px_1px_0_rgba(255,255,255,0.2),inset_-1px_-1px_0_rgba(0,0,0,0.5),0_3px_0_#052e16]'
+                : 'border-[#3f3f46] bg-[#18181b] hover:bg-[#27272a] hover:border-neutral-400 text-neutral-400 shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.5),0_3px_0_#09090b]'
+            } ${className}`.trim()
+          : `relative w-7 h-7 min-w-[28px] min-h-[28px] flex items-center justify-center p-0.5 border transition-all duration-150 cursor-pointer select-none outline-none hover:scale-105 active:scale-95 ${
+              bgmEnabled
+                ? 'border-[#22c55e] bg-[#072412] text-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.5)]'
+                : 'border-[#3f3f46] bg-[#18181b] text-neutral-400 hover:border-neutral-400'
+            } ${className}`.trim()
+      }
     >
       {bgmEnabled ? (
         <svg
