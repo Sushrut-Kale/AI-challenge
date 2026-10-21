@@ -95,11 +95,20 @@ export default function MinecraftHotbar() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isLevelUp, setIsLevelUp] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const tooltipTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+  const [isInIntro, setIsInIntro] = useState(true);
 
   // Track active section and scroll progress
   useEffect(() => {
     const handleScroll = () => {
+      const aboutEl = document.querySelector('#about');
+      if (aboutEl) {
+        const rect = aboutEl.getBoundingClientRect();
+        // Hide during 3D intro sequence until about section approaches viewport
+        setIsInIntro(rect.top > window.innerHeight * 0.45);
+      } else {
+        setIsInIntro(false);
+      }
+
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? window.scrollY / docHeight : 0;
       setScrollProgress(Math.min(1, Math.max(0, progress)));
@@ -130,6 +139,7 @@ export default function MinecraftHotbar() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -177,11 +187,12 @@ export default function MinecraftHotbar() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectSlot]);
 
-  // Hide hotbar completely on dashboard, admin and login routes
+  // Hide hotbar completely on dashboard, admin, login routes, or during the intro sequence on home
   if (
     pathname?.startsWith('/dashboard') ||
     pathname?.startsWith('/admin') ||
-    pathname === '/login'
+    pathname === '/login' ||
+    (pathname === '/' && isInIntro)
   ) {
     return null;
   }

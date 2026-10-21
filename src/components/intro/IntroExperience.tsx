@@ -233,7 +233,7 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             visibility: frame4Opacity > 0.02 ? 'visible' : 'hidden',
           }}
         >
-          <div className="flex max-w-3xl flex-col items-center gap-2 sm:gap-3.5 pointer-events-auto max-h-[82vh] overflow-y-auto scrollbar-none py-1 px-1 sm:px-2">
+          <div className="flex max-w-3xl flex-col items-center gap-2 sm:gap-3.5 pointer-events-auto py-1 px-1 sm:px-2">
             {/* Grand 3D AGENTCRAFT Logo */}
             <div className="relative w-full max-w-[200px] xs:max-w-[260px] sm:max-w-lg md:max-w-xl">
               <Image
@@ -275,31 +275,32 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-1.5 xs:gap-2 sm:gap-3 pt-0.5 sm:pt-1">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2 sm:pt-2.5">
               <a
                 href={EVENT_DATA.registration.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mc-shine border-2 border-[#7a4f05] bg-[#fbbf24] px-3.5 xs:px-4 sm:px-6 py-2 sm:py-2.5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] sm:shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform min-h-[36px] sm:min-h-[44px] min-w-[110px] xs:min-w-[120px] sm:min-w-[130px] inline-flex items-center justify-center cursor-pointer select-none"
+                className="mc-shine h-[38px] sm:h-[44px] box-border border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-3.5 xs:px-4 sm:px-5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] sm:shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#382618] hover:brightness-110 active:translate-y-0.5 transition-transform flex items-center justify-center cursor-pointer select-none shrink-0 leading-none"
                 data-interactive="true"
               >
-                REGISTER ↗
+                <span className="whitespace-nowrap leading-none inline-flex items-center">REGISTER ↗</span>
               </a>
               <button
                 type="button"
                 onClick={() => setIsLoginOpen(true)}
-                className="border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-3.5 xs:px-4 sm:px-5 py-2 sm:py-2.5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#0c2340] sm:shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-all min-h-[36px] sm:min-h-[44px] min-w-[100px] xs:min-w-[110px] sm:min-w-[120px] inline-flex items-center justify-center cursor-pointer select-none"
+                className="h-[38px] sm:h-[44px] box-border border-2 border-[#1e3a5f] bg-[#0284c7] hover:bg-[#0369a1] px-3.5 xs:px-4 sm:px-5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#0c2340] sm:shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_4px_0_#0c2340] hover:brightness-110 active:translate-y-0.5 transition-transform flex items-center justify-center gap-1.5 cursor-pointer select-none shrink-0 leading-none"
                 data-interactive="true"
               >
-                🔑 LOGIN
+                <span className="text-[11px] sm:text-xs leading-none shrink-0 inline-flex items-center">🔑</span>
+                <span className="whitespace-nowrap leading-none inline-flex items-center">LOGIN</span>
               </button>
               <button
                 type="button"
                 onClick={handleSkipToContent}
-                className="border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-3.5 xs:px-4 sm:px-5 py-2 sm:py-2.5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[0_3px_0_#120b05] sm:shadow-[0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-all min-h-[36px] sm:min-h-[44px] min-w-[140px] xs:min-w-[150px] sm:min-w-[170px] inline-flex items-center justify-center cursor-pointer select-none"
+                className="h-[38px] sm:h-[44px] box-border border-2 border-[#4a3824] bg-[#24170a]/90 hover:bg-[#382618] px-3.5 xs:px-4 sm:px-5 font-pixel text-[8px] xs:text-[9px] sm:text-xs uppercase tracking-wider text-amber-200 shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.4),0_3px_0_#120b05] sm:shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.4),0_4px_0_#120b05] hover:brightness-110 active:translate-y-0.5 transition-transform flex items-center justify-center gap-1 cursor-pointer select-none shrink-0 leading-none"
                 data-interactive="true"
               >
-                EXPLORE CHALLENGE ↓
+                <span className="whitespace-nowrap leading-none inline-flex items-center">EXPLORE CHALLENGE ↓</span>
               </button>
             </div>
           </div>
