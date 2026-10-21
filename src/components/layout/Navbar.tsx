@@ -136,13 +136,13 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
               aria-label="AGENTCRAFT Home"
               data-interactive="true"
             >
-              <div className="relative h-6 sm:h-8 w-[95px] xs:w-[120px] sm:w-[140px] xl:w-[155px] 2xl:w-[180px] flex items-center shrink-0">
+              <div className="relative h-[28px] xs:h-[30px] sm:h-[34px] xl:h-[38px] 2xl:h-[40px] flex items-center shrink-0">
                 <Image
                   src="/assets/agentcraft_navbar_logo.png"
                   alt="AGENTCRAFT"
-                  width={180}
-                  height={32}
-                  className="h-6 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  width={290}
+                  height={40}
+                  className="h-[28px] xs:h-[30px] sm:h-[34px] xl:h-[38px] 2xl:h-[40px] w-auto object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.85)]"
                   priority
                 />
               </div>
