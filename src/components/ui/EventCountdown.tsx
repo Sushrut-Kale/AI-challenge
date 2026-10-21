@@ -36,7 +36,7 @@ function calculateTimeRemaining(targetISO: string): TimeRemaining {
 
 export default function EventCountdown({
   targetDateISO,
-  label = 'COUNTDOWN TO FINALE',
+  label = 'COUNTDOWN TO REGISTRATION DEADLINE',
   className = '',
 }: CountdownProps) {
   const [timeLeft, setTimeLeft] = useState<TimeRemaining | null>(null);
@@ -62,7 +62,7 @@ export default function EventCountdown({
     return (
       <div className={`p-3 bg-[#17140f] border-2 border-amber-600/60 text-center ${className}`}>
         <span className="font-pixel text-[10px] text-amber-300 uppercase tracking-wider">
-          ★ EVENT HAS COMMENCED AT MIT AOE
+          ★ REGISTRATION DEADLINE HAS CONCLUDED
         </span>
       </div>
     );

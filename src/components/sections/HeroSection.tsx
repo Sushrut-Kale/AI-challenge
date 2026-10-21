@@ -144,11 +144,11 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Live Countdown to Grand Finale */}
+        {/* Live Countdown to Registration Deadline */}
         <div className="w-full max-w-xl mb-10 p-4 border-2 border-[#3d2a1a] bg-[#1a1209]/80 backdrop-blur-sm">
           <EventCountdown
-            targetDateISO={details.eventDateISO}
-            label="COUNTDOWN TO GRAND FINALE AT MIT AOE"
+            targetDateISO={details.registrationDeadlineISO}
+            label="COUNTDOWN TO REGISTRATION DEADLINE"
           />
         </div>
 

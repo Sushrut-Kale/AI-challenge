@@ -248,16 +248,16 @@ export default function IntroExperience({ onProgressChange }: IntroExperiencePro
 
             {/* Date & Finale Pill */}
             <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 border-2 border-[#dba213]/80 bg-[#1a1209]/90 px-2.5 sm:px-3.5 py-1 sm:py-1.5 font-pixel text-[8px] xs:text-[9px] sm:text-[11px] uppercase tracking-wider text-[#ffd875] backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-              <span>17 November 2026</span>
+              <span>Registration Closes: 30 Oct 2026</span>
               <span className="opacity-50">•</span>
-              <span className="text-amber-400">Grand Finale at MIT AOE</span>
+              <span className="text-amber-400">Grand Finale: 17 Nov 2026</span>
             </div>
 
-            {/* Live Countdown to Grand Finale */}
+            {/* Live Countdown to Registration Deadline */}
             <div className="w-full max-w-[320px] xs:max-w-sm sm:max-w-md p-2 sm:p-2.5 border-2 border-[#3d2a1a] bg-[#140e08]/90 backdrop-blur-sm shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
               <EventCountdown
-                targetDateISO={EVENT_DATA.details.eventDateISO}
-                label="COUNTDOWN TO GRAND FINALE AT MIT AOE"
+                targetDateISO={EVENT_DATA.details.registrationDeadlineISO}
+                label="COUNTDOWN TO REGISTRATION DEADLINE"
               />
             </div>
 
