@@ -281,6 +281,43 @@ export default function MinecraftPanel({
                   ))}
                 </ul>
               </div>
+
+              {/* Official Document Downloads & Viewer */}
+              <div className="bg-[#171717] p-3 border border-[#fbbf24]/50 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                <div>
+                  <span className="text-[#fbbf24] text-[10px] font-bold block font-pixel uppercase">
+                    Official Regulatory Charter & PPT Template
+                  </span>
+                  <span className="text-gray-300 text-[11px]">
+                    14-Page Official Rulebook (PDF) & 9-Slide Deck (PPTX)
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onClose();
+                      if (typeof window !== 'undefined') {
+                        window.dispatchEvent(
+                          new CustomEvent('agentcraft:open-document-viewer', {
+                            detail: { docId: 'rulebook', page: 1 },
+                          })
+                        );
+                      }
+                    }}
+                    className="flex-1 sm:flex-initial px-2.5 py-1.5 bg-[#059669] hover:bg-[#10b981] text-white text-[9px] font-pixel font-bold uppercase border border-[#065f46] cursor-pointer"
+                  >
+                    👁 View Docs
+                  </button>
+                  <a
+                    href="/docs/AgentCraft_Official_Rulebook.pdf"
+                    download="AgentCraft_Official_Rulebook.pdf"
+                    className="flex-1 sm:flex-initial px-2.5 py-1.5 bg-[#fbbf24] hover:bg-[#f59e0b] text-black text-[9px] font-pixel font-bold uppercase border border-[#7a4f05] cursor-pointer"
+                  >
+                    ⬇ PDF (2.68M)
+                  </a>
+                </div>
+              </div>
             </div>
           )}
 
