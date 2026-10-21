@@ -395,6 +395,22 @@ export const EVENT_DATA: EventData = {
         description:
           'Defensive cybersecurity, suspicious-event detection, incident investigation, evidence-based response, and authorized containment in isolated environments.',
       },
+      {
+        id: 'open',
+        name: 'Open Innovation — Any Relevant SDG',
+        trackName: 'Open Innovation',
+        sdgNumber: 'SDGs 01–17',
+        sdgTitle: 'Global Goals Open Track',
+        color: '#a855f7',
+        badgeBg: '#581c87',
+        badgeTextColor: '#f3e8ff',
+        borderColor: '#3b0764',
+        dividerGradient: 'from-purple-600 via-fuchsia-400 to-purple-600',
+        icon: '/assets/items/totem.png',
+        iconAlt: 'Totem of Undying',
+        description:
+          'Pioneer novel agentic systems beyond official tracks (e.g. diagnostics, cyber defense, DeFi, adaptive education, scientific discovery). Define your own baseline and at least 30 held-out test scenarios.',
+      },
     ],
   },
   rounds: [
@@ -541,3 +557,311 @@ export const EVENT_DATA: EventData = {
     },
   ],
 };
+
+export interface DocumentItem {
+  id: string;
+  title: string;
+  shortTitle: string;
+  subtitle: string;
+  fileName: string;
+  fileUrl: string;
+  fileType: 'pdf' | 'pptx';
+  fileSize: string;
+  sizeBytes: number;
+  countLabel: string;
+  version: string;
+  badge: string;
+  badgeVariant: 'emerald' | 'gold' | 'diamond' | 'stone';
+  itemIcon: string;
+  description: string;
+  highlights: string[];
+}
+
+export interface RulebookSection {
+  num: string;
+  title: string;
+  page: number;
+  summary: string;
+}
+
+export interface PresentationSlide {
+  slideNumber: number;
+  title: string;
+  subtitle: string;
+  keyRequirements: string[];
+  scoringTips: string;
+  deliverableFocus: string;
+}
+
+export interface EvaluationCriterion {
+  category: string;
+  points: number;
+  description: string;
+  rubricItems: string[];
+  accentColor: string;
+}
+
+export const OFFICIAL_DOCUMENTS: DocumentItem[] = [
+  {
+    id: 'rulebook',
+    title: 'AGENTCRAFT Official Rulebook',
+    shortTitle: 'Official Rulebook',
+    subtitle: 'Comprehensive Regulatory Dossier & Competition Framework',
+    fileName: 'AgentCraft_Official_Rulebook.pdf',
+    fileUrl: '/docs/AgentCraft_Official_Rulebook.pdf',
+    fileType: 'pdf',
+    fileSize: '2.68 MB',
+    sizeBytes: 2678577,
+    countLabel: '14 Pages',
+    version: 'v1.0 (Official)',
+    badge: 'REGULATORY DOSSIER',
+    badgeVariant: 'emerald',
+    itemIcon: '/assets/items/book_quill.png',
+    description:
+      'The authoritative 14-page charter covering eligibility, separate First Year (Stream A) and Senior (Stream B) streams, all 8 SDG problem tracks, the 100-point judging rubric, and academic integrity policies.',
+    highlights: [
+      '14 pages detailing complete challenge parameters & submission standards',
+      'Stream A (FY) vs Stream B (SY/TY/Final Year) evaluation matrix',
+      'All 8 SDG Tracks (VidyaMitra, KrishiMitra, AarogyaSetu, Open Innovation, etc.)',
+      'Rigorous 100-Point Scoring Rubric across autonomy, depth & safety',
+      'Responsible AI, dataset integrity, and grand finale protocol at MIT AOE',
+    ],
+  },
+  {
+    id: 'template',
+    title: 'AgentCraft Round 1 Presentation Template',
+    shortTitle: 'Pitch Deck Template',
+    subtitle: 'Official 9-Slide PowerPoint Architecture & Prototype Deck',
+    fileName: 'AgentCraft_Template.pptx',
+    fileUrl: '/docs/AgentCraft_Template.pptx',
+    fileType: 'pptx',
+    fileSize: '3.76 MB',
+    sizeBytes: 3758329,
+    countLabel: '9 Slides',
+    version: 'v1.0 (Official)',
+    badge: 'ROUND 1 PPT TEMPLATE',
+    badgeVariant: 'gold',
+    itemIcon: '/assets/items/chest.png',
+    description:
+      'Mandatory PowerPoint pitch deck template for Round 1 online submission (deadline: 2nd November 2026). Standardized structure to present real-world problems, agentic workflows, architecture, and safety safeguards.',
+    highlights: [
+      'Standardized 9-slide layout required for Round 1 screening submission',
+      'Covers problem context, proposed multi-agent architecture & tech stack',
+      'Dedicated slides for agentic workflow, feedback loops & tool execution',
+      'Targeted beneficiaries, SDG impact metrics & benchmark feasibility',
+      'Responsible AI statement, safety boundaries & failure recovery declaration',
+    ],
+  },
+];
+
+export const RULEBOOK_SECTIONS: RulebookSection[] = [
+  { num: '01', title: 'Introduction & Philosophy', page: 2, summary: 'Autonomous multi-agent AI systems: Reason, Act & Impact pillars.' },
+  { num: '02', title: 'Challenge Objectives & Theme', page: 3, summary: 'AI for SDGs, deployability, real-world impact & fair evaluation.' },
+  { num: '03', title: 'Eligibility Criteria & Streams', page: 3, summary: 'Open to FY, SY, TY, Final Year; Stream A (FY) vs Stream B (Senior).' },
+  { num: '04', title: 'Team Formation & Registration', page: 4, summary: '2–4 students + optional mentor. ₹400/team fee. Deadline 30 Oct 2026.' },
+  { num: '05', title: 'Competition Timeline & Dates', page: 4, summary: 'Round 1 screening (2 Nov) & Round 2 Grand Finale (17 Nov at MIT AOE).' },
+  { num: '06', title: 'Problem Statements & 8 Tracks', page: 5, summary: 'VidyaMitra, KrishiMitra, AarogyaSetu, GreenGuardian, RakshaGrid, GridMind, CyberSentinel, Open Innovation.' },
+  { num: '07', title: 'Shared Architecture Requirements', page: 8, summary: 'Core engineering, agent roles, tool interfaces & API standards.' },
+  { num: '08', title: 'Memory, Tools & Agent Protocols', page: 8, summary: 'State transitions, tool calling, reflection loops & consensus.' },
+  { num: '09', title: 'Development & Resource Usage', page: 9, summary: 'Git repositories, README documentation, API keys in environment.' },
+  { num: '10', title: 'Submission Guidelines & Deliverables', page: 9, summary: 'Round 1 PPT, runnable code, agent architecture & test package.' },
+  { num: '11', title: 'Evaluation Criteria (100-Point Rubric)', page: 10, summary: 'Autonomy (20), Depth (20), Safety (20), Performance (20), Innovation (10), Demo (10).' },
+  { num: '12', title: 'Demo, Presentation & Q&A Guidelines', page: 10, summary: 'Online presentation protocol and in-person final jury inspection.' },
+  { num: '13', title: 'Code of Conduct & Sportsmanship', page: 11, summary: 'Professional conduct, mutual respect & campus policies.' },
+  { num: '14', title: 'Academic Integrity & Disqualification', page: 11, summary: 'Zero tolerance for plagiarism, fabrication or pre-built projects.' },
+  { num: '15', title: 'Responsible AI, Ethics & Safety', page: 11, summary: 'Human oversight, uncertainty transparency & track safety boundaries.' },
+  { num: '16', title: 'Data Privacy & Information Security', page: 12, summary: 'Synthetic data, no exposed API keys or private credentials.' },
+  { num: '17', title: 'Intellectual Property Rights', page: 12, summary: 'Teams retain full code ownership; promotional showcase rights.' },
+  { num: '18', title: 'Participant Dashboard & Portal Rules', page: 12, summary: 'Official links only; single submission per team via team leader.' },
+  { num: '19', title: 'Prizes, Awards & Result Declaration', page: 12, summary: '₹30,000 cash pool + internship opportunities with sponsor partners.' },
+  { num: '20', title: 'Grievance Redressal & Appeals', page: 13, summary: '24-hour formal review process for procedural or technical errors.' },
+  { num: '21', title: 'Organizer Rights & Rule Amendments', page: 13, summary: 'Official announcements prevail on WhatsApp Community & website.' },
+  { num: '22', title: 'Terms & Conditions', page: 13, summary: 'Participant compliance and campus event responsibilities.' },
+  { num: '23', title: 'Contact Information & Official Channels', page: 14, summary: 'Ashish Lenka (+91 81170 31180) & official communications.' },
+];
+
+export const PRESENTATION_SLIDES: PresentationSlide[] = [
+  {
+    slideNumber: 1,
+    title: 'Cover & Team Credentials',
+    subtitle: 'Track, Problem Statement Title, Team Name & Roster',
+    keyRequirements: [
+      'Problem Statement Title & Assigned SDG Track',
+      'Team Name & Registered College / Department',
+      'Team Members (2 to 4 students with Year of Study)',
+      'Optional Mentor Name & Affiliation',
+    ],
+    scoringTips: 'Ensure your track name matches official documentation and all student years are accurately declared.',
+    deliverableFocus: 'Identity & Track Alignment',
+  },
+  {
+    slideNumber: 2,
+    title: 'Problem Statement',
+    subtitle: 'Clear Definition of the Real-World Bottleneck',
+    keyRequirements: [
+      'Specific real-world bottleneck or market inefficiency',
+      'Why existing static or chatbot solutions fail at this problem',
+      'Target context, environmental constraints & scope',
+    ],
+    scoringTips: 'Ground your challenge in measurable reality. Avoid generic buzzwords; explain the exact operational friction.',
+    deliverableFocus: 'Domain Need & Failure of Traditional AI',
+  },
+  {
+    slideNumber: 3,
+    title: 'Proposed Solution',
+    subtitle: 'Autonomous Multi-Agent Systems Approach',
+    keyRequirements: [
+      'Conceptual core of your multi-agent architecture',
+      'How specialized agents divide, reason, and conquer the problem',
+      'Primary innovations & why agentic coordination is essential',
+    ],
+    scoringTips: 'Highlight the Reason-Act-Impact paradigm. Show how agents take autonomous actions rather than just generating text.',
+    deliverableFocus: 'Core Agentic Value Proposition',
+  },
+  {
+    slideNumber: 4,
+    title: 'Targeted Users & SDG Impact',
+    subtitle: 'User Personas & Measurable Sustainability Metrics',
+    keyRequirements: [
+      'Direct and indirect stakeholders / user personas',
+      'Primary UN Sustainable Development Goal alignment & target indicators',
+      'Measurable impact metrics (e.g., % water saved, hours reclaimed, detection rate)',
+    ],
+    scoringTips: 'Connect prototype outcomes directly to UN SDG targets. Use quantitative indicators wherever possible.',
+    deliverableFocus: 'Beneficiaries & Social ROI',
+  },
+  {
+    slideNumber: 5,
+    title: 'Agentic AI Workflow',
+    subtitle: 'Planning, Tool Selection, Execution & Reflection Loops',
+    keyRequirements: [
+      'Step-by-step agentic execution loop diagram',
+      'Goal decomposition, planning heuristics, and dynamic replanning',
+      'Tool execution, sensory feedback ingestion & memory state transitions',
+    ],
+    scoringTips: 'Crucial for 20 pts of Autonomy & Planning. Clearly display decision branches, error recovery, and reflection.',
+    deliverableFocus: 'Orchestration & Cognitive Loops',
+  },
+  {
+    slideNumber: 6,
+    title: 'System Architecture & Tech Stack',
+    subtitle: 'Engines, Frameworks, Tool APIs & Data Pipelines',
+    keyRequirements: [
+      'Orchestration framework (LangGraph, CrewAI, AutoGen, or custom runtime)',
+      'LLM models, vector stores, memory backends, and external APIs',
+      'Data ingestion pipelines, sandbox environments, and interface layer',
+    ],
+    scoringTips: 'Judges reward architectural depth and modularity. Clearly illustrate boundaries and state management.',
+    deliverableFocus: 'Engineering Rigor & Modularity',
+  },
+  {
+    slideNumber: 7,
+    title: 'Impact & Feasibility',
+    subtitle: 'Benchmark Comparisons, Quantitative Results & Deployment',
+    keyRequirements: [
+      'Performance compared against a baseline (fixed rules or single LLM prompt)',
+      'Test results on held-out scenarios or stress conditions',
+      'Computational efficiency, cost per run, and operational deployability',
+    ],
+    scoringTips: 'Earns 20 pts in Measurable Performance. Unsupported claims get 0 points; show tangible baseline improvements.',
+    deliverableFocus: 'Empirical Proof & Real-World Viability',
+  },
+  {
+    slideNumber: 8,
+    title: 'Safety, Security & Limitations',
+    subtitle: 'Guardrails, Human Oversight & Responsible AI Safeguards',
+    keyRequirements: [
+      'Human-in-the-loop oversight mechanisms for high-consequence actions',
+      'Privacy safeguards, synthetic data boundaries, and API protection',
+      'Known failure modes, hallucinations, edge-case limitations, and mitigations',
+    ],
+    scoringTips: 'Earns 20 pts in Reliability & Safety. Demonstrating honest limitations and error containment beats overclaiming.',
+    deliverableFocus: 'Responsible AI & Threat Mitigation',
+  },
+  {
+    slideNumber: 9,
+    title: 'Conclusion & Next Steps',
+    subtitle: 'Roadmap, Key Takeaways & Thank You',
+    keyRequirements: [
+      'Summary of prototype achievements & key lessons learned',
+      'Future roadmap for Grand Finale live deployment at MIT AOE',
+      'Open invitation for Jury Q&A and code inspection link',
+    ],
+    scoringTips: 'End on a confident, structured note. Prepare your team to defend live execution and edge cases during Q&A.',
+    deliverableFocus: 'Synthesis & Finale Readiness',
+  },
+];
+
+export const EVALUATION_RUBRIC: EvaluationCriterion[] = [
+  {
+    category: 'Agent Autonomy & Planning',
+    points: 20,
+    description: 'Goal decomposition, multi-step execution, dynamic tool selection, and replanning upon environmental changes.',
+    accentColor: '#10b981',
+    rubricItems: [
+      'Decomposes complex ambiguous goals into actionable sub-tasks',
+      'Selects and executes appropriate tools dynamically based on environment state',
+      'Recovers autonomously from execution exceptions and invalid tool calls',
+      'Re-plans when environmental parameters or feedback invalidate prior assumptions',
+    ],
+  },
+  {
+    category: 'Technical Depth & Architecture',
+    points: 20,
+    description: 'Engineering rigor, data flow design, memory hierarchies, multi-agent coordination, and code quality.',
+    accentColor: '#38bdf8',
+    rubricItems: [
+      'Clean separation of concerns across specialized agents and modules',
+      'Robust short-term and persistent memory design across conversational sessions',
+      'Effective inter-agent communication, consensus, or delegation protocols',
+      'Modular, extensible codebase with clear environment variables and documentation',
+    ],
+  },
+  {
+    category: 'Reliability & Safety',
+    points: 20,
+    description: 'Constraint enforcement, uncertainty handling, fail-safes, human oversight, and adherence to safety boundaries.',
+    accentColor: '#f59e0b',
+    rubricItems: [
+      'Respects track safety boundaries (synthetic data, sandbox isolation, simulation only)',
+      'Incorporates human-in-the-loop gates for high-impact or destructive actions',
+      'Handles incomplete, delayed, or contradictory sensor/log telemetry gracefully',
+      'Transparently discloses uncertainty, limitations, and failure boundaries',
+    ],
+  },
+  {
+    category: 'Measurable Performance',
+    points: 20,
+    description: 'Empirical benchmark comparisons against baseline controllers, held-out test evaluations, and quantitative outcomes.',
+    accentColor: '#8b5cf6',
+    rubricItems: [
+      'Evaluated against a credible baseline (e.g. fixed-rule heuristics or vanilla LLM)',
+      'Tested against held-out or unseen evaluation test cases (not just cherry-picked demos)',
+      'Demonstrates statistically or quantitatively measurable impact in SDG metrics',
+      'Substantiates all performance claims with reproducible evaluation logs',
+    ],
+  },
+  {
+    category: 'Innovation & Real-World Impact',
+    points: 10,
+    description: 'Novelty of the agentic approach, practical feasibility, and genuine alignment with UN Sustainable Development Goals.',
+    accentColor: '#ec4899',
+    rubricItems: [
+      'Addresses a genuine real-world bottleneck aligned with the selected SDG',
+      'Original conceptual approach beyond standard off-the-shelf tutorials',
+      'Feasible transition from collegiate prototype to field deployment',
+    ],
+  },
+  {
+    category: 'Demonstration & Reproducibility',
+    points: 10,
+    description: 'Working live or recorded prototype, comprehensive documentation, and easily reproducible setup.',
+    accentColor: '#14b8a6',
+    rubricItems: [
+      'Clean runnable codebase with step-by-step setup instructions in README',
+      'Live demonstration includes at least one intentional failure or recovery case',
+      'All team members articulate their design decisions during Q&A',
+    ],
+  },
+];
+
