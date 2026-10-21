@@ -102,153 +102,156 @@ export default function Navbar({ isIntro = false }: NavbarProps) {
   // After intro, render the full Minecraft-inspired Navigation Bar
   return (
     <header className="fixed inset-x-2 sm:inset-x-6 top-3 z-50 transition-all duration-200">
-      <div className="relative mx-auto max-w-7xl">
-        {/* Top Grass Border */}
-        <div
-          className="absolute inset-x-0 -top-[9px] h-[10px] border-2 border-b-0 border-[#1f2e14]"
-          style={{
-            backgroundImage: 'url(/assets/grass.png)',
-            backgroundSize: '16px 16px',
-            backgroundRepeat: 'repeat',
-            imageRendering: 'pixelated',
-          }}
-          aria-hidden="true"
-        />
+      <div className="relative mx-auto max-w-7xl flex items-center gap-2 sm:gap-2.5">
+        {/* Dirt-textured Main Navbar Container */}
+        <div className="relative flex-1 min-w-0">
+          {/* Top Grass Border */}
+          <div
+            className="absolute inset-x-0 -top-[9px] h-[10px] border-2 border-b-0 border-[#1f2e14]"
+            style={{
+              backgroundImage: 'url(/assets/grass.png)',
+              backgroundSize: '16px 16px',
+              backgroundRepeat: 'repeat',
+              imageRendering: 'pixelated',
+            }}
+            aria-hidden="true"
+          />
 
-        {/* Dirt-textured Main Navbar Header */}
-        <div
-          className={`flex items-center justify-between gap-1 sm:gap-2 rounded-b-[14px] border-2 border-[#1f2e14] px-1.5 xs:px-2.5 sm:px-4 xl:px-5 py-1.5 sm:py-2 shadow-[0_10px_28px_rgba(0,0,0,0.6)] transition-all duration-200 ${
-            isScrolled ? 'brightness-95' : 'brightness-100'
-          }`}
-          style={{
-            backgroundImage: 'url(/assets/dirt.png)',
-            backgroundSize: '32px 32px',
-            backgroundRepeat: 'repeat',
-            imageRendering: 'pixelated',
-          }}
-        >
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="flex items-center transition-transform hover:scale-105 active:scale-95 outline-none shrink-0"
-            aria-label="AGENTCRAFT Home"
-            data-interactive="true"
+          {/* Dirt-textured Main Navbar Header */}
+          <div
+            className={`flex items-center justify-between gap-1 sm:gap-2 rounded-b-[14px] border-2 border-[#1f2e14] px-2 xs:px-2.5 sm:px-3.5 xl:px-4 py-1.5 sm:py-2 shadow-[0_10px_28px_rgba(0,0,0,0.6)] transition-all duration-200 ${
+              isScrolled ? 'brightness-95' : 'brightness-100'
+            }`}
+            style={{
+              backgroundImage: 'url(/assets/dirt.png)',
+              backgroundSize: '32px 32px',
+              backgroundRepeat: 'repeat',
+              imageRendering: 'pixelated',
+            }}
           >
-            <div className="relative h-6 sm:h-8 w-[95px] xs:w-[120px] sm:w-[160px] xl:w-[190px] flex items-center shrink-0">
-              <Image
-                src="/assets/agentcraft_navbar_logo.png"
-                alt="AGENTCRAFT"
-                width={190}
-                height={32}
-                className="h-6 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                priority
-              />
-            </div>
-          </Link>
-
-          {/* Desktop Navigation Links (High-Contrast Minecraft HUD) - Shown on XL displays with ample room */}
-          <nav className="hidden xl:flex items-center gap-1 xl:gap-2 px-2 xl:px-2.5 py-1 bg-black/65 border border-[#3b2716]/90 rounded-md backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] shrink-0">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="font-pixel text-[9px] xl:text-[10px] 2xl:text-[11px] font-bold tracking-wider uppercase text-neutral-100 hover:text-[#fbbf24] px-2 xl:px-2.5 py-1.5 min-h-[34px] flex items-center transition-all rounded hover:bg-[#2e1d0f]/90 border border-transparent hover:border-amber-500/60 cursor-pointer whitespace-nowrap"
-                style={{
-                  textShadow:
-                    '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
-                }}
-                data-interactive="true"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Right Action: Register CTA & Team Portal / Dashboard */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {isAuthenticated ? (
-              <>
-                {/* Authenticated Team/Admin Badge & Action */}
-                <Link
-                  href={isAdmin ? '/admin' : '/dashboard'}
-                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] px-2.5 sm:px-3 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
-                  data-interactive="true"
-                >
-                  <span className="whitespace-nowrap leading-none">{isAdmin ? '🛡 ADMIN' : `⚔ ${team?.team_id || 'PORTAL'}`}</span>
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] px-2.5 sm:px-3 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
-                  data-interactive="true"
-                  title="Logout"
-                >
-                  <span className="whitespace-nowrap leading-none">EXIT</span>
-                </button>
-              </>
-            ) : (
-              <>
-                {/* Official Registration Form */}
-                <a
-                  href={REGISTRATION_FORM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mc-shine h-[34px] sm:h-[36px] box-border border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-2.5 sm:px-3 xl:px-3.5 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer whitespace-nowrap shrink-0 leading-none"
-                  data-interactive="true"
-                  title="Register for AGENTCRAFT (Official Form)"
-                >
-                  <span className="whitespace-nowrap leading-none inline-flex items-center">REGISTER ↗</span>
-                </a>
-
-                {/* Participant Team Login */}
-                <button
-                  type="button"
-                  onClick={() => setIsLoginOpen(true)}
-                  className="h-[34px] sm:h-[36px] box-border border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2.5 sm:px-3 xl:px-3.5 font-pixel text-[8px] sm:text-[9px] xl:text-[10px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 leading-none"
-                  data-interactive="true"
-                  title="Team Portal Login"
-                >
-                  <span className="text-[10px] sm:text-xs leading-none shrink-0 inline-flex items-center">🔑</span>
-                  <span className="whitespace-nowrap leading-none inline-flex items-center">LOGIN</span>
-                </button>
-              </>
-            )}
-
-            {/* Top-Right: Custom Cursor Toggle on PC, Sound Button on Mobile */}
-            <div className="hidden md:flex items-center shrink-0">
-              <CursorToggleButton variant="navbar" />
-            </div>
-            <div className="flex md:hidden items-center shrink-0">
-              <MobileNavbarSoundButton variant="navbar" />
-            </div>
-
-            {/* Mobile/Tablet Menu Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="h-[34px] w-[34px] sm:h-[36px] sm:w-[36px] box-border border-2 border-[#1f2e14] bg-[#2a1d13] hover:bg-[#3d2c1d] text-amber-200 xl:hidden shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.5),0_3px_0_#140d08] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer shrink-0 leading-none"
-              aria-label="Toggle navigation menu"
-              aria-expanded={mobileMenuOpen}
+            {/* Brand Logo */}
+            <Link
+              href="/"
+              className="flex items-center transition-transform hover:scale-105 active:scale-95 outline-none shrink-0"
+              aria-label="AGENTCRAFT Home"
               data-interactive="true"
             >
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
-                {mobileMenuOpen ? (
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M3 3h2v2H3V3zm4 4H5V5h2v2zm2 0h2V5H9v2zm2 2v2h-2V9h2zm-4 0v2H5V9h2zm6 4h-2v-2h2v2zM3 13h2v-2H3v2z"
-                  />
-                ) : (
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M2 4h14v2H2V4zm0 4h14v2H2V8zm0 4h14v2H2v-2z"
-                  />
-                )}
-              </svg>
-            </button>
+              <div className="relative h-6 sm:h-8 w-[95px] xs:w-[120px] sm:w-[140px] xl:w-[155px] 2xl:w-[180px] flex items-center shrink-0">
+                <Image
+                  src="/assets/agentcraft_navbar_logo.png"
+                  alt="AGENTCRAFT"
+                  width={180}
+                  height={32}
+                  className="h-6 sm:h-8 w-auto object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                  priority
+                />
+              </div>
+            </Link>
+
+            {/* Desktop Navigation Links (High-Contrast Minecraft HUD) - Shown on XL displays with ample room */}
+            <nav className="hidden xl:flex items-center gap-0.5 2xl:gap-1 px-1 2xl:px-2 py-1 bg-black/65 border border-[#3b2716]/90 rounded-md backdrop-blur-sm shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)] shrink-0">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="font-pixel text-[8px] xl:text-[8.5px] 2xl:text-[10px] font-bold tracking-wider uppercase text-neutral-100 hover:text-[#fbbf24] px-1 xl:px-1.5 2xl:px-2 py-1.5 min-h-[32px] flex items-center transition-all rounded hover:bg-[#2e1d0f]/90 border border-transparent hover:border-amber-500/60 cursor-pointer whitespace-nowrap"
+                  style={{
+                    textShadow:
+                      '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
+                  }}
+                  data-interactive="true"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* Right Action: Register CTA & Team Portal / Dashboard */}
+            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 pr-1 sm:pr-2">
+              {isAuthenticated ? (
+                <>
+                  {/* Authenticated Team/Admin Badge & Action */}
+                  <Link
+                    href={isAdmin ? '/admin' : '/dashboard'}
+                    className="h-[32px] sm:h-[35px] box-border border-2 border-[#065f46] bg-[#047857] hover:bg-[#059669] px-2 sm:px-2.5 font-pixel text-[7.5px] sm:text-[8px] 2xl:text-[9px] font-bold uppercase tracking-wider text-emerald-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#064e3b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
+                    data-interactive="true"
+                  >
+                    <span className="whitespace-nowrap leading-none">{isAdmin ? '🛡 ADMIN' : `⚔ ${team?.team_id || 'PORTAL'}`}</span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="h-[32px] sm:h-[35px] box-border border-2 border-[#7f1d1d] bg-[#991b1b] hover:bg-[#b91c1c] px-2 sm:px-2.5 font-pixel text-[7.5px] sm:text-[8px] 2xl:text-[9px] font-bold uppercase tracking-wider text-red-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#450a0a] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
+                    data-interactive="true"
+                    title="Logout"
+                  >
+                    <span className="whitespace-nowrap leading-none">EXIT</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  {/* Official Registration Form */}
+                  <a
+                    href={REGISTRATION_FORM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mc-shine h-[32px] sm:h-[35px] box-border border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] px-2 sm:px-2.5 2xl:px-3 font-pixel text-[7.5px] sm:text-[8px] 2xl:text-[9px] font-bold uppercase tracking-wider text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_3px_0_#382618] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer whitespace-nowrap shrink-0 leading-none"
+                    data-interactive="true"
+                    title="Register for AGENTCRAFT (Official Form)"
+                  >
+                    <span className="whitespace-nowrap leading-none inline-flex items-center">REGISTER ↗</span>
+                  </a>
+
+                  {/* Participant Team Login */}
+                  <button
+                    type="button"
+                    onClick={() => setIsLoginOpen(true)}
+                    className="h-[32px] sm:h-[35px] box-border border-2 border-[#3b0764] bg-[#2e0854] hover:bg-[#430c7a] px-2 sm:px-2.5 2xl:px-3 font-pixel text-[7.5px] sm:text-[8px] 2xl:text-[9px] font-bold uppercase tracking-wider text-purple-100 shadow-[inset_2px_2px_0_rgba(255,255,255,0.25),inset_-2px_-2px_0_rgba(0,0,0,0.5),0_3px_0_#17022b] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap shrink-0 leading-none"
+                    data-interactive="true"
+                    title="Team Portal Login"
+                  >
+                    <span className="text-[10px] sm:text-xs leading-none shrink-0 inline-flex items-center">🔑</span>
+                    <span className="whitespace-nowrap leading-none inline-flex items-center">LOGIN</span>
+                  </button>
+                </>
+              )}
+
+              {/* Mobile/Tablet Menu Button */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="h-[32px] w-[32px] sm:h-[35px] sm:w-[35px] box-border border-2 border-[#1f2e14] bg-[#2a1d13] hover:bg-[#3d2c1d] text-amber-200 xl:hidden shadow-[inset_1px_1px_0_rgba(255,255,255,0.15),inset_-1px_-1px_0_rgba(0,0,0,0.5),0_3px_0_#140d08] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center justify-center cursor-pointer shrink-0 leading-none"
+                aria-label="Toggle navigation menu"
+                aria-expanded={mobileMenuOpen}
+                data-interactive="true"
+              >
+                <svg width="17" height="17" viewBox="0 0 18 18" fill="currentColor">
+                  {mobileMenuOpen ? (
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M3 3h2v2H3V3zm4 4H5V5h2v2zm2 0h2V5H9v2zm2 2v2h-2V9h2zm-4 0v2H5V9h2zm6 4h-2v-2h2v2zM3 13h2v-2H3v2z"
+                    />
+                  ) : (
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2 4h14v2H2V4zm0 4h14v2H2V8zm0 4h14v2H2v-2z"
+                    />
+                  )}
+                </svg>
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Outside of dirt navbar: Custom Cursor Toggle on PC, Sound Button on Mobile */}
+        <div className="hidden md:flex items-center shrink-0">
+          <CursorToggleButton className="!w-8 !h-8 sm:!w-9 sm:!h-9 rounded border border-[#3f3f46] bg-[#18181b]/95 backdrop-blur-sm shadow-md hover:border-neutral-300" />
+        </div>
+        <div className="flex md:hidden items-center shrink-0">
+          <MobileNavbarSoundButton className="!w-8 !h-8 sm:!w-9 sm:!h-9 rounded border border-[#3f3f46] bg-[#18181b]/95 backdrop-blur-sm shadow-md hover:border-neutral-300" />
         </div>
 
         {/* Mobile Navigation Drawer */}
