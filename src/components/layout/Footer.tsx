@@ -84,7 +84,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#docs" className="hover:text-amber-400 transition-colors inline-flex items-center gap-1.5" data-interactive="true">
-                  <span>→</span> Rulebook & PPT Template
+                  <span>→</span> Official Docs & Templates
                 </a>
               </li>
               <li>

@@ -48,6 +48,14 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
   },
   {
     id: 5,
+    name: 'Archival Chest',
+    sectionId: '#docs',
+    icon: '/assets/items/chest.png',
+    tooltip: 'Docs & Pitch Template',
+    rarity: 'rare',
+  },
+  {
+    id: 6,
     name: 'Golden Apple',
     sectionId: '#prizes',
     icon: '/assets/items/golden_apple.png',
@@ -55,7 +63,7 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
     rarity: 'epic',
   },
   {
-    id: 6,
+    id: 7,
     name: 'Guild Emerald',
     sectionId: '#sponsors',
     icon: '/assets/items/emerald.png',
@@ -63,7 +71,7 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
     rarity: 'rare',
   },
   {
-    id: 7,
+    id: 8,
     name: 'Redstone Repeater',
     sectionId: '#faqs',
     icon: '/assets/items/redstone.png',
@@ -71,19 +79,11 @@ const HOTBAR_SLOTS: HotbarSlot[] = [
     rarity: 'rare',
   },
   {
-    id: 8,
-    name: 'Eye of Ender',
-    sectionId: '#registration',
-    icon: '/assets/items/ender_eye.png',
-    tooltip: 'Register ↗',
-    rarity: 'epic',
-  },
-  {
     id: 9,
-    name: 'Smithing Hammer',
-    sectionId: '#hero',
-    icon: '/assets/items/iron_pickaxe.png',
-    tooltip: 'Hammer Strike Impact!',
+    name: 'Eye of Ender',
+    sectionId: '#contact',
+    icon: '/assets/items/ender_eye.png',
+    tooltip: 'Coordinators & Support',
     rarity: 'epic',
   },
 ];
@@ -97,7 +97,6 @@ export default function MinecraftHotbar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const tooltipTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
-
   // Track active section and scroll progress
   useEffect(() => {
     const handleScroll = () => {
@@ -106,7 +105,17 @@ export default function MinecraftHotbar() {
       setScrollProgress(Math.min(1, Math.max(0, progress)));
 
       // Detect which section is currently on screen
-      const sections = ['#about', '#rounds', '#timeline', '#rules', '#prizes', '#sponsors', '#faqs', '#registration'];
+      const sections = [
+        '#about',
+        '#rounds',
+        '#timeline',
+        '#rules',
+        '#docs',
+        '#prizes',
+        '#sponsors',
+        '#faqs',
+        '#contact',
+      ];
       let current = 1;
       for (let i = 0; i < sections.length; i++) {
         const el = document.querySelector(sections[i]);
@@ -146,14 +155,13 @@ export default function MinecraftHotbar() {
       setHoveredSlot(null);
     }, 1800);
 
+    const target = document.querySelector(slot.sectionId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+
     if (slotId === 9) {
-      // Slot 9 triggers a celebratory slash attack!
       triggerLevelUpCelebration();
-    } else {
-      const target = document.querySelector(slot.sectionId);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
     }
   }, [triggerLevelUpCelebration]);
 
