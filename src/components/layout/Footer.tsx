@@ -83,6 +83,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
+                <a href="#docs" className="hover:text-amber-400 transition-colors inline-flex items-center gap-1.5" data-interactive="true">
+                  <span>→</span> Rulebook & PPT Template
+                </a>
+              </li>
+              <li>
                 <a href="#prizes" className="hover:text-emerald-400 transition-colors inline-flex items-center gap-1.5" data-interactive="true">
                   <span>→</span> Championship Perks
                 </a>
@@ -94,9 +99,31 @@ export default function Footer() {
           <div className="sm:col-span-1 lg:col-span-4 lg:pl-4 flex flex-col justify-between">
             <div>
               <h4 className="font-pixel text-xs text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-                <span className="text-amber-400">★</span> Quick Actions
+                <span className="text-amber-400">★</span> Quick Actions & Downloads
               </h4>
               <ul className="space-y-2.5 text-xs font-pixel text-neutral-400">
+                <li>
+                  <a
+                    href="/docs/AgentCraft_Official_Rulebook.pdf"
+                    download="AgentCraft_Official_Rulebook.pdf"
+                    className="hover:text-emerald-300 transition-colors text-emerald-400 inline-flex items-center gap-1.5"
+                    data-interactive="true"
+                    title="Download Official Rulebook (PDF, 2.68 MB)"
+                  >
+                    <span>📜</span> Download Rulebook v1.0 (PDF) ⬇
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/docs/AgentCraft_Template.pptx"
+                    download="AgentCraft_Template.pptx"
+                    className="hover:text-amber-300 transition-colors text-amber-400 inline-flex items-center gap-1.5"
+                    data-interactive="true"
+                    title="Download Round 1 Presentation Template (PPTX, 3.76 MB)"
+                  >
+                    <span>📊</span> Download PPT Template (PPTX) ⬇
+                  </a>
+                </li>
                 <li>
                   <a
                     href={EVENT_DATA.registration.url}

@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { label: 'ROUNDS', href: '#rounds' },
   { label: 'TIMELINE', href: '#timeline' },
   { label: 'RULES', href: '#rules' },
+  { label: 'DOCS', href: '#docs' },
   { label: 'PRIZES', href: '#prizes' },
   { label: 'SPONSORS', href: '#sponsors' },
   { label: 'FAQS', href: '#faqs' },

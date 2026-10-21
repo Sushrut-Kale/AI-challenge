@@ -146,6 +146,52 @@ export default function RulesSection() {
                 </p>
               </div>
             </div>
+
+            {/* Official Downloads & Interactive Reader Banner */}
+            <div className="mt-6 p-4 sm:p-5 bg-[#0f0e0d] border-2 border-[#523c28] rounded flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)]">
+              <div className="flex items-center gap-3">
+                <span className="text-2xl sm:text-3xl shrink-0">📜</span>
+                <div>
+                  <h4 className="font-pixel text-xs sm:text-sm text-amber-300 uppercase mb-0.5 font-bold">
+                    Official Rulebook & Round 1 PPT Template Available
+                  </h4>
+                  <p className="font-terminal text-xs sm:text-sm text-neutral-300">
+                    Access the complete 14-page regulatory charter, 8 SDG challenge tracks, 100-pt rubric, and official 9-slide deck.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.dispatchEvent(
+                        new CustomEvent('agentcraft:open-document-viewer', {
+                          detail: { docId: 'rulebook', page: 1 },
+                        })
+                      );
+                    }
+                  }}
+                  className="flex-1 sm:flex-initial px-3.5 py-2 border-2 border-[#065f46] bg-[#059669] hover:bg-[#10b981] font-pixel text-[8px] sm:text-[9px] uppercase font-bold text-white shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.5)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1 cursor-pointer"
+                  data-interactive="true"
+                >
+                  <span>👁</span>
+                  <span>VIEW ONLINE</span>
+                </button>
+
+                <a
+                  href="/docs/AgentCraft_Official_Rulebook.pdf"
+                  download="AgentCraft_Official_Rulebook.pdf"
+                  className="flex-1 sm:flex-initial px-3.5 py-2 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-[8px] sm:text-[9px] uppercase font-bold text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1 cursor-pointer"
+                  data-interactive="true"
+                  title="Download Rulebook (PDF, 2.68 MB)"
+                >
+                  <span>⬇</span>
+                  <span>DOWNLOAD (2.68 MB)</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -10,9 +10,11 @@ import TracksSection from '@/components/sections/TracksSection';
 import TimelineSection from '@/components/sections/TimelineSection';
 import RulesSection from '@/components/sections/RulesSection';
 import PrizesSection from '@/components/sections/PrizesSection';
+import DocumentsSection from '@/components/sections/DocumentsSection';
 import SponsorsSection from '@/components/sections/SponsorsSection';
 import FAQSection from '@/components/sections/FAQSection';
 import ContactSection from '@/components/sections/ContactSection';
+import DocumentViewerModal from '@/components/documents/DocumentViewerModal';
 
 export default function HomePage() {
   const [heroProgress, setHeroProgress] = useState(0);
@@ -50,12 +52,16 @@ export default function HomePage() {
         <TracksSection />
         <TimelineSection />
         <RulesSection />
+        <DocumentsSection />
         <PrizesSection />
         <SponsorsSection />
         <FAQSection />
         <ContactSection />
         <Footer />
       </main>
+
+      {/* Global Interactive Document & Presentation Template Viewer */}
+      <DocumentViewerModal />
     </>
   );
 }
