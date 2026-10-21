@@ -108,9 +108,20 @@ export default function Footer() {
                     download="AgentCraft_Official_Rulebook.pdf"
                     className="hover:text-emerald-300 transition-colors text-emerald-400 inline-flex items-center gap-1.5"
                     data-interactive="true"
-                    title="Download Official Rulebook (PDF, 2.68 MB)"
+                    title="Download Official Rulebook"
                   >
-                    <span>📜</span> Download Rulebook v1.0 (PDF) ⬇
+                    <span>📜</span> Download Official Rulebook (PDF) ⬇
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/docs/AgentCraft_Problem_Tracks.pdf"
+                    download="AgentCraft_Problem_Tracks.pdf"
+                    className="hover:text-sky-300 transition-colors text-sky-400 inline-flex items-center gap-1.5"
+                    data-interactive="true"
+                    title="Download Problem Tracks & Technical Specs"
+                  >
+                    <span>🎯</span> Download Problem Tracks (PDF) ⬇
                   </a>
                 </li>
                 <li>
@@ -119,7 +130,7 @@ export default function Footer() {
                     download="AgentCraft_Template.pptx"
                     className="hover:text-amber-300 transition-colors text-amber-400 inline-flex items-center gap-1.5"
                     data-interactive="true"
-                    title="Download Round 1 Presentation Template (PPTX, 3.76 MB)"
+                    title="Download Round 1 Presentation Template"
                   >
                     <span>📊</span> Download PPT Template (PPTX) ⬇
                   </a>

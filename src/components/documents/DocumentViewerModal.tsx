@@ -5,17 +5,19 @@ import Image from 'next/image';
 import {
   OFFICIAL_DOCUMENTS,
   RULEBOOK_SECTIONS,
+  TRACKS_SECTIONS,
   PRESENTATION_SLIDES,
   DocumentItem,
+  RulebookSection,
 } from '@/data/event';
 import PixelBadge from '@/components/ui/PixelBadge';
 import { playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 
 export interface DocumentViewerState {
   isOpen: boolean;
-  activeDocId: 'rulebook' | 'template';
-  currentPage: number; // 1 to 14
-  currentSlide: number; // 1 to 9
+  activeDocId: 'rulebook' | 'tracks' | 'template';
+  currentPage: number;
+  currentSlide: number;
 }
 
 export default function DocumentViewerModal() {
@@ -33,7 +35,7 @@ export default function DocumentViewerModal() {
   useEffect(() => {
     const handleOpen = (e: Event) => {
       const customEvent = e as CustomEvent<{
-        docId?: 'rulebook' | 'template';
+        docId?: 'rulebook' | 'tracks' | 'template';
         page?: number;
         slide?: number;
       }>;
@@ -41,10 +43,12 @@ export default function DocumentViewerModal() {
       const page = customEvent.detail?.page || 1;
       const slide = customEvent.detail?.slide || 1;
 
+      const maxPages = docId === 'rulebook' ? 14 : docId === 'tracks' ? 10 : 1;
+
       setState({
         isOpen: true,
         activeDocId: docId,
-        currentPage: Math.max(1, Math.min(14, page)),
+        currentPage: Math.max(1, Math.min(maxPages, page)),
         currentSlide: Math.max(1, Math.min(9, slide)),
       });
       setZoomLevel(100);
@@ -66,6 +70,12 @@ export default function DocumentViewerModal() {
     setState((prev) => ({ ...prev, isOpen: false }));
   }, []);
 
+  const currentDoc: DocumentItem =
+    OFFICIAL_DOCUMENTS.find((d) => d.id === state.activeDocId) ||
+    OFFICIAL_DOCUMENTS[0];
+  const isTemplate = state.activeDocId === 'template';
+  const totalPages = currentDoc.totalPages || 1;
+
   // Keyboard navigation
   useEffect(() => {
     if (!state.isOpen) return;
@@ -74,10 +84,10 @@ export default function DocumentViewerModal() {
       if (e.key === 'Escape') {
         closeModal();
       } else if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-        if (state.activeDocId === 'rulebook') {
+        if (!isTemplate) {
           setState((prev) => ({
             ...prev,
-            currentPage: Math.min(14, prev.currentPage + 1),
+            currentPage: Math.min(totalPages, prev.currentPage + 1),
           }));
         } else {
           setState((prev) => ({
@@ -86,7 +96,7 @@ export default function DocumentViewerModal() {
           }));
         }
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        if (state.activeDocId === 'rulebook') {
+        if (!isTemplate) {
           setState((prev) => ({
             ...prev,
             currentPage: Math.max(1, prev.currentPage - 1),
@@ -102,23 +112,23 @@ export default function DocumentViewerModal() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [state.isOpen, state.activeDocId, closeModal]);
+  }, [state.isOpen, isTemplate, totalPages, closeModal]);
 
   if (!state.isOpen) return null;
 
-  const currentDoc: DocumentItem =
-    OFFICIAL_DOCUMENTS.find((d) => d.id === state.activeDocId) ||
-    OFFICIAL_DOCUMENTS[0];
-  const isRulebook = state.activeDocId === 'rulebook';
   const currentSlideData = PRESENTATION_SLIDES[state.currentSlide - 1];
+  const activeSections: RulebookSection[] =
+    state.activeDocId === 'tracks' ? TRACKS_SECTIONS : RULEBOOK_SECTIONS;
 
-  const handleSwitchDoc = (docId: 'rulebook' | 'template') => {
+  const handleSwitchDoc = (docId: 'rulebook' | 'tracks' | 'template') => {
     try {
       playMinecraftClick();
     } catch {}
     setState((prev) => ({
       ...prev,
       activeDocId: docId,
+      currentPage: 1,
+      currentSlide: 1,
     }));
     setZoomLevel(100);
   };
@@ -136,6 +146,11 @@ export default function DocumentViewerModal() {
     } catch {}
     setState((prev) => ({ ...prev, currentSlide: slide }));
   };
+
+  const pageImageSrc =
+    state.activeDocId === 'tracks'
+      ? `/docs/preview/tracks_page_${state.currentPage}.png`
+      : `/docs/preview/rulebook_page_${state.currentPage}.png`;
 
   return (
     <div
@@ -155,31 +170,44 @@ export default function DocumentViewerModal() {
         {/* Top Header / Mode Switcher */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-3 border-b-2 border-[#8b8b8b] shrink-0">
           {/* Document Tabs */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => handleSwitchDoc('rulebook')}
-              className={`px-2.5 sm:px-3.5 py-1.5 font-pixel text-[9px] sm:text-[11px] uppercase tracking-wider font-bold transition-all flex items-center gap-1.5 border-2 ${
-                isRulebook
+              className={`px-2.5 sm:px-3 py-1.5 font-pixel text-[8px] sm:text-[10px] uppercase tracking-wider font-bold transition-all flex items-center gap-1.5 border-2 ${
+                state.activeDocId === 'rulebook'
                   ? 'border-[#1b3a1a] bg-[#2e5d2b] text-white shadow-[inset_2px_2px_0_#4ade80,inset_-2px_-2px_0_#142b13]'
                   : 'border-[#71717a] bg-[#8a8a8a] text-neutral-800 hover:text-white hover:bg-[#737373]'
               }`}
             >
               <span>📜</span>
-              <span>RULEBOOK v1.0 (PDF)</span>
+              <span>RULEBOOK</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSwitchDoc('tracks')}
+              className={`px-2.5 sm:px-3 py-1.5 font-pixel text-[8px] sm:text-[10px] uppercase tracking-wider font-bold transition-all flex items-center gap-1.5 border-2 ${
+                state.activeDocId === 'tracks'
+                  ? 'border-[#0369a1] bg-[#0284c7] text-white shadow-[inset_2px_2px_0_#7dd3fc,inset_-2px_-2px_0_#075985]'
+                  : 'border-[#71717a] bg-[#8a8a8a] text-neutral-800 hover:text-white hover:bg-[#737373]'
+              }`}
+            >
+              <span>🎯</span>
+              <span>PROBLEM TRACKS</span>
             </button>
 
             <button
               type="button"
               onClick={() => handleSwitchDoc('template')}
-              className={`px-2.5 sm:px-3.5 py-1.5 font-pixel text-[9px] sm:text-[11px] uppercase tracking-wider font-bold transition-all flex items-center gap-1.5 border-2 ${
-                !isRulebook
+              className={`px-2.5 sm:px-3 py-1.5 font-pixel text-[8px] sm:text-[10px] uppercase tracking-wider font-bold transition-all flex items-center gap-1.5 border-2 ${
+                state.activeDocId === 'template'
                   ? 'border-[#78350f] bg-[#d97706] text-white shadow-[inset_2px_2px_0_#fde68a,inset_-2px_-2px_0_#451a03]'
                   : 'border-[#71717a] bg-[#8a8a8a] text-neutral-800 hover:text-white hover:bg-[#737373]'
               }`}
             >
               <span>📊</span>
-              <span>ROUND 1 TEMPLATE (PPTX)</span>
+              <span>PPT TEMPLATE</span>
             </button>
           </div>
 
@@ -189,7 +217,7 @@ export default function DocumentViewerModal() {
               href={currentDoc.fileUrl}
               download={currentDoc.fileName}
               className="border-2 border-[#166534] bg-[#22c55e] hover:bg-[#16a34a] text-white px-2.5 sm:px-3 py-1 sm:py-1.5 font-pixel text-[8px] sm:text-[10px] uppercase font-bold tracking-wider shadow-[inset_2px_2px_0_#86efac,inset_-2px_-2px_0_#14532d] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 flex items-center gap-1 cursor-pointer"
-              title={`Download ${currentDoc.fileName} (${currentDoc.fileSize})`}
+              title={`Download ${currentDoc.fileName}`}
               onClick={() => {
                 try {
                   playMinecraftClick();
@@ -197,8 +225,7 @@ export default function DocumentViewerModal() {
               }}
             >
               <span>⬇</span>
-              <span className="hidden xs:inline">DOWNLOAD</span>
-              <span>({currentDoc.fileSize})</span>
+              <span>DOWNLOAD</span>
             </a>
 
             <a
@@ -227,8 +254,12 @@ export default function DocumentViewerModal() {
         {/* Subheader / File Info Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 bg-[#404040] text-neutral-200 border border-[#2b2b2b] mb-3 text-xs font-terminal shrink-0">
           <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
-            <span className="text-amber-400 font-pixel text-[10px]">
-              {isRulebook ? 'DOC // RULEBOOK' : 'DOC // PRESENTATION TEMPLATE'}
+            <span className="text-amber-400 font-pixel text-[9px]">
+              {state.activeDocId === 'rulebook'
+                ? 'RULEBOOK'
+                : state.activeDocId === 'tracks'
+                ? 'PROBLEM TRACKS'
+                : 'ROUND 1 TEMPLATE'}
             </span>
             <span className="opacity-40">|</span>
             <span className="font-bold text-white text-[11px] sm:text-xs">
@@ -236,12 +267,12 @@ export default function DocumentViewerModal() {
             </span>
             <span className="opacity-40">•</span>
             <span className="text-emerald-400 font-pixel text-[9px]">
-              {currentDoc.version}
+              {currentDoc.formatLabel}
             </span>
           </div>
 
           <div className="flex items-center gap-3 font-pixel text-[9px] text-neutral-300">
-            {isRulebook ? (
+            {!isTemplate ? (
               <>
                 <button
                   type="button"
@@ -250,7 +281,9 @@ export default function DocumentViewerModal() {
                 >
                   {showOutline ? 'HIDE INDEX' : 'SHOW INDEX'}
                 </button>
-                <span>PAGE {state.currentPage} OF 14</span>
+                <span>
+                  PAGE {state.currentPage} OF {totalPages}
+                </span>
               </>
             ) : (
               <span>SLIDE {state.currentSlide} OF 9</span>
@@ -260,18 +293,18 @@ export default function DocumentViewerModal() {
 
         {/* Main Content Area */}
         <div className="relative flex-1 flex gap-3 min-h-0 overflow-hidden">
-          {isRulebook ? (
-            /* =================== RULEBOOK PDF VIEWER =================== */
+          {!isTemplate ? (
+            /* =================== PDF VIEWER (RULEBOOK & TRACKS) =================== */
             <div className="flex-1 flex gap-3 h-full min-h-0 overflow-hidden">
               {/* Optional Section Navigator Index */}
               {showOutline && (
                 <div className="hidden lg:flex flex-col w-64 bg-[#2e2e2e] border-2 border-[#1c1c1c] p-2 text-neutral-200 overflow-y-auto shrink-0 shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]">
                   <div className="pb-1.5 mb-2 border-b border-white/10 font-pixel text-[9px] text-amber-400 flex items-center justify-between">
                     <span>📑 TABLE OF CONTENTS</span>
-                    <span>23 SECTIONS</span>
+                    <span>{activeSections.length} SECTIONS</span>
                   </div>
                   <div className="space-y-1 font-terminal text-xs">
-                    {RULEBOOK_SECTIONS.map((sec) => {
+                    {activeSections.map((sec) => {
                       const isActive = state.currentPage === sec.page;
                       return (
                         <button
@@ -321,15 +354,15 @@ export default function DocumentViewerModal() {
                       ◀ PREV
                     </button>
                     <span className="px-2 font-bold text-white text-[10px]">
-                      {state.currentPage} / 14
+                      {state.currentPage} / {totalPages}
                     </span>
                     <button
                       type="button"
-                      disabled={state.currentPage >= 14}
+                      disabled={state.currentPage >= totalPages}
                       onClick={() =>
                         setState((prev) => ({
                           ...prev,
-                          currentPage: Math.min(14, prev.currentPage + 1),
+                          currentPage: Math.min(totalPages, prev.currentPage + 1),
                         }))
                       }
                       className="px-2 py-1 bg-[#3a3a3a] hover:bg-[#4a4a4a] disabled:opacity-40 border border-[#525252] text-[9px] cursor-pointer"
@@ -383,11 +416,10 @@ export default function DocumentViewerModal() {
                       maxWidth: '100%',
                     }}
                   >
-                    {/* Rendered PDF Page Preview Image */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/docs/preview/rulebook_page_${state.currentPage}.png`}
-                      alt={`AgentCraft Official Rulebook Page ${state.currentPage}`}
+                      src={pageImageSrc}
+                      alt={`Document Page ${state.currentPage}`}
                       className="max-h-[70vh] w-auto object-contain bg-white block"
                       loading="eager"
                     />
@@ -396,7 +428,7 @@ export default function DocumentViewerModal() {
 
                 {/* Bottom Quick Page Scroller */}
                 <div className="p-2 bg-[#212121] border-t border-[#333] flex items-center justify-center gap-1 overflow-x-auto shrink-0">
-                  {Array.from({ length: 14 }, (_, i) => i + 1).map((p) => (
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                     <button
                       key={p}
                       type="button"
@@ -557,7 +589,7 @@ export default function DocumentViewerModal() {
                       } catch {}
                     }}
                   >
-                    <span>⬇ DOWNLOAD COMPLETE 9-SLIDE PPTX (3.76 MB)</span>
+                    <span>⬇ DOWNLOAD PPTX</span>
                   </a>
                 </div>
               </div>

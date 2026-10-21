@@ -566,15 +566,14 @@ export interface DocumentItem {
   fileName: string;
   fileUrl: string;
   fileType: 'pdf' | 'pptx';
-  fileSize: string;
-  sizeBytes: number;
-  countLabel: string;
-  version: string;
+  formatLabel: string;
   badge: string;
   badgeVariant: 'emerald' | 'gold' | 'diamond' | 'stone';
   itemIcon: string;
   description: string;
-  highlights: string[];
+  previewPrefix?: string;
+  totalPages?: number;
+  totalSlides?: number;
 }
 
 export interface RulebookSection {
@@ -604,54 +603,67 @@ export interface EvaluationCriterion {
 export const OFFICIAL_DOCUMENTS: DocumentItem[] = [
   {
     id: 'rulebook',
-    title: 'AGENTCRAFT Official Rulebook',
-    shortTitle: 'Official Rulebook',
-    subtitle: 'Comprehensive Regulatory Dossier & Competition Framework',
+    title: 'Official Rulebook',
+    shortTitle: 'Rulebook',
+    subtitle: 'Regulations, Streams & Guidelines',
     fileName: 'AgentCraft_Official_Rulebook.pdf',
     fileUrl: '/docs/AgentCraft_Official_Rulebook.pdf',
     fileType: 'pdf',
-    fileSize: '2.68 MB',
-    sizeBytes: 2678577,
-    countLabel: '14 Pages',
-    version: 'v1.0 (Official)',
-    badge: 'REGULATORY DOSSIER',
+    formatLabel: 'PDF · 14 Pages',
+    badge: 'OFFICIAL RULEBOOK',
     badgeVariant: 'emerald',
     itemIcon: '/assets/items/book_quill.png',
     description:
-      'The authoritative 14-page charter covering eligibility, separate First Year (Stream A) and Senior (Stream B) streams, all 8 SDG problem tracks, the 100-point judging rubric, and academic integrity policies.',
-    highlights: [
-      '14 pages detailing complete challenge parameters & submission standards',
-      'Stream A (FY) vs Stream B (SY/TY/Final Year) evaluation matrix',
-      'All 8 SDG Tracks (VidyaMitra, KrishiMitra, AarogyaSetu, Open Innovation, etc.)',
-      'Rigorous 100-Point Scoring Rubric across autonomy, depth & safety',
-      'Responsible AI, dataset integrity, and grand finale protocol at MIT AOE',
-    ],
+      'Authoritative charter covering eligibility, First Year (Stream A) vs Senior (Stream B) streams, timeline, 100-point rubric, and code of conduct.',
+    previewPrefix: '/docs/preview/rulebook_page_',
+    totalPages: 14,
+  },
+  {
+    id: 'tracks',
+    title: 'Challenge Problem Tracks',
+    shortTitle: 'Problem Tracks',
+    subtitle: 'Technical Specifications & Engineering Standards',
+    fileName: 'AgentCraft_Problem_Tracks.pdf',
+    fileUrl: '/docs/AgentCraft_Problem_Tracks.pdf',
+    fileType: 'pdf',
+    formatLabel: 'PDF · 10 Pages',
+    badge: 'TECHNICAL SPECS',
+    badgeVariant: 'diamond',
+    itemIcon: '/assets/items/ender_eye.png',
+    description:
+      'Detailed specifications for all challenge tracks, simulation targets, sensor disruptions, advanced requirements, and shared engineering standards.',
+    previewPrefix: '/docs/preview/tracks_page_',
+    totalPages: 10,
   },
   {
     id: 'template',
-    title: 'AgentCraft Round 1 Presentation Template',
-    shortTitle: 'Pitch Deck Template',
-    subtitle: 'Official 9-Slide PowerPoint Architecture & Prototype Deck',
+    title: 'Round 1 Pitch Template',
+    shortTitle: 'Pitch Deck',
+    subtitle: 'Official 9-Slide Presentation Deck',
     fileName: 'AgentCraft_Template.pptx',
     fileUrl: '/docs/AgentCraft_Template.pptx',
     fileType: 'pptx',
-    fileSize: '3.76 MB',
-    sizeBytes: 3758329,
-    countLabel: '9 Slides',
-    version: 'v1.0 (Official)',
-    badge: 'ROUND 1 PPT TEMPLATE',
+    formatLabel: 'PPTX · 9 Slides',
+    badge: 'ROUND 1 TEMPLATE',
     badgeVariant: 'gold',
     itemIcon: '/assets/items/chest.png',
     description:
-      'Mandatory PowerPoint pitch deck template for Round 1 online submission (deadline: 2nd November 2026). Standardized structure to present real-world problems, agentic workflows, architecture, and safety safeguards.',
-    highlights: [
-      'Standardized 9-slide layout required for Round 1 screening submission',
-      'Covers problem context, proposed multi-agent architecture & tech stack',
-      'Dedicated slides for agentic workflow, feedback loops & tool execution',
-      'Targeted beneficiaries, SDG impact metrics & benchmark feasibility',
-      'Responsible AI statement, safety boundaries & failure recovery declaration',
-    ],
+      'Standardized PowerPoint template for Round 1 online screening submission, covering problem context, agentic workflow, architecture, and safety.',
+    totalSlides: 9,
   },
+];
+
+export const TRACKS_SECTIONS: RulebookSection[] = [
+  { num: '01', title: 'Cover & Challenge Overview', page: 1, summary: 'National AI Agent Challenge overview & core principles.' },
+  { num: '02', title: 'Technical Requirements & Principles', page: 2, summary: 'Autonomous AI agents that plan, use tools & verify outcomes.' },
+  { num: '03', title: 'AgentCraft Challenge Framework', page: 3, summary: 'Simulated block worlds, dynamic environments & tool APIs.' },
+  { num: '04', title: 'Track 01 & 02: VidyaMitra & KrishiMitra', page: 4, summary: 'Adaptive learning (SDG 4) & smart irrigation (SDG 2).' },
+  { num: '05', title: 'Track 03: AarogyaSetu AI', page: 5, summary: 'Evidence-based health navigation & triage (SDG 3).' },
+  { num: '06', title: 'Track 04 & 05: GreenGuardian & RakshaGrid', page: 6, summary: 'Circular resource recovery (SDG 12) & disaster response (SDG 11 & 13).' },
+  { num: '07', title: 'Track 06: GridMind', page: 7, summary: 'Microgrid & renewable energy management (SDG 7).' },
+  { num: '08', title: 'Track 07: CyberSentinel', page: 8, summary: 'Defensive cyber triage & sandbox containment (SDG 9).' },
+  { num: '09', title: 'Shared Engineering Requirements', page: 9, summary: 'Autonomy, state memory, tool execution & responsible AI.' },
+  { num: '10', title: 'Official 100-Point Judging Rubric', page: 10, summary: 'Autonomy, depth, safety, performance, innovation & demo.' },
 ];
 
 export const RULEBOOK_SECTIONS: RulebookSection[] = [

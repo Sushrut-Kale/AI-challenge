@@ -314,7 +314,7 @@ export default function MinecraftPanel({
                     download="AgentCraft_Official_Rulebook.pdf"
                     className="flex-1 sm:flex-initial px-2.5 py-1.5 bg-[#fbbf24] hover:bg-[#f59e0b] text-black text-[9px] font-pixel font-bold uppercase border border-[#7a4f05] cursor-pointer"
                   >
-                    ⬇ PDF (2.68M)
+                    ⬇ Download
                   </a>
                 </div>
               </div>

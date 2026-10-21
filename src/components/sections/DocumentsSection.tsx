@@ -12,7 +12,7 @@ import { playMinecraftClick } from '@/components/ui/MinecraftAudioManager';
 export default function DocumentsSection() {
   const [expandedRubric, setExpandedRubric] = useState<string | null>(null);
 
-  const openDocumentViewer = (docId: 'rulebook' | 'template', page = 1) => {
+  const openDocumentViewer = (docId: 'rulebook' | 'tracks' | 'template', page = 1) => {
     try {
       playMinecraftClick();
     } catch {}
@@ -35,20 +35,27 @@ export default function DocumentsSection() {
   return (
     <SectionContainer id="docs" variant="default" showTopSeam>
       <SectionHeading
-        tag="OFFICIAL ARCHIVES & ARTIFACTS"
+        tag="OFFICIAL ARCHIVES"
         title="DOCUMENTS & TEMPLATES"
-        subtitle="Download or view the official regulatory charter, Round 1 presentation blueprint, and the complete 100-point judging matrix."
+        subtitle="Official regulatory charter, challenge track specifications, and Round 1 presentation pitch template."
       />
 
-      {/* Main Two Documents Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
+      {/* 3 Clean Document Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14">
         {OFFICIAL_DOCUMENTS.map((doc: DocumentItem) => {
           const isRulebook = doc.id === 'rulebook';
+          const isTracks = doc.id === 'tracks';
+
+          const accentColor = isRulebook
+            ? '#10b981'
+            : isTracks
+            ? '#38bdf8'
+            : '#f59e0b';
 
           return (
             <PixelCard
               key={doc.id}
-              variant={isRulebook ? 'emerald' : 'gold'}
+              variant={isRulebook ? 'emerald' : isTracks ? 'stone' : 'gold'}
               title={doc.title}
               headerIcon={
                 <Image
@@ -64,56 +71,41 @@ export default function DocumentsSection() {
                   {doc.badge}
                 </PixelBadge>
               }
-              accentBarColor={isRulebook ? '#10b981' : '#f59e0b'}
+              accentBarColor={accentColor}
               className="h-full flex flex-col justify-between"
             >
               <div>
-                {/* Meta details bar */}
-                <div className="flex flex-wrap items-center gap-2 mb-3 font-pixel text-[10px] text-amber-300 font-bold">
-                  <span>📄 {doc.countLabel}</span>
-                  <span className="opacity-40">•</span>
-                  <span>💾 {doc.fileSize}</span>
-                  <span className="opacity-40">•</span>
-                  <span className="text-emerald-400">{doc.version}</span>
+                {/* Format Pill */}
+                <div className="flex items-center gap-2 mb-3 font-pixel text-[10px] text-amber-300 font-bold">
+                  <span>📄 {doc.formatLabel}</span>
                 </div>
 
-                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed mb-5">
+                <p className="font-terminal text-sm sm:text-base text-neutral-200 leading-relaxed mb-6">
                   {doc.description}
                 </p>
-
-                {/* Highlights List */}
-                <div className="space-y-2 mb-6 p-3.5 bg-black/40 border border-[#3d2c1c] rounded">
-                  <span className="font-pixel text-[8px] sm:text-[9px] text-neutral-400 block uppercase tracking-wider mb-1.5">
-                    Included in this artifact:
-                  </span>
-                  <div className="space-y-1.5 text-xs sm:text-sm font-terminal text-neutral-300">
-                    {doc.highlights.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2">
-                        <span className="text-amber-400 font-pixel text-[8px] mt-0.5 shrink-0">
-                          ►
-                        </span>
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               {/* Action Buttons: View, Download, Open Tab */}
-              <div className="pt-4 border-t border-[#3d2c1c] flex flex-wrap items-center gap-2.5">
+              <div className="pt-4 border-t border-[#3d2c1c] flex items-center gap-2">
                 {/* View Button */}
                 <button
                   type="button"
-                  onClick={() => openDocumentViewer(doc.id as 'rulebook' | 'template')}
-                  className={`flex-1 min-w-[130px] px-3.5 py-2.5 font-pixel text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-white border-2 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.5)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1.5 cursor-pointer ${
+                  onClick={() =>
+                    openDocumentViewer(
+                      doc.id as 'rulebook' | 'tracks' | 'template'
+                    )
+                  }
+                  className={`flex-1 px-3 py-2.5 font-pixel text-[9px] uppercase font-bold tracking-wider text-white border-2 shadow-[inset_2px_2px_0_rgba(255,255,255,0.3),inset_-2px_-2px_0_rgba(0,0,0,0.5)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1.5 cursor-pointer ${
                     isRulebook
                       ? 'border-[#065f46] bg-[#059669] hover:bg-[#10b981]'
+                      : isTracks
+                      ? 'border-[#0369a1] bg-[#0284c7] hover:bg-[#38bdf8]'
                       : 'border-[#78350f] bg-[#d97706] hover:bg-[#f59e0b]'
                   }`}
                   data-interactive="true"
                 >
                   <span>👁</span>
-                  <span>{isRulebook ? 'VIEW RULEBOOK' : 'VIEW 9 SLIDES'}</span>
+                  <span>VIEW</span>
                 </button>
 
                 {/* Direct Download Button */}
@@ -125,12 +117,12 @@ export default function DocumentsSection() {
                       playMinecraftClick();
                     } catch {}
                   }}
-                  className="flex-1 min-w-[130px] px-3.5 py-2.5 font-pixel text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-[#1a1206] bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#7a4f05] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="flex-1 px-3 py-2.5 font-pixel text-[9px] uppercase font-bold tracking-wider text-[#1a1206] bg-[#fbbf24] hover:bg-[#f59e0b] border-2 border-[#7a4f05] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1.5 cursor-pointer"
                   data-interactive="true"
                   title={`Download ${doc.fileName}`}
                 >
                   <span>⬇</span>
-                  <span>DOWNLOAD ({doc.fileSize})</span>
+                  <span>DOWNLOAD</span>
                 </a>
 
                 {/* New Tab Button */}
@@ -138,7 +130,7 @@ export default function DocumentsSection() {
                   href={doc.fileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2.5 font-pixel text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-neutral-300 bg-[#1e293b] hover:bg-[#334155] border-2 border-[#0f172a] shadow-[inset_2px_2px_0_rgba(255,255,255,0.2),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1 cursor-pointer"
+                  className="px-2.5 py-2.5 font-pixel text-[9px] uppercase font-bold text-neutral-300 bg-[#1e293b] hover:bg-[#334155] border-2 border-[#0f172a] shadow-[inset_2px_2px_0_rgba(255,255,255,0.2),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center cursor-pointer"
                   data-interactive="true"
                   title="Open file in new tab"
                 >
@@ -150,17 +142,17 @@ export default function DocumentsSection() {
         })}
       </div>
 
-      {/* Official 100-Point Judging Matrix (Section 11) */}
+      {/* Official 100-Point Judging Matrix */}
       <div className="max-w-6xl mx-auto mb-12">
         <div className="text-center mb-8">
           <span className="font-pixel text-[10px] sm:text-xs text-amber-400 tracking-widest uppercase mb-2 inline-flex items-center gap-1.5 font-bold">
-            <span>⚖</span> Section 11 of the Official Rulebook
+            <span>⚖</span> Official Evaluation Criteria
           </span>
           <h3 className="font-pixel text-xl sm:text-3xl text-white tracking-wide uppercase mb-3">
-            OFFICIAL 100-POINT JUDGING RUBRIC
+            100-POINT JUDGING RUBRIC
           </h3>
           <p className="font-terminal text-sm sm:text-base text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-            All teams are scored out of 100 against published engineering, autonomy, reliability, and SDG impact criteria. Ranked separately within Stream A (FY) and Stream B (Senior).
+            All teams are scored against published criteria across autonomy, depth, safety, and measurable outcomes.
           </p>
         </div>
 
@@ -229,7 +221,7 @@ export default function DocumentsSection() {
               Round 1 Submission Due: 2nd November 2026
             </h4>
             <p className="font-terminal text-xs sm:text-sm text-neutral-200 leading-relaxed">
-              Teams must download the official 9-slide PowerPoint template above, populate their multi-agent solution architecture, and submit it along with their runnable code demo.
+              Download the official 9-slide PowerPoint template, populate your multi-agent architecture, and submit it along with your runnable demo.
             </p>
           </div>
         </div>

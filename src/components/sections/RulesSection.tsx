@@ -185,10 +185,10 @@ export default function RulesSection() {
                   download="AgentCraft_Official_Rulebook.pdf"
                   className="flex-1 sm:flex-initial px-3.5 py-2 border-2 border-[#7a4f05] bg-[#fbbf24] hover:bg-[#f59e0b] font-pixel text-[8px] sm:text-[9px] uppercase font-bold text-[#1a1206] shadow-[inset_2px_2px_0_rgba(255,255,255,0.4),inset_-2px_-2px_0_rgba(0,0,0,0.4)] transition-transform hover:-translate-y-0.5 active:translate-y-0.5 inline-flex items-center justify-center gap-1 cursor-pointer"
                   data-interactive="true"
-                  title="Download Rulebook (PDF, 2.68 MB)"
+                  title="Download Official Rulebook"
                 >
                   <span>⬇</span>
-                  <span>DOWNLOAD (2.68 MB)</span>
+                  <span>DOWNLOAD</span>
                 </a>
               </div>
             </div>
